@@ -1,0 +1,12 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "types": ["vite-plugin-pwa/info"],
+    "paths": {
+      "@/*": ["src/*"],
+    },
+  }
+}
