@@ -1,7 +1,6 @@
 import { For, Show } from 'solid-js'
 import { useStore } from '@nanostores/solid'
-import { conversationMapSortList, currentConversationId } from '@/stores/conversation'
-import { showConversationEditModal } from '@/stores/ui'
+import { addConversation, conversationMapSortList, currentConversationId } from '@/stores/conversation'
 
 export default () => {
   const $conversationMapSortList = useStore(conversationMapSortList)
@@ -27,7 +26,7 @@ export default () => {
         </div>
         <div
           class="fcc gap-2 p-6 bg-base-100 hv-base border border-base rounded-lg"
-          onClick={() => showConversationEditModal.set(true)}
+          onClick={() => addConversation()}
         >
           <div class="i-carbon-add" />
           <div class="flex-1 text-sm truncate">New Conversation</div>

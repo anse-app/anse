@@ -33,7 +33,7 @@ export const Select = (inputProps: Props) => {
   }))
 
   return (
-    <div class="z-10">
+    <div>
       <div>
         <button
           class={`fi justify-between w-full px-2 py-1 border border-base ${props.readonly ? '' : 'hv-base'}`}

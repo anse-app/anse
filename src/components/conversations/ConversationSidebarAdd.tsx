@@ -1,10 +1,8 @@
-import { showConversationEditModal } from '@/stores/ui'
-import { currentEditingConversationId } from '@/stores/conversation'
+import { addConversation } from '@/stores/conversation'
 
 export default () => {
   const handleAdd = () => {
-    currentEditingConversationId.set(null)
-    showConversationEditModal.set(true)
+    addConversation()
   }
 
   return (

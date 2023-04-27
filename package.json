@@ -34,6 +34,7 @@
     "@zag-js/toggle": "^0.2.15",
     "@zag-js/tooltip": "^0.2.12",
     "astro": "^2.2.0",
+    "destr": "^1.2.2",
     "eslint": "^8.37.0",
     "eventsource-parser": "^0.1.0",
     "idb-keyval": "^6.2.0",

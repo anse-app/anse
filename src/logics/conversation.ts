@@ -1,3 +1,4 @@
+import destr from 'destr'
 import { getProviderById } from '@/stores/provider'
 import { updateConversationById } from '@/stores/conversation'
 import { clearMessagesByConversationId, getMessagesByConversationId, pushMessageByConversationId } from '@/stores/messages'
@@ -7,7 +8,7 @@ import { currentErrorMessage } from '@/stores/ui'
 import { generateRapidProviderPayload, promptHelper } from './helper'
 import type { CallProviderPayload, HandlerPayload, PromptResponse } from '@/types/provider'
 import type { Conversation } from '@/types/conversation'
-import type { ErrorMessage } from '@/types/message'
+import type { ErrorMessage, Message } from '@/types/message'
 
 export const handlePrompt = async(conversation: Conversation, prompt: string, signal?: AbortSignal) => {
   const generalSettings = getGeneralSettings()
@@ -37,7 +38,14 @@ export const handlePrompt = async(conversation: Conversation, prompt: string, si
     globalSettings: getSettingsByProviderId(conversation.providerId),
     providerId: conversation.providerId,
     prompt,
-    historyMessages: getMessagesByConversationId(conversation.id),
+    messages: [
+      ...(conversation.systemInfo ? [{ role: 'system', content: conversation.systemInfo }] : []) as Message[],
+      ...(destr(conversation.mockMessages) || []) as Message[],
+      ...getMessagesByConversationId(conversation.id).map(message => ({
+        role: message.role,
+        content: message.content,
+      })),
+    ],
   }
   try {
     providerResponse = await getProviderResponse(callMethod, providerPayload, signal)
@@ -73,8 +81,9 @@ export const handlePrompt = async(conversation: Conversation, prompt: string, si
 
   // Update conversation title
   if (providerResponse && conversation.conversationType === 'continuous' && !conversation.name) {
-    const rapidPayload = generateRapidProviderPayload(promptHelper.summarizeText(prompt), conversation.providerId)
-    const generatedTitle = await getProviderResponse(callMethod, rapidPayload, signal).catch(() => {}) as string || prompt
+    const inputText = conversation.systemInfo || prompt
+    const rapidPayload = generateRapidProviderPayload(promptHelper.summarizeText(inputText), conversation.providerId)
+    const generatedTitle = await getProviderResponse(callMethod, rapidPayload, signal).catch(() => {}) as string || inputText
     updateConversationById(conversation.id, {
       name: generatedTitle,
     })
@@ -107,7 +116,7 @@ const getProviderResponse = async(caller: 'frontend' | 'backend', payload: CallP
 export const callProviderHandler = async(payload: CallProviderPayload, signal?: AbortSignal) => {
   console.log('callProviderHandler', payload)
 
-  const { conversationMeta, providerId, prompt, historyMessages } = payload
+  const { conversationMeta, providerId, prompt, messages } = payload
   const provider = getProviderById(providerId)
   if (!provider) return
 
@@ -116,22 +125,13 @@ export const callProviderHandler = async(payload: CallProviderPayload, signal?: 
     conversationId: conversationMeta.id,
     globalSettings: payload.globalSettings,
     conversationSettings: {},
-    systemRole: '',
-    mockMessages: [],
   }
-  if (conversationMeta.conversationType === 'single') {
-    response = await provider.handleSinglePrompt?.(prompt, handlerPayload, signal)
-  } else if (conversationMeta.conversationType === 'continuous') {
-    const messages = historyMessages.map(message => ({
-      role: message.role,
-      content: message.content,
-    }))
+  if (conversationMeta.conversationType === 'single' || conversationMeta.conversationType === 'continuous')
     response = await provider.handleContinuousPrompt?.(messages, handlerPayload, signal)
-  } else if (conversationMeta.conversationType === 'image') {
+  else if (conversationMeta.conversationType === 'image')
     response = await provider.handleImagePrompt?.(prompt, handlerPayload, signal)
-  } else if (conversationMeta.conversationType === 'rapid') {
+  else if (conversationMeta.conversationType === 'rapid')
     response = await provider.handleRapidPrompt?.(prompt, handlerPayload.globalSettings)
-  }
 
   return response
 }

@@ -7,6 +7,9 @@ import type { Conversation } from '@/types/conversation'
 
 export const conversationMap = map<Record<string, Conversation>>({})
 export const currentConversationId = atom('')
+export const currentConversation = computed(currentConversationId, (id) => {
+  return id ? conversationMap.get()[id] as Conversation : null
+})
 export const currentEditingConversationId = atom<string | null>('')
 export const currentEditingConversation = computed(currentEditingConversationId, (id) => {
   return id ? conversationMap.get()[id] as Conversation : null

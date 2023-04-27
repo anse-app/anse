@@ -15,6 +15,7 @@ export interface Provider {
   supportConversationType: ConversationType[]
   /** Whether the Provider can accept frontend or backend calls, or both. */
   supportCallMethod?: 'both' | 'frontend' | 'backend'
+  // TODO: merge these 3 handlers into one
   /** Handle a prompt in single conversation type */
   handleSinglePrompt?: (prompt: string, payload: HandlerPayload, signal?: AbortSignal) => Promise<PromptResponse>
   /** Handle a prompt in continuous conversation type */
@@ -36,15 +37,13 @@ export interface CallProviderPayload {
   globalSettings: SettingsPayload
   providerId: string
   prompt: string
-  historyMessages: Message[]
+  messages: Message[]
 }
 
 export interface HandlerPayload {
   conversationId: string
   globalSettings: SettingsPayload
   conversationSettings: SettingsPayload
-  systemRole: string
-  mockMessages: Message[]
 }
 
 export type PromptResponse = string | ReadableStream | null | undefined

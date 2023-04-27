@@ -57,7 +57,7 @@ export default defineConfig({
     'placeholder-base': 'placeholder:op-50 dark:placeholder:op-30',
     'hv-base': 'transition-colors cursor-pointer hover:bg-darker',
     'hv-foreground': 'transition-opacity cursor-pointer op-70 hover:op-100',
-    'input-base': 'bg-transparent placeholder:op-50 dark:placeholder:op-30 focus:(ring-0 outline-none)',
+    'input-base': 'bg-transparent placeholder:op-50 dark:placeholder:op-20 focus:(ring-0 outline-none) resize-none',
     'max-w-base': 'max-w-3xl mx-auto',
     'text-error': 'text-red-700 dark:text-red-400/80',
     'border-error': 'border border-red-700 dark:border-red-400/80',
