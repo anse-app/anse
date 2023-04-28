@@ -42,45 +42,47 @@
 
 ### Deploy With Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ddiu8081/chatgpt-demo/tree/feat/v2)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/anse-app/anse)
 
 
-![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230425/image.6tk44v12tocg.webp)
+![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230428/image.26ujbsqdg8g0.png)
 
 ### Deploy With Netlify
 
-[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?branch=feat/v2&repository=https://github.com/ddiu8081/chatgpt-demo)
+[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/anse-app/anse)
 
 **Step-by-step deployment tutorial:**
 
-1. [Fork](https://github.com/ddiu8081/chatgpt-demo/fork) this project，Go to [https://app.netlify.com/start](https://app.netlify.com/start) new Site, select the project you `forked` done, and connect it with your `GitHub` account.
+1. [Fork](https://github.com/anse-app/anse/fork) this project，Go to [https://app.netlify.com/start](https://app.netlify.com/start) new Site, select the project you `forked` done, and connect it with your `GitHub` account.
 
-![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230425/image.7307jjzdj1q8.webp)
+![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230428/image.4f39uw469xxc.png)
 
-![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230425/image.3klsl2viyqkg.webp)
+![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230428/image.25j9vb69r534.png)
 
 
-2. Select the `feat/v2` branch, select the default build command and output directory, Click the `Deploy Site` button to start deploying the site。
+2. Select the `main` branch, select the default build command and output directory, Click the `Deploy Site` button to start deploying the site。
 
-![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230425/image.6lqb6wjkqjcw.webp)
+![image](https://cdn.staticaly.com/gh/yzh990918/static@master/20230428/image.qibvac65l1c.png)
 
 
 ### Deploy with Docker
 
-[Docker Hub address](https://hub.docker.com/r/ddiu8081/chatgpt-demo-v2).
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/Vghs2p?referralCode=qLUU2s)
+
+[Docker Hub address](https://hub.docker.com/r/ddiu8081/anse).
 
 **Direct run**
 ```bash
-docker run -p 3000:3000 -d ddiu8081/chatgpt-demo-v2:latest
+docker run -p 3000:3000 -d ddiu8081/anse:latest
 ```
 
 **Docker compose**
 ```yml
 version: '3'
 services:
-  chatgpt-demo:
-    image: ddiu8081/chatgpt-demo-v2:latest
-    container_name: chatgpt-demo-v2
+  anse-demo:
+    image: ddiu8081/anse:latest
+    container_name: anse
     restart: always
     ports:
       - '3000:3000'
@@ -101,15 +103,15 @@ Please refer to the official deployment documentation：https://docs.astro.build
 
 Q: TypeError: fetch failed (can't connect to OpenAI Api)
 
-A: Reference: https://github.com/ddiu8081/chatgpt-demo/issues/34
+A: Reference: https://github.com/anse-app/chatgpt-demo/issues/34
 
 Q: throw new TypeError(`${context}` is not a ReadableStream.)
 
-A: The Node version needs to be `v18` or later，reference: https://github.com/ddiu8081/chatgpt-demo/issues/65
+A: The Node version needs to be `v18` or later，reference: https://github.com/anse-app/chatgpt-demo/issues/65
 
 Q: Accelerate domestic access without the need for proxy deployment tutorial?
 
-A: You can refer to this tutorial: https://github.com/ddiu8081/chatgpt-demo/discussions/270
+A: You can refer to this tutorial: https://github.com/anse-app/chatgpt-demo/discussions/270
 
 Q: `PWA` is not working?
 
@@ -120,8 +122,8 @@ This project exists thanks to all those who contributed.
 
 Thank you to all our supporters!🙏
 
-[![img](https://contributors.nn.ci/api?repo=ddiu8081/chatgpt-demo)](https://github.com/ddiu8081/chatgpt-demo/graphs/contributors)
+[![img](https://contributors.nn.ci/api?repo=anse-app/anse)](https://github.com/anse-app/anse/graphs/contributors)
 
 ## License
 
-MIT © [ddiu8081](https://github.com/ddiu8081/chatgpt-demo/blob/main/LICENSE)
+MIT © [ddiu8081](https://github.com/anse-app/chatgpt-demo/blob/main/LICENSE)
