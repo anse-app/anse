@@ -25,4 +25,4 @@ jobs:
       - run: npx changelogithub
         continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
