@@ -1,8 +1,8 @@
 version: '3'
 services:
-  chatgpt-demo:
-    image: ddiu8081/chatgpt-demo-v2:latest
-    container_name: chatgpt-demo-v2
+  anse-demo:
+    image: ddiu8081/anse:latest
+    container_name: anse
     restart: always
     ports:
       - '3000:3000'

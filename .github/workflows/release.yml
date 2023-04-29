@@ -1,19 +1,19 @@
-name: Lint CI
+name: Release
 
 on:
   push:
-    branches:
-      - main
-
-  pull_request:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
-  lint:
+  release:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -24,8 +24,7 @@ jobs:
           node-version: 18.x
           cache: pnpm
 
-      - name: Install
-        run: pnpm install --no-frozen-lockfile
-
-      - name: Lint
-        run: pnpm run lint
+      - run: npx changelogithub
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}

@@ -36,11 +36,11 @@ export default () => {
       <footer class="h-14 fi justify-between px-3">
         <ThemeToggle />
         <div text-xs op-40 px-2>
-          <a href="#" target="_blank" rel="noreferrer" class="hv-foreground">
-            FAQ
+          <a href="https://docs.anse.app" target="_blank" rel="noreferrer" class="hv-foreground">
+            Docs
           </a>
           <span class="px-1"> · </span>
-          <a href="https://github.com/ddiu8081/chatgpt-demo" target="_blank" rel="noreferrer" class="hv-foreground">
+          <a href="https://github.com/anse-app/anse" target="_blank" rel="noreferrer" class="hv-foreground">
             Github
           </a>
         </div>
