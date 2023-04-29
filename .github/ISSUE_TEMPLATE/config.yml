@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentation
+    url: https://docs.anse.app/
+    about: Check the documentation for usage of Anse, or make improvements to it.
+  - name: ⏱️ Roadmap
+    url: https://github.com/orgs/anse-app/projects/2
+    about: Explore upcoming features.
+  - name: 💬 Discussions
+    url: https://github.com/anse-app/anse/discussions
+    about: Use discussions if you have an idea for improvement or for asking questions.
