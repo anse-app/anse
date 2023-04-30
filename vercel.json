@@ -1,3 +1,6 @@
 {
-  "buildCommand": "OUTPUT=vercel astro build"
+  "buildCommand": "OUTPUT=vercel astro build",
+  "github": {
+    "silent": true
+  }
 }
