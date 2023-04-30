@@ -1,9 +1,9 @@
 import providerOpenAI from '@/providers/openai'
-import providerStableDiffusion from '@/providers/stable-diffusion'
+import providerReplicate from '@/providers/replicate'
 
 export const providerList = [
   providerOpenAI(),
-  // providerStableDiffusion(),
+  providerReplicate(),
 ]
 
 export const providerMetaList = providerList.map(provider => ({
