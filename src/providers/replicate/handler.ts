@@ -1,8 +1,14 @@
 import { fetchImageGeneration } from './api'
-import type { Provider } from '@/types/provider'
+import type { HandlerPayload, Provider } from '@/types/provider'
+import type { Message } from '@/types/message'
 
-// TODO: handle CORS error
-export const handleImagePrompt: Provider['handleImagePrompt'] = async(prompt, payload) => {
+export const handlePrompt: Provider['handlePrompt'] = async(messages, payload, signal?: AbortSignal) => {
+  if (payload.botId === 'stable-diffusion')
+    return handleStableDiffusion(messages, payload)
+}
+
+const handleStableDiffusion = async(messages: Message[], payload: HandlerPayload) => {
+  const prompt = messages.length > 0 ? messages[messages.length - 1].content : ''
   const response = await fetchImageGeneration({
     token: payload.globalSettings.token as string,
     method: 'POST',

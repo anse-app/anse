@@ -3,14 +3,14 @@ import providerStableDiffusion from '@/providers/stable-diffusion'
 
 export const providerList = [
   providerOpenAI(),
-  providerStableDiffusion(),
+  // providerStableDiffusion(),
 ]
 
 export const providerMetaList = providerList.map(provider => ({
   id: provider.id,
   name: provider.name,
   icon: provider.icon,
-  supportConversationType: provider.supportConversationType,
+  bots: provider.bots,
 }))
 
 export const platformSettingsUIList = providerList.map(provider => ({

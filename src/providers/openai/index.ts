@@ -1,8 +1,6 @@
 import {
-  handleContinuousPrompt,
-  handleImagePrompt,
+  handlePrompt,
   handleRapidPrompt,
-  handleSinglePrompt,
 } from './handler'
 import type { Provider } from '@/types/provider'
 
@@ -66,11 +64,27 @@ const providerOpenAI = () => {
         step: 0.01,
       },
     ],
-    conversationSettings: [],
-    supportConversationType: ['continuous', 'single', 'image'],
-    handleSinglePrompt,
-    handleContinuousPrompt,
-    handleImagePrompt,
+    bots: [
+      {
+        id: 'chat:continuous',
+        type: 'chat:continuous',
+        name: 'Continuous Chat',
+        settings: [],
+      },
+      {
+        id: 'chat:single',
+        type: 'chat:single',
+        name: 'Single Chat',
+        settings: [],
+      },
+      {
+        id: 'image:generation',
+        type: 'image:generation',
+        name: 'DALL·E',
+        settings: [],
+      },
+    ],
+    handlePrompt,
     handleRapidPrompt,
   }
   return provider

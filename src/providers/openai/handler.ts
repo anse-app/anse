@@ -3,37 +3,20 @@ import { parseStream } from './parser'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
-export const handleSinglePrompt: Provider['handleSinglePrompt'] = async(prompt, payload, signal?: AbortSignal) => {
-  return handleChatCompletion([{ role: 'user', content: prompt }], payload, signal)
-}
-
-export const handleContinuousPrompt: Provider['handleContinuousPrompt'] = async(messages, payload, signal?: AbortSignal) => {
-  return handleChatCompletion(messages, payload, signal)
-}
-
-export const handleImagePrompt: Provider['handleImagePrompt'] = async(prompt, payload) => {
-  const response = await fetchImageGeneration({
-    apiKey: payload.globalSettings.apiKey as string,
-    baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
-    body: {
-      prompt,
-      n: 1,
-      size: '512x512',
-      response_format: 'url', // TODO: support 'b64_json'
-    },
-  })
-  if (!response.ok) {
-    const responseJson = await response.json()
-    const errMessage = responseJson.error?.message || response.statusText || 'Unknown error'
-    throw new Error(errMessage)
-  }
-  const resJson = await response.json()
-  return resJson.data[0].url
+export const handlePrompt: Provider['handlePrompt'] = async(messages, payload, signal?: AbortSignal) => {
+  if (payload.botId === 'chat:continuous')
+    return handleChatCompletion(messages, payload, signal)
+  if (payload.botId === 'chat:single')
+    return handleChatCompletion(messages, payload, signal)
+  if (payload.botId === 'image:generation')
+    return handleImageGeneration(messages, payload)
 }
 
 export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, globalSettings) => {
   const rapidPromptPayload = {
     conversationId: 'temp',
+    conversationType: 'chat:continuous',
+    botId: 'temp',
     globalSettings: {
       ...globalSettings,
       model: 'gpt-3.5-turbo',
@@ -42,7 +25,7 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
       top_p: 1,
       stream: false,
     },
-    conversationSettings: {},
+    botSettings: {},
   } as HandlerPayload
   const result = await handleChatCompletion([{ role: 'user', content: prompt }], rapidPromptPayload)
   if (typeof result === 'string')
@@ -77,4 +60,25 @@ const handleChatCompletion = async(messages: Message[], payload: HandlerPayload,
     const resJson = await response.json()
     return resJson.choices[0].message.content as string
   }
+}
+
+const handleImageGeneration = async(messages: Message[], payload: HandlerPayload) => {
+  const prompt = messages.length > 0 ? messages[messages.length - 1].content : ''
+  const response = await fetchImageGeneration({
+    apiKey: payload.globalSettings.apiKey as string,
+    baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
+    body: {
+      prompt,
+      n: 1,
+      size: '512x512',
+      response_format: 'url', // TODO: support 'b64_json'
+    },
+  })
+  if (!response.ok) {
+    const responseJson = await response.json()
+    const errMessage = responseJson.error?.message || response.statusText || 'Unknown error'
+    throw new Error(errMessage)
+  }
+  const resJson = await response.json()
+  return resJson.data[0].url
 }

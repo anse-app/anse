@@ -1,13 +1,11 @@
-import {
-  handleImagePrompt,
-} from './handler'
+import { handlePrompt } from './handler'
 import type { Provider } from '@/types/provider'
 
-const providerOpenAI = () => {
+const providerReplicate = () => {
   const provider: Provider = {
-    id: 'provider-stable-diffusion',
-    icon: 'i-carbon-paint-brush', // @unocss-include
-    name: 'Stable Diffusion',
+    id: 'provider-replicate',
+    icon: 'i-carbon-replicate', // @unocss-include
+    name: 'Replicate',
     globalSettings: [
       {
         key: 'token',
@@ -22,12 +20,18 @@ const providerOpenAI = () => {
         default: 'db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf',
       },
     ],
-    conversationSettings: [],
-    supportConversationType: ['image'],
+    bots: [
+      {
+        id: 'stable-diffusion',
+        type: 'image:generation',
+        name: 'Stable Diffusion',
+        settings: [],
+      },
+    ],
     supportCallMethod: 'backend',
-    handleImagePrompt,
+    handlePrompt,
   }
   return provider
 }
 
-export default providerOpenAI
+export default providerReplicate

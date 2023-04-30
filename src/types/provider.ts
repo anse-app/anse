@@ -3,27 +3,27 @@ import type { Message } from '@/types/message'
 
 export interface Provider {
   id: string
-  /** Icon of provider. Only support `@unocss/preset-icons` class name for now */
-  icon?: string
-  /** Name of provider */
+  /** Icon of provider. Only support `@unocss/preset-icons` class name for now. */
+  icon: string
+  /** Name of provider. */
   name: string
-  /** Global settings of the provider */
+  /** Global settings of the provider. */
   globalSettings?: SettingsUI[]
-  /** Settings for each conversation */
-  conversationSettings?: SettingsUI[]
-  /** The types of conversations supported by the Provider. */
-  supportConversationType: ConversationType[]
+  /** Bots list. Each bot provides a list of presets including conversation types, settings items, etc. */
+  bots: Bot[]
   /** Whether the Provider can accept frontend or backend calls, or both. */
   supportCallMethod?: 'both' | 'frontend' | 'backend'
-  // TODO: merge these 3 handlers into one
-  /** Handle a prompt in single conversation type */
-  handleSinglePrompt?: (prompt: string, payload: HandlerPayload, signal?: AbortSignal) => Promise<PromptResponse>
-  /** Handle a prompt in continuous conversation type */
-  handleContinuousPrompt?: (messages: Message[], payload: HandlerPayload, signal?: AbortSignal) => Promise<PromptResponse>
-  /** Handle a prompt in image conversation type */
-  handleImagePrompt?: (prompt: string, payload: HandlerPayload, signal?: AbortSignal) => Promise<string>
-  /** Handle a temporary, rapidly prompt, used for interface display like conversation title's generation */
+  // Handle a prompt in conversation
+  handlePrompt: (messages: Message[], payload: HandlerPayload, signal?: AbortSignal) => Promise<PromptResponse>
+  /** Handle a temporary, rapidly prompt, used for interface display like conversation title's generation. */
   handleRapidPrompt?: (prompt: string, globalSettings: SettingsPayload) => Promise<string>
+}
+
+export interface Bot {
+  id: string
+  type: ConversationType
+  name: string
+  settings: SettingsUI[]
 }
 
 export type SettingsPayload = Record<string, string | number | boolean>
@@ -32,7 +32,7 @@ export type SettingsPayload = Record<string, string | number | boolean>
 export interface CallProviderPayload {
   conversationMeta: {
     id: string
-    conversationType: string
+    conversationType: ConversationType
   }
   globalSettings: SettingsPayload
   providerId: string
@@ -42,8 +42,10 @@ export interface CallProviderPayload {
 
 export interface HandlerPayload {
   conversationId: string
+  conversationType: ConversationType
+  botId: string
   globalSettings: SettingsPayload
-  conversationSettings: SettingsPayload
+  botSettings: SettingsPayload
 }
 
 export type PromptResponse = string | ReadableStream | null | undefined
