@@ -1,10 +1,12 @@
+import { createSignal } from 'solid-js'
 import { providerMetaList } from '@/stores/provider'
+import { Select } from '../ui/base'
 import type { ConversationType } from '@/types/conversation'
 
 interface BotMeta {
-  id: string
+  value: string
   type: ConversationType
-  name: string
+  label: string
   provider: {
     id: string
     name: string
@@ -14,9 +16,9 @@ interface BotMeta {
 
 const botMetaList: BotMeta[] = providerMetaList.map((provider) => {
   return provider.bots.map(bot => ({
-    id: bot.id,
+    value: bot.id,
     type: bot.type,
-    name: bot.name,
+    label: bot.name,
     provider: {
       id: provider.id,
       name: provider.name,
@@ -26,7 +28,28 @@ const botMetaList: BotMeta[] = providerMetaList.map((provider) => {
 }).flat()
 
 export default () => {
+  const [value, setValue] = createSignal('')
+
   return (
-    <div>{JSON.stringify(botMetaList)}</div>
+    <Select
+      value={value()}
+      onChange={setValue}
+      options={botMetaList}
+      selectedComponent={item => (
+        <div class="fi gap-2">
+          {item.provider.icon && <div class={item.provider.icon} />}
+          <div>{item.provider.name} / {item.label}</div>
+        </div>
+      )}
+      itemComponent={(item, isSelected) => (
+        <div class="fi gap-2 w-full px-2 py-1 border-b border-b-base hv-base">
+          {item.provider.icon && <div class={item.provider.icon} />}
+          <div class="flex-1">{item.provider.name} / {item.label}</div>
+          {isSelected && (
+          <div i-carbon-checkmark />
+          )}
+        </div>
+      )}
+    />
   )
 }

@@ -17,7 +17,7 @@ export default ({ settings, editing, value, setValue }: Props) => {
   return (
     <div>
       {editing() && (
-        <Select value={value} setValue={setValue} options={selectSettings.options} />
+        <Select value={value()} onChange={setValue} options={selectSettings.options} />
       )}
       {!editing() && value() && (
         <div>{value()}</div>
