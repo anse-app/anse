@@ -1,5 +1,5 @@
 import { action, atom, computed, map } from 'nanostores'
-import { providerMetaList } from './provider'
+import { botMetaList } from './provider'
 import { clearMessagesByConversationId } from './messages'
 import { conversationMapData } from './tests/conversation.mock'
 import { db } from './storage/conversation'
@@ -28,8 +28,7 @@ export const addConversation = action(conversationMap, 'addConversation', (map, 
   const instanceId = instance?.id || `id_${Date.now()}`
   const conversation: Conversation = {
     id: instanceId,
-    providerId: instance?.providerId || providerMetaList[0]?.id,
-    conversationType: instance?.conversationType || providerMetaList[0]?.supportConversationType?.[0],
+    bot: botMetaList[0]?.value,
     name: instance?.name || '',
     icon: instance?.icon || 'i-carbon-chat',
     lastUseTime: Date.now(),

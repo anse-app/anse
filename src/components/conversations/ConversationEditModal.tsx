@@ -10,7 +10,7 @@ export default () => {
 
   const handleButtonClick = () => {
     if (Object.keys(modifiedConversationPayload).length)
-      updateConversationById($currentConversation().id, modifiedConversationPayload)
+      updateConversationById($currentConversation()!.id, modifiedConversationPayload)
     showConversationEditModal.set(false)
   }
 
@@ -25,7 +25,7 @@ export default () => {
     <div class="p-6">
       <main class="flex flex-col gap-3 mt-3">
         <ConversationEdit
-          conversation={$currentConversation()}
+          conversation={$currentConversation()!}
           handleChange={handleChange}
         />
       </main>

@@ -1,21 +1,20 @@
 import { fetchChatCompletion, fetchImageGeneration } from './api'
 import { parseStream } from './parser'
-import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
-export const handlePrompt: Provider['handlePrompt'] = async(messages, payload, signal?: AbortSignal) => {
-  if (payload.botId === 'chat:continuous')
-    return handleChatCompletion(messages, payload, signal)
-  if (payload.botId === 'chat:single')
-    return handleChatCompletion(messages, payload, signal)
-  if (payload.botId === 'image:generation')
-    return handleImageGeneration(messages, payload)
+export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
+  if (payload.botId === 'chat_continuous')
+    return handleChatCompletion(payload, signal)
+  if (payload.botId === 'chat_single')
+    return handleChatCompletion(payload, signal)
+  if (payload.botId === 'image_generation')
+    return handleImageGeneration(payload)
 }
 
 export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, globalSettings) => {
   const rapidPromptPayload = {
     conversationId: 'temp',
-    conversationType: 'chat:continuous',
+    conversationType: 'chat_single',
     botId: 'temp',
     globalSettings: {
       ...globalSettings,
@@ -26,20 +25,22 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
       stream: false,
     },
     botSettings: {},
+    prompt,
+    messages: [{ role: 'user', content: prompt }],
   } as HandlerPayload
-  const result = await handleChatCompletion([{ role: 'user', content: prompt }], rapidPromptPayload)
+  const result = await handleChatCompletion(rapidPromptPayload)
   if (typeof result === 'string')
     return result
   return ''
 }
 
-const handleChatCompletion = async(messages: Message[], payload: HandlerPayload, signal?: AbortSignal) => {
+const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal) => {
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
     body: {
       model: payload.globalSettings.model as string,
-      messages,
+      messages: payload.messages,
       temperature: payload.globalSettings.temperature as number,
       max_tokens: payload.globalSettings.maxTokens as number,
       top_p: payload.globalSettings.topP as number,
@@ -62,8 +63,8 @@ const handleChatCompletion = async(messages: Message[], payload: HandlerPayload,
   }
 }
 
-const handleImageGeneration = async(messages: Message[], payload: HandlerPayload) => {
-  const prompt = messages.length > 0 ? messages[messages.length - 1].content : ''
+const handleImageGeneration = async(payload: HandlerPayload) => {
+  const prompt = payload.prompt
   const response = await fetchImageGeneration({
     apiKey: payload.globalSettings.apiKey as string,
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),

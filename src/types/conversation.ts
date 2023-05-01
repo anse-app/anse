@@ -1,9 +1,9 @@
-export type ConversationType = 'chat:single' | 'chat:continuous' | 'image:generation'
+export const allConversationTypes = ['chat_single', 'chat_continuous', 'image_generation'] as const
+export type ConversationType = typeof allConversationTypes[number]
 
 export interface Conversation {
   id: string
-  providerId: string
-  conversationType: ConversationType
+  bot: string
   name: string
   icon: string
   systemInfo?: string

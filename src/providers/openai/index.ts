@@ -66,20 +66,20 @@ const providerOpenAI = () => {
     ],
     bots: [
       {
-        id: 'chat:continuous',
-        type: 'chat:continuous',
+        id: 'chat_continuous',
+        type: 'chat_continuous',
         name: 'Continuous Chat',
         settings: [],
       },
       {
-        id: 'chat:single',
-        type: 'chat:single',
+        id: 'chat_single',
+        type: 'chat_single',
         name: 'Single Chat',
         settings: [],
       },
       {
-        id: 'image:generation',
-        type: 'image:generation',
+        id: 'image_generation',
+        type: 'image_generation',
         name: 'DALL·E',
         settings: [],
       },

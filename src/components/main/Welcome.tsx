@@ -2,16 +2,12 @@ import { For, Show } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { addConversation, conversationMapSortList, currentConversationId } from '@/stores/conversation'
 
-// TODO: Test area
-import BotSelect from '../ui/BotSelect'
-
 export default () => {
   const $conversationMapSortList = useStore(conversationMapSortList)
 
   return (
     <div class="fcc h-full">
       <div class="flex flex-col gap-4 w-full max-w-md mx-12 sm:mx-18 overflow-hidden">
-        <BotSelect />
         <div class="px-6 py-4 bg-base-100 border border-base rounded-lg">
           <h2 class="text-xs op-30 uppercase my-2">Recents</h2>
           <div class="flex flex-col items-start">

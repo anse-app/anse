@@ -23,7 +23,7 @@ const providerReplicate = () => {
     bots: [
       {
         id: 'stable-diffusion',
-        type: 'image:generation',
+        type: 'image_generation',
         name: 'Stable Diffusion',
         settings: [],
       },

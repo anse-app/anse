@@ -1,26 +1,7 @@
 import { Show, createSignal } from 'solid-js'
-import { showSystemInfoModel } from '@/stores/ui'
-import { providerMetaList } from '@/stores/provider'
-import { Select } from '@/components/ui/base'
-import type { Conversation, ConversationType } from '@/types/conversation'
-
-const typeSelectList = [
-  {
-    value: 'continuous' as const,
-    label: 'Continuous Conversation',
-    icon: 'i-carbon-edt-loop',
-  },
-  {
-    value: 'single' as const,
-    label: 'Single Conversation',
-    icon: 'i-carbon-connect',
-  },
-  {
-    value: 'image' as const,
-    label: 'Image Generation',
-    icon: 'i-carbon-image',
-  },
-]
+import BotSelect from '@/components/ui/BotSelect'
+import { getBotMetaById } from '@/stores/provider'
+import type { Conversation } from '@/types/conversation'
 
 interface Props {
   conversation: Conversation
@@ -28,22 +9,13 @@ interface Props {
 }
 
 export default (props: Props) => {
-  const [selectProviderId, setSelectProviderId] = createSignal(props.conversation.providerId || providerMetaList[0]?.id)
-  const [selectConversationType, setSelectConversationType] = createSignal<ConversationType>(props.conversation.conversationType || 'continuous')
-  const selectProvider = () => providerMetaList.find(item => item.id === selectProviderId()) || null
-  const supportedConversationType = () => typeSelectList.filter(item => selectProvider()?.supportConversationType.includes(item.value))
+  const [providerBot, setProviderBot] = createSignal(props.conversation.bot || '')
+  const botMeta = () => getBotMetaById(providerBot()) || null
 
-  const handleProviderChange = (id: string) => {
-    setSelectProviderId(id)
-    props.handleChange({ providerId: id })
-    // TODO: This will crash the app
-    // setSelectConversationType(selectProvider()?.supportConversationType[0] || 'continuous')
-  }
-
-  const handleConversationTypeChange = (type: ConversationType) => {
-    setSelectConversationType(type)
-    const payload: Partial<Conversation> = { conversationType: type }
-    if (type === 'image') {
+  const handleProviderBotChange = (e: string) => {
+    setProviderBot(e)
+    const payload: Partial<Conversation> = { bot: e }
+    if (botMeta()?.type === 'image_generation') {
       payload.systemInfo = undefined
       payload.mockMessages = undefined
     }
@@ -52,10 +24,6 @@ export default (props: Props) => {
 
   const handleOpenIconSelector = () => {
     // TODO: Icon selector by `emoji-mart`
-  }
-
-  const handleOpenSystemInfoSettings = () => {
-    showSystemInfoModel.set(true)
   }
 
   const handleOpenMockMessages = () => {
@@ -75,25 +43,8 @@ export default (props: Props) => {
         value={props.conversation.name}
         onBlur={e => props.handleChange({ name: e.currentTarget.value })}
       />
-      <div class="py-1 border bg-base-50 border-base rounded-lg text-sm">
-        <div class="fi justify-between gap-10 px-4 h-10">
-          <h3 class="op-80 shrink-0">Provider</h3>
-          <Select
-            options={providerMetaList.map(item => ({ value: item.id, label: item.name, icon: item.icon }))}
-            value={selectProviderId}
-            setValue={handleProviderChange}
-          />
-        </div>
-        <div class="fi justify-between gap-10 px-4 h-10">
-          <h3 class="op-80 shrink-0">Conversation Type</h3>
-          <Select
-            options={supportedConversationType()}
-            value={selectConversationType}
-            setValue={handleConversationTypeChange}
-          />
-        </div>
-      </div>
-      <Show when={selectConversationType() !== 'image'}>
+      <BotSelect value={props.conversation.bot} onChange={handleProviderBotChange} />
+      <Show when={botMeta()?.type !== 'image_generation'}>
         <div class="py-1 border bg-base-50 border-base rounded-lg text-sm">
           <div class="px-4 py-2">
             <h3 class="op-80 shrink-0">System Info</h3>

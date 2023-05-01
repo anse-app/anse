@@ -4,7 +4,6 @@ import type { ErrorMessage } from '@/types/message'
 export const showConversationSidebar = atom(false)
 export const showSettingsSidebar = atom(false)
 export const showConversationEditModal = atom(false)
-export const showSystemInfoModel = atom(false)
 
 export const inputPrompt = atom('')
 export const isSendBoxFocus = atom(false)

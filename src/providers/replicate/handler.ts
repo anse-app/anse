@@ -2,13 +2,13 @@ import { fetchImageGeneration } from './api'
 import type { HandlerPayload, Provider } from '@/types/provider'
 import type { Message } from '@/types/message'
 
-export const handlePrompt: Provider['handlePrompt'] = async(messages, payload, signal?: AbortSignal) => {
+export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
   if (payload.botId === 'stable-diffusion')
-    return handleStableDiffusion(messages, payload)
+    return handleStableDiffusion(payload)
 }
 
-const handleStableDiffusion = async(messages: Message[], payload: HandlerPayload) => {
-  const prompt = messages.length > 0 ? messages[messages.length - 1].content : ''
+const handleStableDiffusion = async(payload: HandlerPayload) => {
+  const prompt = payload.prompt
   const response = await fetchImageGeneration({
     token: payload.globalSettings.token as string,
     method: 'POST',

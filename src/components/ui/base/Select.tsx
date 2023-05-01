@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createUniqueId, mergeProps, on } from 'solid-js'
+import { createEffect, createMemo, createSignal, createUniqueId, mergeProps, on } from 'solid-js'
 import * as select from '@zag-js/select'
 import { normalizeProps, useMachine } from '@zag-js/solid'
 import type { JSXElement } from 'solid-js'
@@ -15,6 +15,7 @@ interface Props<T> {
 }
 
 export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
+  const [selectedItem, setSelectedItem] = createSignal<T | null>(null)
   const props = mergeProps({
     placeholder: 'Select option',
   }, inputProps)
@@ -22,8 +23,11 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
     id: createUniqueId(),
     selectedOption: props.options.find(o => o.value === props.value),
     readOnly: props.readonly,
-    onChange: (details) => {
-      details && props.onChange(details.value)
+    onChange: (detail) => {
+      if (detail) {
+        setSelectedItem(props.options.find(o => o.value === detail.value))
+        props.onChange(detail.value)
+      }
     },
   }))
 
@@ -31,7 +35,10 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
 
   createEffect(on(() => props.value, () => {
     const option = props.options.find(o => o.value === props.value)
-    option && api().setSelectedOption(option)
+    if (option) {
+      api().setSelectedOption(option)
+      setSelectedItem(option)
+    }
   }))
 
   const selectedComponent = (item: T | null) => {
@@ -67,7 +74,7 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
           class={`fi justify-between w-full px-2 py-1 border border-base ${props.readonly ? '' : 'hv-base'}`}
           {...api().triggerProps}
         >
-          {selectedComponent(api().selectedOption as T)}
+          {selectedComponent(selectedItem())}
           {!props.readonly && <div i-carbon-caret-down />}
         </button>
       </div>

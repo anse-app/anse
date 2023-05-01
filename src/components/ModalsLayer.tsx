@@ -2,12 +2,10 @@ import {
   showConversationEditModal,
   showConversationSidebar,
   showSettingsSidebar,
-  showSystemInfoModel,
 } from '@/stores/ui'
 import ConversationSidebar from './conversations/ConversationSidebar'
 import SettingsSidebar from './settings/SettingsSidebar'
 import ConversationEditModal from './conversations/ConversationEditModal'
-import ConversationEdit from './conversations/ConversationEdit'
 import Modal from './ui/Modal'
 
 export default () => {
@@ -24,11 +22,6 @@ export default () => {
         </div>
       </Modal>
       <Modal bindValue={showConversationEditModal} direction="bottom" closeBtnClass="top-6 right-6">
-        <div class="max-h-[70vh] w-full">
-          <ConversationEditModal />
-        </div>
-      </Modal>
-      <Modal bindValue={showSystemInfoModel} direction="bottom" closeBtnClass="top-6 right-6">
         <div class="max-h-[70vh] w-full">
           <ConversationEditModal />
         </div>
