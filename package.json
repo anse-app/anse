@@ -35,6 +35,7 @@
     "@zag-js/toggle": "^0.2.15",
     "@zag-js/tooltip": "^0.2.12",
     "astro": "^2.2.0",
+    "bumpp": "^9.1.0",
     "destr": "^1.2.2",
     "eslint": "^8.37.0",
     "eventsource-parser": "^0.1.0",
@@ -49,11 +50,11 @@
     "remark-math": "^5.1.1",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
+    "solid-emoji-picker": "^0.2.0",
     "solid-js": "1.6.12",
     "solid-transition-group": "^0.2.2",
     "solidjs-use": "^1.2.0",
-    "unified": "^10.1.2",
-    "bumpp": "^9.1.0"
+    "unified": "^10.1.2"
   },
   "devDependencies": {
     "@evan-yang/eslint-config": "^1.0.9",

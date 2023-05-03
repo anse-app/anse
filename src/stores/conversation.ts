@@ -33,7 +33,7 @@ const migrateConversationStoreIfNeeded = () => {
         // @ts-expect-error migrate old data
         bot: `${conversation.providerId}:${typeDict[conversation.conversationType] || 'chat_single'}`,
         name: conversation.name,
-        icon: conversation.icon,
+        icon: '',
         systemInfo: conversation.systemInfo,
         mockMessages: conversation.mockMessages,
         lastUseTime: conversation.lastUseTime,
@@ -57,7 +57,7 @@ export const addConversation = action(conversationMap, 'addConversation', (map, 
     id: instanceId,
     bot: botMetaList[0]?.value,
     name: instance?.name || '',
-    icon: instance?.icon || 'i-carbon-chat',
+    icon: instance?.icon || '',
     lastUseTime: Date.now(),
   }
   map.setKey(instanceId, conversation)

@@ -31,8 +31,8 @@ export default ({ instance }: Props) => {
       ].join(' ')}
       onClick={handleClick}
     >
-      <div class="fcc w-8 h-8 rounded-full text-xl shrink-0">
-        <div class={instance.icon || 'i-carbon-chat'} />
+      <div class="fcc w-8 h-8 rounded-full text-2xl shrink-0">
+        {instance.icon ? instance.icon : <div class="text-xl i-carbon-chat" />}
       </div>
       <div class="flex-1 truncate">{ instance.name || 'Untitled' }</div>
       <div class={isTouchDevice ? '' : 'hidden group-hover:block'}>

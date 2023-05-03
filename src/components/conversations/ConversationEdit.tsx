@@ -1,6 +1,8 @@
-import { Show, createSignal } from 'solid-js'
+import { Show, createSignal, onMount } from 'solid-js'
+import { useStore } from '@nanostores/solid'
 import BotSelect from '@/components/ui/BotSelect'
 import { getBotMetaById } from '@/stores/provider'
+import { emojiPickerCurrentPick, showEmojiPickerModal } from '@/stores/ui'
 import type { Conversation } from '@/types/conversation'
 
 interface Props {
@@ -10,7 +12,12 @@ interface Props {
 
 export default (props: Props) => {
   const [providerBot, setProviderBot] = createSignal(props.conversation.bot || '')
+  const $emojiPickerCurrentPick = useStore(emojiPickerCurrentPick)
   const botMeta = () => getBotMetaById(providerBot()) || null
+
+  onMount(() => {
+    emojiPickerCurrentPick.set(undefined)
+  })
 
   const handleProviderBotChange = (e: string) => {
     setProviderBot(e)
@@ -24,6 +31,10 @@ export default (props: Props) => {
 
   const handleOpenIconSelector = () => {
     // TODO: Icon selector by `emoji-mart`
+    showEmojiPickerModal.set(true)
+    emojiPickerCurrentPick.listen((emoji) => {
+      props.handleChange({ icon: emoji })
+    })
   }
 
   const handleOpenMockMessages = () => {
@@ -33,9 +44,11 @@ export default (props: Props) => {
   return (
     <div class="flex flex-col gap-4">
       <div
-        class="w-16 h-16 border border-base rounded-xl border-dashed hv-base"
+        class="fcc w-16 h-16 text-10 border border-base rounded-xl border-dashed hv-base"
         onClick={handleOpenIconSelector}
-      />
+      >
+        {$emojiPickerCurrentPick() || props.conversation.icon}
+      </div>
       <input
         type="text"
         class="font-semibold mr-12 mb-3 px-1 truncate outline-0 bg-transparent placeholder:op-40"

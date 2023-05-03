@@ -106,6 +106,9 @@ dependencies:
   remark-rehype:
     specifier: ^10.1.0
     version: 10.1.0
+  solid-emoji-picker:
+    specifier: ^0.2.0
+    version: 0.2.0(solid-js@1.6.12)
   solid-js:
     specifier: 1.6.12
     version: 1.6.12
@@ -8485,6 +8488,15 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       babel-code-frame: 6.26.0
+    dev: false
+
+  /solid-emoji-picker@0.2.0(solid-js@1.6.12):
+    resolution: {integrity: sha512-cLPevMIevKPs06UOjFakYP+TXKFcvwhD0cF9d3ivrqXUIOt/0bgXHnxPQlbFXtOr6mYXVngrNhzHBGdNi1fVNQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      solid-js: ^1.2
+    dependencies:
+      solid-js: 1.6.12
     dev: false
 
   /solid-js@1.6.12:
