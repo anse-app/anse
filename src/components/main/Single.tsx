@@ -21,13 +21,13 @@ export default ({ conversationId, messages }: Props) => {
 
   return (
     <div class="flex flex-col h-full">
-      <div class="flex-[1] border-b border-base p-6 break-all overflow-y-scroll">
+      <div class="flex-[1] border-b border-base p-6 break-words overflow-y-scroll">
         <StreamableText
           class="mx-auto"
           text={messageInput()?.content || ''}
         />
       </div>
-      <div class="scroll-list flex-[2] p-6 break-all overflow-y-scroll" ref={scrollRef!}>
+      <div class="scroll-list flex-[2] p-6 break-words overflow-y-scroll" ref={scrollRef!}>
         <StreamableText
           class="mx-auto"
           text={messageOutput()?.content || ''}
