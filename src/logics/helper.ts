@@ -1,17 +1,16 @@
 import { getSettingsByProviderId } from '@/stores/settings'
-import type { CallProviderPayload } from '@/types/provider'
+import type { HandlerPayload } from '@/types/provider'
 
 export const generateRapidProviderPayload = (prompt: string, providerId: string) => {
   const payload = {
-    conversationMeta: {
-      id: 'temp',
-      conversationType: 'rapid',
-    },
+    conversationId: 'temp',
+    conversationType: 'chat_single',
+    botId: 'temp',
     globalSettings: getSettingsByProviderId(providerId),
-    providerId,
+    botSettings: {},
     prompt,
-    historyMessages: [],
-  } as CallProviderPayload
+    messages: [],
+  } as HandlerPayload
   return payload
 }
 

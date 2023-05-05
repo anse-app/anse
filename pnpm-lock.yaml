@@ -64,6 +64,9 @@ dependencies:
   bumpp:
     specifier: ^9.1.0
     version: 9.1.0
+  destr:
+    specifier: ^1.2.2
+    version: 1.2.2
   eslint:
     specifier: ^8.37.0
     version: 8.37.0
@@ -103,6 +106,9 @@ dependencies:
   remark-rehype:
     specifier: ^10.1.0
     version: 10.1.0
+  solid-emoji-picker:
+    specifier: ^0.2.0
+    version: 0.2.0(solid-js@1.6.12)
   solid-js:
     specifier: 1.6.12
     version: 1.6.12
@@ -1745,7 +1751,7 @@ packages:
       eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.27.5)(eslint@8.37.0)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.37.0)
       eslint-plugin-html: 6.2.0
-      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.57.1)(eslint@8.37.0)
+      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-typescript@2.7.1)(eslint@8.37.0)
       eslint-plugin-jsonc: 2.7.0(eslint@8.37.0)
       eslint-plugin-jsx-a11y: 6.7.1(eslint@8.37.0)
       eslint-plugin-markdown: 2.2.1(eslint@8.37.0)
@@ -4607,7 +4613,7 @@ packages:
       eslint-plugin-promise: ^6.0.0
     dependencies:
       eslint: 8.37.0
-      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.57.1)(eslint@8.37.0)
+      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-typescript@2.7.1)(eslint@8.37.0)
       eslint-plugin-n: 15.7.0(eslint@8.37.0)
       eslint-plugin-promise: 6.1.1(eslint@8.37.0)
     dev: true
@@ -4631,7 +4637,7 @@ packages:
     dependencies:
       debug: 4.3.4
       eslint: 8.37.0
-      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.57.1)(eslint@8.37.0)
+      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-typescript@2.7.1)(eslint@8.37.0)
       glob: 7.2.3
       is-glob: 4.0.3
       resolve: 1.22.2
@@ -4640,7 +4646,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-module-utils@2.7.4(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-node@0.3.7)(eslint@8.37.0):
+  /eslint-module-utils@2.7.4(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@2.7.1)(eslint@8.37.0):
     resolution: {integrity: sha512-j4GT+rqzCoRKHwURX7pddtIPGySnX9Si/cgMI5ztrcqOPtk5dDEeZ34CQVPphnqkJytlc97Vuk05Um2mJ3gEQA==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -4665,6 +4671,7 @@ packages:
       debug: 3.2.7
       eslint: 8.37.0
       eslint-import-resolver-node: 0.3.7
+      eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.27.5)(eslint@8.37.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4714,7 +4721,7 @@ packages:
       htmlparser2: 7.2.0
     dev: true
 
-  /eslint-plugin-import@2.27.5(@typescript-eslint/parser@5.57.1)(eslint@8.37.0):
+  /eslint-plugin-import@2.27.5(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-typescript@2.7.1)(eslint@8.37.0):
     resolution: {integrity: sha512-LmEt3GVofgiGuiE+ORpnvP+kAm3h6MLZJ4Q5HCyHADofsb4VzXFsRiWj3c0OFiV+3DWFh0qg3v9gcPlfc3zRow==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -4732,7 +4739,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.37.0
       eslint-import-resolver-node: 0.3.7
-      eslint-module-utils: 2.7.4(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-node@0.3.7)(eslint@8.37.0)
+      eslint-module-utils: 2.7.4(@typescript-eslint/parser@5.57.1)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@2.7.1)(eslint@8.37.0)
       has: 1.0.3
       is-core-module: 2.11.0
       is-glob: 4.0.3
@@ -8481,6 +8488,15 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       babel-code-frame: 6.26.0
+    dev: false
+
+  /solid-emoji-picker@0.2.0(solid-js@1.6.12):
+    resolution: {integrity: sha512-cLPevMIevKPs06UOjFakYP+TXKFcvwhD0cF9d3ivrqXUIOt/0bgXHnxPQlbFXtOr6mYXVngrNhzHBGdNi1fVNQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      solid-js: ^1.2
+    dependencies:
+      solid-js: 1.6.12
     dev: false
 
   /solid-js@1.6.12:

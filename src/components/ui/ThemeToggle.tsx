@@ -13,7 +13,6 @@ export default () => {
   })
 
   const handleDarkChanged = () => {
-    console.log('handleDarkChanged')
     const dark = !isDark()
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#222222' : '#fafafa')
     setIsDark(dark)

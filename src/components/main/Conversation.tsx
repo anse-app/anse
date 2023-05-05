@@ -3,6 +3,8 @@ import { useStore } from '@nanostores/solid'
 import { conversationMap, currentConversationId } from '@/stores/conversation'
 import { conversationMessagesMap } from '@/stores/messages'
 import { loadingStateMap, streamsMap } from '@/stores/streams'
+import { getBotMetaById } from '@/stores/provider'
+import ConversationEmpty from './ConversationEmpty'
 import Welcome from './Welcome'
 import Continuous from './Continuous'
 import Single from './Single'
@@ -18,6 +20,9 @@ export default () => {
   const currentConversation = () => {
     return $conversationMap()[$currentConversationId()]
   }
+  const currentBot = () => {
+    return getBotMetaById(currentConversation()?.bot)
+  }
   const currentConversationMessages = () => {
     return $conversationMessagesMap()[$currentConversationId()] || []
   }
@@ -30,19 +35,22 @@ export default () => {
         <Welcome />
       )}
     >
-      <Match when={currentConversation()?.conversationType === 'continuous'}>
+      <Match when={$currentConversationId() && !currentConversationMessages().length}>
+        <ConversationEmpty conversation={currentConversation()} />
+      </Match>
+      <Match when={currentBot()?.type === 'chat_continuous'}>
         <Continuous
           conversationId={$currentConversationId()}
           messages={currentConversationMessages}
         />
       </Match>
-      <Match when={currentConversation()?.conversationType === 'single'}>
+      <Match when={currentBot()?.type === 'chat_single'}>
         <Single
           conversationId={$currentConversationId()}
           messages={currentConversationMessages}
         />
       </Match>
-      <Match when={currentConversation()?.conversationType === 'image'}>
+      <Match when={currentBot()?.type === 'image_generation'}>
         <Image
           // conversationId={$currentConversationId()}
           messages={currentConversationMessages}
