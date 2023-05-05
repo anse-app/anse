@@ -28,10 +28,13 @@ const migrateConversationStoreIfNeeded = () => {
         continuous: 'chat_continuous',
         image: 'image_generation',
       }
+      const providerDict = {
+        'provider-stable-diffusion': 'provider-replicate',
+      }
       const newConversationData = {
         id: conversation.id,
         // @ts-expect-error migrate old data
-        bot: `${conversation.providerId}:${typeDict[conversation.conversationType] || 'chat_single'}`,
+        bot: `${providerDict[conversation.providerId] || conversation.providerId}:${typeDict[conversation.conversationType] || 'chat_single'}`,
         name: conversation.name,
         icon: '',
         systemInfo: conversation.systemInfo,
