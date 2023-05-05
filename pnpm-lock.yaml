@@ -123,6 +123,9 @@ devDependencies:
   '@iconify-json/carbon':
     specifier: ^1.1.16
     version: 1.1.16
+  '@iconify-json/ion':
+    specifier: ^1.1.10
+    version: 1.1.10
   '@iconify-json/simple-icons':
     specifier: ^1.1.48
     version: 1.1.48
@@ -1799,6 +1802,12 @@ packages:
 
   /@iconify-json/carbon@1.1.16:
     resolution: {integrity: sha512-AD8bcnRSGA0WfcGEass2FbA0sagrUzrpFx5WchuDy3uf7yKBWumdypdQK121DH321fQDl5+zZQ26T6gC9knwUQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/ion@1.1.10:
+    resolution: {integrity: sha512-JH8T6Xzn+JtuONVXnP8ADRHWF9SdTRVrYpl8rnhKvHNE1qDgLGAMbUE645Irtycq6Xxg8VWGwtjEI8HmEKb21Q==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

@@ -102,7 +102,7 @@ export default () => {
           ref={inputRef!}
           type="text"
           placeholder="Untitled"
-          class="w-full bg-transparent border border-base px-2 py-1 input-base focus:border-darker"
+          class="w-full bg-transparent border border-base px-2 py-1  focus:border-darker transition-colors-200"
         />
         <Select
           options={providerMetaList.map(item => ({ value: item.id, label: item.name, icon: item.icon }))}
