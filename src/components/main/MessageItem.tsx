@@ -18,12 +18,16 @@ export default (props: Props) => {
     assistant: 'bg-gradient-to-b from-[#fccb90] to-[#d57eeb]',
   }
 
+  const handleCopyMessage = () => {
+
+  }
+
   const menuList: MenuItem[] = [
     { id: 'retry', label: 'Retry message', icon: 'i-ion:refresh-outline' },
     { id: 'show', label: 'Show raw code', icon: 'i-carbon-code' },
     { id: 'share', label: 'Share message', icon: 'i-ion:ios-share-alt' },
     { id: 'edit', label: 'Edit message', icon: 'i-ion:md-create' },
-    { id: 'copy', label: 'Copy code', icon: 'i-carbon-copy' },
+    { id: 'copy', label: 'Copy message', icon: 'i-carbon-copy' },
     { id: 'delete', label: 'Delete message', icon: 'i-carbon-trash-can' },
   ]
 

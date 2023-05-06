@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js'
-import { useClipboard } from 'solidjs-use'
+import { useClipboardCopy } from '@/hooks'
 import SettingsNotDefined from './SettingsNotDefined'
 import type { Accessor } from 'solid-js'
 import type { SettingsUI } from '@/types/provider'
@@ -51,7 +51,7 @@ export default ({ settings, editing, value, setValue }: Props) => {
 const ApiKeyMaskText = (props: {
   key: Accessor<string>
 }) => {
-  const { copy } = useClipboard({ source: props.key() })
+  const [copied, copy] = useClipboardCopy(props.key())
 
   if (!props.key)
     return <div>unknown</div>
@@ -60,7 +60,10 @@ const ApiKeyMaskText = (props: {
       <div>{props.key().slice(0, 3)}</div>
       <div>****</div>
       <div>{props.key().slice(-4)}</div>
-      <div class="i-carbon-copy text-sm cursor-pointer ml-1" onClick={() => copy()} />
+      <div
+        class={`${copied() ? 'i-carbon:checkmark text-emerald-400 text-xl' : 'i-carbon-copy'} text-sm cursor-pointer ml-1`}
+        onClick={() => copy()}
+      />
     </div>
   )
 }
