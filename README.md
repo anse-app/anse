@@ -4,8 +4,9 @@
 
 Anse is a fully optimized UI for AI Chats.
 
-- [Visit anse.app](https://anse.app)
-- [Documentation](https://docs.anse.app)
+- 🍿 **Live preview**: https://anse.app
+- 📖 **Documentation**: https://docs.anse.app
+- ✨ **Release Notes**: https://github.com/anse-app/anse/releases
 
 ## Features
 
