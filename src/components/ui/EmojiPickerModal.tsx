@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js'
+import { Suspense, createSignal } from 'solid-js'
 import { EmojiPicker } from 'solid-emoji-picker'
 import { emojiPickerCurrentPick, showEmojiPickerModal } from '@/stores/ui'
 import type { Emoji } from 'solid-emoji-picker'
@@ -32,10 +32,12 @@ export default () => {
         />
       </div>
       <div class="mt-2 -mx-1 h-[16rem] overflow-auto">
-        <EmojiPicker
-          filter={emojiFilter}
-          onEmojiClick={handleEmojiPick}
-        />
+        <Suspense fallback={<div class="mt-[8rem] mx-auto fcc text-base i-carbon:circle-solid  text-slate-400 animate-ping" />}>
+          <EmojiPicker
+            filter={emojiFilter}
+            onEmojiClick={handleEmojiPick}
+          />
+        </Suspense>
       </div>
     </div>
   )
