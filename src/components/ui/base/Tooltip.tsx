@@ -9,6 +9,7 @@ interface Props {
   children: JSX.Element
   openDelay?: number
   closeDelay?: number
+  handleChildClick?: () => void
   placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
 }
 
@@ -30,9 +31,9 @@ export const Tooltip = (props: Props) => {
   const resolvedChild = () => {
     const child = children(() => props.children)
     createEffect(() => {
-      spread(child() as Element, { ...api().triggerProps })
+      spread(child() as Element, { ...api().triggerProps, onClick: props.handleChildClick })
     })
-    return child
+    return child()
   }
 
   return (

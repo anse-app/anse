@@ -10,6 +10,8 @@ export interface MenuItem {
   icon?: string
   // TODO: nested menu
   children?: MenuItem[]
+  role?: string
+  action?: (params?: any) => void
 }
 
 interface Props {

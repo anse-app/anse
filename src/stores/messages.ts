@@ -60,3 +60,16 @@ export const clearMessagesByConversationId = action(
     })
   },
 )
+
+export const deleteMessageByConversationId = action(
+  conversationMessagesMap,
+  'deleteMessageByConversationId',
+  (map, id: string, payload: MessageInstance) => {
+    const oldMessages = map.get()[id] || []
+    map.setKey(id, [...oldMessages.filter(message => message.id !== payload.id)])
+    db.setItem(id, [...oldMessages.filter(message => message.id !== payload.id)])
+    updateConversationById(id, {
+      lastUseTime: Date.now(),
+    })
+  },
+)

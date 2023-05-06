@@ -1,6 +1,9 @@
 import { For } from 'solid-js/web'
+import { createSignal } from 'solid-js'
+import { useClipboardCopy } from '@/hooks'
+import { deleteMessageByConversationId } from '@/stores/messages'
 import StreamableText from '../StreamableText'
-import { DropDownMenu, Tooltip } from '../ui/base'
+import { Tooltip } from '../ui/base'
 import type { MenuItem } from '../ui/base'
 import type { MessageInstance } from '@/types/message'
 
@@ -18,18 +21,29 @@ export default (props: Props) => {
     assistant: 'bg-gradient-to-b from-[#fccb90] to-[#d57eeb]',
   }
 
-  const handleCopyMessage = () => {
+  const [copied, copy] = useClipboardCopy(props.message.content)
+  const [showRawCode, setShowRawCode] = createSignal(false)
 
+  const handleDeleteMessageItem = () => {
+    deleteMessageByConversationId(props.conversationId, props.message)
   }
 
-  const menuList: MenuItem[] = [
-    { id: 'retry', label: 'Retry message', icon: 'i-ion:refresh-outline' },
-    { id: 'show', label: 'Show raw code', icon: 'i-carbon-code' },
-    { id: 'share', label: 'Share message', icon: 'i-ion:ios-share-alt' },
-    { id: 'edit', label: 'Edit message', icon: 'i-ion:md-create' },
-    { id: 'copy', label: 'Copy message', icon: 'i-carbon-copy' },
-    { id: 'delete', label: 'Delete message', icon: 'i-carbon-trash-can' },
-  ]
+  const [menuList, setMenuList] = createSignal<MenuItem[]>([
+    // TODO: Retry send message
+    // { id: 'retry', label: 'Retry send', icon: 'i-ion:refresh-outline', role: 'all' },
+    { id: 'raw', label: 'Show raw code', icon: 'i-carbon-code', role: 'system', action: () => setShowRawCode(!showRawCode()) },
+    // TODO: Share message
+    // { id: 'share', label: 'Share message', icon: 'i-ion:ios-share-alt' },
+    // TODO: Edit message
+    // { id: 'edit', label: 'Edit message', icon: 'i-ion:md-create', role: 'user' },
+    { id: 'copy', label: 'Copy message', icon: 'i-carbon-copy', role: 'all', action: copy },
+    { id: 'delete', label: 'Delete message', icon: 'i-carbon-trash-can', role: 'all', action: handleDeleteMessageItem },
+  ])
+
+  if (props.message.role === 'user')
+    setMenuList(menuList().filter(item => ['all', 'user'].includes(item.role!)))
+  else
+    setMenuList(menuList().filter(item => ['all', 'system'].includes(item.role!)))
 
   return (
     <div
@@ -48,8 +62,15 @@ export default (props: Props) => {
         </div>
         <div class={`hidden sm:block absolute right-6 -top-4 ${!props.index && 'top-0'}`}>
           <div class="op-0 group-hover:op-80 fcc space-x-2 !bg-base px-4 py-1 rounded-xl b border-base transition-opacity duration-400">
-            <For each={menuList}>
-              {item => (<Tooltip tip={item.label}><div class={`${item.icon} menu-icon`} /></Tooltip>)}
+            <For each={menuList()}>
+              {item => (
+                <Tooltip tip={item.label} handleChildClick={item.action}>
+                  {
+                    item.id === 'copy'
+                      ? <div class={`menu-icon ${copied() ? 'i-carbon-checkmark !text-emerald-400' : 'i-carbon-copy'}`} />
+                      : <div class={`${item.icon} menu-icon`} />
+                  }
+                </Tooltip>)}
             </For>
           </div>
         </div>
@@ -63,6 +84,7 @@ export default (props: Props) => {
                   handleStreaming: props.handleStreaming,
                 })
               : undefined}
+            showRawCode={showRawCode()}
           />
         </div>
 
