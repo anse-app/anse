@@ -14,7 +14,7 @@ export default (props: Props) => {
   const messageOutput = () => props.messages().length > 1 ? props.messages()[1] : null
   return (
     <div class="flex flex-col h-full">
-      <div class="min-h-16 max-h-40 fi px-6 py-4 border-b border-base break-all overflow-y-scroll">
+      <div class="min-h-16 max-h-40 fi px-6 py-4 border-b border-base break-words overflow-y-scroll">
         <StreamableText
           class="w-full"
           text={messageInput()?.content || ''}

@@ -1,13 +1,15 @@
 import { callProviderHandler } from '@/logics/conversation'
 import type { APIRoute } from 'astro'
-import type { CallProviderPayload } from '@/types/provider'
+import type { HandlerPayload } from '@/types/provider'
 import type { ErrorMessage } from '@/types/message'
 
-export const post: APIRoute = async({ request }) => {
-  const body = await request.json() as CallProviderPayload
+export const post: APIRoute = async({ params, request }) => {
+  const providerId = params.provider as string
+  const body = await request.json() as HandlerPayload
 
   try {
-    const providerResponse = await callProviderHandler(body)
+    if (!providerId) throw new Error('Provider ID is required')
+    const providerResponse = await callProviderHandler(providerId, body)
     const isStream = providerResponse instanceof ReadableStream
     return new Response(providerResponse, {
       headers: {

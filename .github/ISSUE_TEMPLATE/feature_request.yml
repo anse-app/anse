@@ -5,7 +5,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for taking the time to fill out this feature request!
+        ### Before submitting...
+        Thank you for taking the time to fill out this feature request! Please confirm the following points before submitting:
+
+        ✅ I have checked the feature was not already submitted by searching on GitHub under issues or discussions.
+        ✅ I have checked the feature was not listed on [Anse's Roadmap](https://github.com/orgs/anse-app/projects/2).
+        ✅ Use English. This allows more people to search and participate in the issue.
   - type: textarea
     id: feature-description
     attributes:

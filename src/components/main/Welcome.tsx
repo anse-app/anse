@@ -1,7 +1,6 @@
 import { For, Show } from 'solid-js'
 import { useStore } from '@nanostores/solid'
-import { conversationMapSortList, currentConversationId } from '@/stores/conversation'
-import { showConversationEditModal } from '@/stores/ui'
+import { addConversation, conversationMapSortList, currentConversationId } from '@/stores/conversation'
 
 export default () => {
   const $conversationMapSortList = useStore(conversationMapSortList)
@@ -14,9 +13,9 @@ export default () => {
           <div class="flex flex-col items-start">
             <For each={$conversationMapSortList().slice(0, 3)}>
               {instance => (
-                <div class="fi gap-2 h-8 max-w-full text-sm hv-foreground" onClick={() => currentConversationId.set(instance.id)}>
-                  <div class={instance.icon || 'i-carbon-chat'} />
-                  <div class="flex-1 truncate">{instance.name || 'Untitled'}</div>
+                <div class="fi gap-2 h-8 max-w-full hv-foreground" onClick={() => currentConversationId.set(instance.id)}>
+                  {instance.icon ? instance.icon : <div class="text-sm i-carbon-chat" />}
+                  <div class="flex-1 text-sm truncate">{instance.name || 'Untitled'}</div>
                 </div>
               )}
             </For>
@@ -27,7 +26,7 @@ export default () => {
         </div>
         <div
           class="fcc gap-2 p-6 bg-base-100 hv-base border border-base rounded-lg"
-          onClick={() => showConversationEditModal.set(true)}
+          onClick={() => addConversation()}
         >
           <div class="i-carbon-add" />
           <div class="flex-1 text-sm truncate">New Conversation</div>

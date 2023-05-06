@@ -33,7 +33,7 @@ export default (props: Props) => {
 
   return (
     <div
-      class="p-6 break-all group relative"
+      class="p-6 break-words group relative"
       classList={{
         'op-70 bg-darker': props.message.role === 'user',
       }}

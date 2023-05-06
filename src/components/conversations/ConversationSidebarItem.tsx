@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/solid'
-import { currentConversationId, currentEditingConversationId, deleteConversationById } from '@/stores/conversation'
-import { showConversationEditModal, showConversationSidebar } from '@/stores/ui'
+import { currentConversationId, deleteConversationById } from '@/stores/conversation'
+import { showConversationSidebar } from '@/stores/ui'
 import type { Conversation } from '@/types/conversation'
 
 interface Props {
@@ -19,13 +19,8 @@ export default ({ instance }: Props) => {
   }
   const handleDelete = (e: MouseEvent, conversationId: string) => {
     e.stopPropagation()
-    deleteConversationById(conversationId)
     currentConversationId.set('')
-  }
-  const handleEdit = (e: MouseEvent, conversationId: string) => {
-    e.stopPropagation()
-    currentEditingConversationId.set(conversationId)
-    showConversationEditModal.set(true)
+    deleteConversationById(conversationId)
   }
 
   return (
@@ -36,17 +31,11 @@ export default ({ instance }: Props) => {
       ].join(' ')}
       onClick={handleClick}
     >
-      <div class="fcc w-8 h-8 rounded-full text-xl shrink-0">
-        <div class={instance.icon || 'i-carbon-chat'} />
+      <div class="fcc w-8 h-8 rounded-full text-2xl shrink-0">
+        {instance.icon ? instance.icon : <div class="text-xl i-carbon-chat" />}
       </div>
       <div class="flex-1 truncate">{ instance.name || 'Untitled' }</div>
       <div class={isTouchDevice ? '' : 'hidden group-hover:block'}>
-        <div
-          class="inline-flex p-2 items-center gap-1 rounded-md hv-base"
-          onClick={e => handleEdit(e, instance.id)}
-        >
-          <div class="i-carbon-edit" />
-        </div>
         <div
           class="inline-flex p-2 items-center gap-1 rounded-md hv-base"
           onClick={e => handleDelete(e, instance.id)}
