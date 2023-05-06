@@ -40,6 +40,9 @@ Anse is a fully optimized UI for AI Chats.
    ```
 3. Add your [OpenAI API key](https://platform.openai.com/account/api-keys) to the settings panel, then enjoy it!
 
+## How to deploy
+For more details, please refer to this document: https://docs.anse.app/self-deploy
+
 ## Frequently Asked Questions
 
 Q: TypeError: fetch failed (can't connect to OpenAI Api)
