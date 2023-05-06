@@ -30,12 +30,12 @@ export default (props: Props) => {
 
   const [menuList, setMenuList] = createSignal<MenuItem[]>([
     // TODO: Retry send message
-    // { id: 'retry', label: 'Retry send', icon: 'i-ion:refresh-outline', role: 'all' },
+    { id: 'retry', label: 'Retry send', icon: 'i-ion:refresh-outline', role: 'all' },
     { id: 'raw', label: 'Show raw code', icon: 'i-carbon-code', role: 'system', action: () => setShowRawCode(!showRawCode()) },
     // TODO: Share message
     // { id: 'share', label: 'Share message', icon: 'i-ion:ios-share-alt' },
     // TODO: Edit message
-    // { id: 'edit', label: 'Edit message', icon: 'i-ion:md-create', role: 'user' },
+    { id: 'edit', label: 'Edit message', icon: 'i-ion:md-create', role: 'user' },
     { id: 'copy', label: 'Copy message', icon: 'i-carbon-copy', role: 'all', action: copy },
     { id: 'delete', label: 'Delete message', icon: 'i-carbon-trash-can', role: 'all', action: handleDeleteMessageItem },
   ])
