@@ -1,7 +1,7 @@
 import { For, Show } from 'solid-js/web'
 import { createSignal } from 'solid-js'
 import { useStore } from '@nanostores/solid'
-import { useClipboardCopy } from '../../hooks'
+import { useClipboardCopy } from '@/hooks'
 import { deleteMessageByConversationId, spliceMessageByConversationId, spliceUpdateMessageByConversationId } from '@/stores/messages'
 import { conversationMap } from '@/stores/conversation'
 import { handlePrompt } from '@/logics/conversation'
