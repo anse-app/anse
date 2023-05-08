@@ -5,6 +5,7 @@ import { currentErrorMessage, isSendBoxFocus, scrollController } from '@/stores/
 import { addConversation, conversationMap, currentConversationId } from '@/stores/conversation'
 import { loadingStateMap, streamsMap } from '@/stores/streams'
 import { handlePrompt } from '@/logics/conversation'
+import { globalAbortController } from '@/stores/settings'
 
 export default () => {
   let inputRef: HTMLTextAreaElement
@@ -14,7 +15,7 @@ export default () => {
   const $currentErrorMessage = useStore(currentErrorMessage)
   const $streamsMap = useStore(streamsMap)
   const $loadingStateMap = useStore(loadingStateMap)
-  const [controller, setController] = createSignal<AbortController>()
+  const $globalAbortController = useStore(globalAbortController)
 
   const [inputPrompt, setInputPrompt] = createSignal('')
   const isEditing = () => inputPrompt() || $isSendBoxFocus()
@@ -96,12 +97,11 @@ export default () => {
 
   const clearPrompt = () => {
     setInputPrompt('')
-    inputRef.value = ''
     isSendBoxFocus.set(false)
   }
 
   const handleAbortFetch = () => {
-    controller()!.abort()
+    $globalAbortController()?.abort()
     clearPrompt()
   }
 
@@ -124,7 +124,7 @@ export default () => {
       addConversation()
 
     const controller = new AbortController()
-    setController(controller)
+    globalAbortController.set(controller)
     handlePrompt(currentConversation(), inputRef.value, controller.signal)
     clearPrompt()
     scrollController().scrollToBottom()
