@@ -1,5 +1,5 @@
 import { For, Show } from 'solid-js/web'
-import { createSignal } from 'solid-js'
+import { createSignal, onCleanup } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { useClipboardCopy } from '@/hooks'
 import { deleteMessageByConversationId, spliceMessageByConversationId, spliceUpdateMessageByConversationId } from '@/stores/messages'
@@ -20,12 +20,12 @@ interface Props {
 }
 
 export default (props: Props) => {
+  let inputRef: HTMLTextAreaElement
   const $conversationMap = useStore(conversationMap)
 
   const [showRawCode, setShowRawCode] = createSignal(false)
   const [copied, setCopied] = createSignal(false)
   const [isEditing, setIsEditing] = createSignal(false)
-  let inputRef: HTMLTextAreaElement
   const [inputPrompt, setInputPrompt] = createSignal(props.message.content)
 
   const currentConversation = () => {
@@ -38,6 +38,7 @@ export default (props: Props) => {
     setCopied(Iscopied())
     setTimeout(() => setCopied(false), 1000)
   }
+
   const handleDeleteMessageItem = () => {
     deleteMessageByConversationId(props.conversationId, props.message)
   }
