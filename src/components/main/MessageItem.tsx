@@ -1,5 +1,5 @@
 import { For, Show } from 'solid-js/web'
-import { createSignal, onCleanup } from 'solid-js'
+import { createSignal } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { useClipboardCopy } from '@/hooks'
 import { deleteMessageByConversationId, spliceMessageByConversationId, spliceUpdateMessageByConversationId } from '@/stores/messages'
@@ -103,7 +103,8 @@ export default (props: Props) => {
     >
       <div class="max-w-base flex gap-4 overflow-hidden">
         <div class={`shrink-0 w-7 h-7 rounded-md op-80 ${roleClass[props.message.role]}`} />
-        <div class={`sm:hidden block absolute bottom-2 right-4 z-10 op-70 cursor-pointer ${isEditing() && '!hidden'}`}>
+        <div id="menuList-wrapper" class={`sm:hidden block absolute bottom-2 right-4 z-10 op-70 cursor-pointer ${isEditing() && '!hidden'}`}>
+          {/* TODO: hiden when clickOutside */}
           <DropDownMenu menuList={menuList()}>
             <div class="text-xl i-carbon:overflow-menu-horizontal" />
           </DropDownMenu>

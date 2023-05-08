@@ -2,8 +2,7 @@ import * as menu from '@zag-js/menu'
 import { normalizeProps, useMachine } from '@zag-js/solid'
 import { Show, children, createEffect, createMemo, createUniqueId } from 'solid-js'
 import { Dynamic, For, Portal, spread } from 'solid-js/web'
-import { useClickOutside } from '@/hooks'
-import type { Accessor, JSX, JSXElement } from 'solid-js'
+import type { JSX, JSXElement } from 'solid-js'
 
 export interface MenuItem {
   id: string
@@ -17,7 +16,7 @@ export interface MenuItem {
 interface Props {
   children: JSX.Element
   menuList: MenuItem[]
-  close?: () => Accessor<boolean>
+  close?: boolean
 }
 
 export const DropDownMenu = (props: Props) => {
@@ -33,7 +32,6 @@ export const DropDownMenu = (props: Props) => {
       },
     }),
   )
-  let dropDownMenuRef: HTMLDivElement
 
   const api = createMemo(() => menu.connect(state, send, normalizeProps))
 
@@ -48,11 +46,6 @@ export const DropDownMenu = (props: Props) => {
   createEffect(() => {
     // https://github.com/chakra-ui/zag/issues/595
     api().setPositioning({})
-
-    dropDownMenuRef = document.getElementById('DropDownMenuRef') as HTMLDivElement
-    useClickOutside(dropDownMenuRef, () => {
-      api().close()
-    })
   })
 
   return (
