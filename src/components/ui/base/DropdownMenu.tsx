@@ -8,8 +8,9 @@ export interface MenuItem {
   id: string
   label: string | JSXElement
   icon?: string
-  // TODO: nested menu
   children?: MenuItem[]
+  role?: string
+  action?: (params?: any) => void
 }
 
 interface Props {
@@ -22,7 +23,11 @@ export const DropDownMenu = (props: Props) => {
     menu.machine({
       id: createUniqueId(),
       onSelect(details) {
-        console.log(details)
+        if (details.value) {
+          const currentAction = props.menuList.find(item => item.id === details.value)?.action
+          if (typeof currentAction === 'function')
+            currentAction()
+        }
       },
     }),
   )
@@ -43,7 +48,7 @@ export const DropDownMenu = (props: Props) => {
   })
 
   return (
-    <div>
+    <div class="!outline-none">
       <Dynamic component={resolvedChild} />
       <Show when={api().isOpen}>
         <Portal>

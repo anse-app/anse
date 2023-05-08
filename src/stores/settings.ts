@@ -1,10 +1,11 @@
-import { action, map } from 'nanostores'
+import { action, atom, map } from 'nanostores'
 import { db } from './storage/settings'
 import { getProviderById, providerMetaList } from './provider'
 import type { SettingsPayload } from '@/types/provider'
 import type { GeneralSettings } from '@/types/app'
 
 export const providerSettingsMap = map<Record<string, SettingsPayload>>({})
+export const globalAbortController = atom<AbortController | null>(null)
 
 export const rebuildSettingsStore = async() => {
   const exportData = await db.exportData()

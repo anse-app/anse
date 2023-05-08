@@ -10,7 +10,7 @@ import type { HandlerPayload, PromptResponse } from '@/types/provider'
 import type { Conversation } from '@/types/conversation'
 import type { ErrorMessage, Message } from '@/types/message'
 
-export const handlePrompt = async(conversation: Conversation, prompt: string, signal?: AbortSignal) => {
+export const handlePrompt = async(conversation: Conversation, prompt?: string, signal?: AbortSignal) => {
   const generalSettings = getGeneralSettings()
   const bot = getBotMetaById(conversation.bot)
   const [providerId, botId] = conversation.bot.split(':')
@@ -22,13 +22,14 @@ export const handlePrompt = async(conversation: Conversation, prompt: string, si
 
   if (bot.type !== 'chat_continuous')
     clearMessagesByConversationId(conversation.id)
-
-  pushMessageByConversationId(conversation.id, {
-    id: `${conversation.id}:user:${Date.now()}`,
-    role: 'user',
-    content: prompt,
-    dateTime: new Date().getTime(),
-  })
+  if (prompt) {
+    pushMessageByConversationId(conversation.id, {
+      id: `${conversation.id}:user:${Date.now()}`,
+      role: 'user',
+      content: prompt,
+      dateTime: new Date().getTime(),
+    })
+  }
 
   setLoadingStateByConversationId(conversation.id, true)
   let providerResponse: PromptResponse
@@ -85,7 +86,7 @@ export const handlePrompt = async(conversation: Conversation, prompt: string, si
 
   // Update conversation title
   if (providerResponse && bot.type === 'chat_continuous' && !conversation.name) {
-    const inputText = conversation.systemInfo || prompt
+    const inputText = conversation.systemInfo || prompt!
     const rapidPayload = generateRapidProviderPayload(promptHelper.summarizeText(inputText), provider.id)
     const generatedTitle = await getProviderResponse(provider.id, rapidPayload).catch(() => {}) as string || inputText
     updateConversationById(conversation.id, {
@@ -128,7 +129,7 @@ export const callProviderHandler = async(providerId: string, payload: HandlerPay
 
   let response: PromptResponse
   if (payload.botId === 'temp')
-    response = await provider.handleRapidPrompt?.(payload.prompt, payload.globalSettings)
+    response = await provider.handleRapidPrompt?.(payload.prompt!, payload.globalSettings)
   else
     response = await provider.handlePrompt?.(payload, signal)
 

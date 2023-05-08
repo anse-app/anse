@@ -34,7 +34,7 @@ export interface HandlerPayload {
   botId: string
   globalSettings: SettingsPayload
   botSettings: SettingsPayload
-  prompt: string
+  prompt?: string
   messages: Message[]
 }
 

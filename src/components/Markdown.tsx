@@ -11,6 +11,7 @@ import 'katex/dist/katex.min.css'
 interface Props {
   class?: string
   text: string
+  showRawCode?: boolean
 }
 
 const parseMarkdown = (raw: string) => {
@@ -27,11 +28,11 @@ const parseMarkdown = (raw: string) => {
 }
 
 export default (props: Props) => {
-  const htmlString = () => parseMarkdown(props.text)
+  const htmlString = () => props.showRawCode ? props.text : parseMarkdown(props.text)
 
   return (
     <div
-      class={props.class ?? ''}
+      class={`${props.class ?? ''} ${props.showRawCode ? 'whitespace-pre-wrap overflow-auto my-0' : ''}`}
       innerHTML={htmlString()}
     />
   )
