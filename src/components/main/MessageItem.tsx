@@ -74,11 +74,11 @@ export default (props: Props) => {
   }
 
   const [menuList, setMenuList] = createSignal<MenuItem[]>([
-    { id: 'retry', label: 'Retry send', icon: 'i-ion:refresh-outline', role: 'all', action: handleRetryMessageItem },
+    { id: 'retry', label: 'Retry send', icon: 'i-carbon:restart', role: 'all', action: handleRetryMessageItem },
     { id: 'raw', label: 'Show raw code', icon: 'i-carbon-code', role: 'system', action: () => setShowRawCode(!showRawCode()) },
     // TODO: Share message
-    // { id: 'share', label: 'Share message', icon: 'i-ion:ios-share-alt' },
-    { id: 'edit', label: 'Edit message', icon: 'i-ion:md-create', role: 'user', action: handleEditMessageItem },
+    // { id: 'share', label: 'Share message', icon: 'i-carbon:share' },
+    { id: 'edit', label: 'Edit message', icon: 'i-carbon:edit', role: 'user', action: handleEditMessageItem },
     { id: 'copy', label: 'Copy message', icon: 'i-carbon-copy', role: 'all', action: handleCopyMessageItem },
     { id: 'delete', label: 'Delete message', icon: 'i-carbon-trash-can', role: 'all', action: handleDeleteMessageItem },
   ])
@@ -104,13 +104,12 @@ export default (props: Props) => {
       <div class="max-w-base flex gap-4 overflow-hidden">
         <div class={`shrink-0 w-7 h-7 rounded-md op-80 ${roleClass[props.message.role]}`} />
         <div id="menuList-wrapper" class={`sm:hidden block absolute bottom-2 right-4 z-10 op-70 cursor-pointer ${isEditing() && '!hidden'}`}>
-          {/* TODO: hiden when clickOutside */}
           <DropDownMenu menuList={menuList()}>
             <div class="text-xl i-carbon:overflow-menu-horizontal" />
           </DropDownMenu>
         </div>
         <div class={`hidden sm:block absolute right-6 -top-4 ${!props.index && 'top-0'} ${isEditing() && '!hidden'}`}>
-          <div class="op-0 group-hover:op-80 fcc space-x-2 !bg-base px-4 py-1 rounded-xl b border-base transition-opacity duration-400">
+          <div class="op-0 group-hover:op-80 fcc space-x-2 !bg-base px-2 py-1 rounded-md border border-base transition-opacity">
             <For each={menuList()}>
               {item => (
                 <Tooltip tip={item.label} handleChildClick={item.action}>

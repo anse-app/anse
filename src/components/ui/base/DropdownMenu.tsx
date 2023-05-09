@@ -1,6 +1,6 @@
 import * as menu from '@zag-js/menu'
 import { normalizeProps, useMachine } from '@zag-js/solid'
-import { children, createEffect, createMemo, createUniqueId } from 'solid-js'
+import { Show, children, createEffect, createMemo, createUniqueId } from 'solid-js'
 import { Dynamic, For, Portal, spread } from 'solid-js/web'
 import type { JSX, JSXElement } from 'solid-js'
 
@@ -47,18 +47,20 @@ export const DropDownMenu = (props: Props) => {
     <div>
       <Dynamic component={resolvedChild} />
       <Portal>
-        <div {...api().positionerProps}>
-          <div {...api().contentProps} class="bg-base rounded-md shadow-md">
-            <For each={props.menuList}>
-              {item => (
-                <div class="px-3 py-2 flex items-center space-x-2 hv-base" {...api().getItemProps({ id: item.id })}>
-                  {item.icon && <div class={item.icon} />}
-                  <div>{item.label}</div>
-                </div>
-              )}
-            </For>
+        <Show when={props.children}>
+          <div {...api().positionerProps}>
+            <div {...api().contentProps} class="bg-base text-sm border border-base rounded-md outline-none overflow-hidden shadow-md">
+              <For each={props.menuList}>
+                {item => (
+                  <div class="px-3 py-2 flex items-center space-x-2 hv-base" {...api().getItemProps({ id: item.id })}>
+                    {item.icon && <div class={item.icon} />}
+                    <div>{item.label}</div>
+                  </div>
+                )}
+              </For>
+            </div>
           </div>
-        </div>
+        </Show>
       </Portal>
     </div>
   )

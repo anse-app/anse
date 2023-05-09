@@ -41,7 +41,7 @@ export const Tooltip = (props: Props) => {
       <Dynamic component={resolvedChild} />
       <Show when={api().isOpen}>
         <div {...api().positionerProps} class="transition-opacity duration-300">
-          <div {...api().contentProps} class="px-2 py-1 text-sm text-white bg-dark-600 dark-bg-zinc-900 rounded-md shadow-sm op-80">{ props.tip }</div>
+          <div {...api().contentProps} class="px-2 py-1 text-xs text-white bg-dark-600 dark-bg-zinc-900 rounded-md shadow-sm op-80">{ props.tip }</div>
         </div>
       </Show>
     </div>
