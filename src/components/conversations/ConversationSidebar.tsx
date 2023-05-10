@@ -1,6 +1,7 @@
 import { For } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { conversationMapSortList } from '@/stores/conversation'
+import logo from '@/assets/logo.svg'
 import ConversationSidebarItem from './ConversationSidebarItem'
 import ConversationSidebarAdd from './ConversationSidebarAdd'
 
@@ -9,9 +10,9 @@ export default () => {
 
   return (
     <div class="h-full flex flex-col bg-sidebar">
-      <div class="h-14 fi border-b border-base px-4 text-xs uppercase pl-6">
-        Conversations
-      </div>
+      <header class="fi h-14 px-6">
+        <img src={logo} alt="logo" class="w-5" />
+      </header>
       <div class="flex-1 overflow-auto">
         <For each={$conversationMapSortList()}>
           {instance => (
