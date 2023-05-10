@@ -15,7 +15,7 @@ export const Toggle = (inputProps: Props) => {
   const [state, send] = useMachine(zagSwitch.machine({
     id: createUniqueId(),
     readOnly: props.readOnly,
-    value: props.value(),
+    checked: props.value(),
     onChange({ checked }) {
       if (hack_FirstTimeRender) {
         hack_FirstTimeRender = false
