@@ -73,10 +73,10 @@
     "unocss": "^0.50.6",
     "vite-plugin-pwa": "^0.14.7"
   },
-    "simple-git-hooks": {
-      "pre-commit": "pnpm lint-staged"
-    },
-    "lint-staged": {
-      "*": "pnpm lint:fix"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "pnpm lint:fix"
+  }
 }

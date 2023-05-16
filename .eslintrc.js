@@ -7,6 +7,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'react/jsx-key': 'off',
+    'import/namespace': 'off',
   },
   overrides: [
     {

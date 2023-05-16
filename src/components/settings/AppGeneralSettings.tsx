@@ -1,28 +1,41 @@
 import { For } from 'solid-js'
+import { localesOptions } from '@/locale'
+import { useI18n } from '@/hooks'
 import SettingsUIComponent from './SettingsUIComponent'
 import type { Accessor } from 'solid-js'
 import type { GeneralSettings } from '@/types/app'
+import type { SettingsUI } from '@/types/provider'
 
 interface Props {
   settingsValue: Accessor<GeneralSettings>
   updateSettings: (v: Partial<GeneralSettings>) => void
 }
 
-const settingsUIList = [
+const settingsUIList: SettingsUI[] = [
   {
     key: 'requestWithBackend',
     name: 'Request With Backend',
     type: 'toggle',
+    default: false,
   },
-] as const
+  {
+    key: 'locale',
+    name: 'Change system language',
+    type: 'select',
+    default: 'en',
+    options: localesOptions,
+  },
+]
 
 export default (props: Props) => {
+  const { t } = useI18n()
+
   return (
     <div class="px-4 py-3 transition-colors border-b border-base">
       <h3 class="fi gap-2">
         <div class="flex-1 fi gap-1.5 overflow-hidden">
           <div class="i-carbon-settings" />
-          <div class="flex-1 text-sm truncate">General</div>
+          <div class="flex-1 text-sm truncate">{t('settings.general.title')}</div>
         </div>
       </h3>
       <div class="mt-2 flex flex-col">
@@ -32,9 +45,9 @@ export default (props: Props) => {
               <SettingsUIComponent
                 settings={item}
                 editing={() => true}
-                value={() => props.settingsValue()[item.key] || false}
+                value={() => props.settingsValue()[item.key as keyof GeneralSettings] || false}
                 setValue={(v) => {
-                  props.updateSettings({ [item.key]: v as boolean })
+                  props.updateSettings({ [item.key]: v })
                 }}
               />
             )
