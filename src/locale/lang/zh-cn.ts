@@ -5,7 +5,8 @@ export const zhCN = {
   desc: '简体中文',
   locales: {
     settings: {
-      btn: 'TEST',
+      title: '设置',
+      save: '保存',
       general: {
         title: '通用',
         requestWithBackend: '请求代理后端',
@@ -18,7 +19,10 @@ export const zhCN = {
       replicate: {},
     },
     conversations: {
-      title: 'CONVERSATIONS',
+      title: '对话列表',
+      add: '创建新对话',
+      recent: '最近对话',
+      noRecent: '暂无最近对话',
     },
   },
 } as language

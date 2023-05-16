@@ -1,15 +1,17 @@
 import { For, Show } from 'solid-js'
 import { useStore } from '@nanostores/solid'
+import { useI18n } from '@/hooks'
 import { addConversation, conversationMapSortList, currentConversationId } from '@/stores/conversation'
 
 export default () => {
+  const { t } = useI18n()
   const $conversationMapSortList = useStore(conversationMapSortList)
 
   return (
     <div class="fcc h-full">
       <div class="flex flex-col gap-4 w-full max-w-md mx-12 sm:mx-18 overflow-hidden">
         <div class="px-6 py-4 bg-base-100 border border-base rounded-lg">
-          <h2 class="text-xs op-30 uppercase my-2">Recents</h2>
+          <h2 class="text-xs op-30 uppercase my-2">{t('conversations.recent')}</h2>
           <div class="flex flex-col items-start">
             <For each={$conversationMapSortList().slice(0, 3)}>
               {instance => (
@@ -20,7 +22,7 @@ export default () => {
               )}
             </For>
             <Show when={!$conversationMapSortList().length}>
-              <div class="fi gap-2 h-8 text-sm op-20">No Recents</div>
+              <div class="fi gap-2 h-8 text-sm op-20">{t('conversations.noRecent')}</div>
             </Show>
           </div>
         </div>
@@ -29,7 +31,7 @@ export default () => {
           onClick={() => addConversation()}
         >
           <div class="i-carbon-add" />
-          <div class="flex-1 text-sm truncate">New Conversation</div>
+          <div class="flex-1 text-sm truncate">{t('conversations.add')}</div>
         </div>
       </div>
     </div>

@@ -5,7 +5,8 @@ export const en = {
   desc: 'English',
   locales: {
     settings: {
-      btn: 'TEST',
+      title: 'Settings',
+      save: 'Save',
       general: {
         title: 'General',
         requestWithBackend: 'Request With Backend',
@@ -18,7 +19,10 @@ export const en = {
       replicate: {},
     },
     conversations: {
-      title: 'CONVERSATIONS',
+      title: 'Conversations',
+      add: 'New Conversation',
+      recent: 'Recents',
+      noRecent: 'No recents',
     },
   },
 } as language
