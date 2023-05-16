@@ -10,8 +10,8 @@ export default () => {
 
   return (
     <div class="h-full flex flex-col bg-sidebar">
-      <header class="fi h-14 px-6">
-        <img src={logo} alt="logo" class="w-5" />
+      <header class="fi gap-1.5 h-14 px-6">
+        <img src={logo} alt="logo" class="w-4" />
       </header>
       <div class="flex-1 overflow-auto">
         <For each={$conversationMapSortList()}>
