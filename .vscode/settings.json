@@ -9,5 +9,9 @@
       "astro", // Enable .astro
       "typescript", // Enable .ts
       "typescriptreact" // Enable .tsx
+  ],
+  "i18n-ally.localesPaths": [
+    "src/locale",
+    "src/locale/lang"
   ]
 }

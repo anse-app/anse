@@ -12,7 +12,8 @@
     "astro": "astro",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
-    "release": "bumpp"
+    "release": "bumpp",
+    "postinstall": "npx simple-git-hooks"
   },
   "dependencies": {
     "@astrojs/netlify": "2.0.0",
@@ -66,8 +67,16 @@
     "@unocss/preset-icons": "^0.50.6",
     "@unocss/preset-typography": "^0.50.6",
     "eslint-plugin-astro": "^0.24.0",
+    "lint-staged": "^13.2.2",
     "punycode": "^2.3.0",
+    "simple-git-hooks": "^2.8.1",
     "unocss": "^0.50.6",
     "vite-plugin-pwa": "^0.14.7"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "pnpm lint:fix"
   }
 }

@@ -1,17 +1,20 @@
 import { Show, onMount } from 'solid-js'
-import { useDark } from '@/hooks'
+import { useDark, useDisableTransition } from '@/hooks'
 
 export default () => {
   const [isDark, setIsDark] = useDark()
+  const { disableTransition, removeDisableTransition } = useDisableTransition()
 
   onMount(() => {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark() ? '#222222' : '#fafafa')
   })
 
   const handleDarkChanged = () => {
+    disableTransition()
     const dark = !isDark()
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#222222' : '#fafafa')
     setIsDark(dark)
+    removeDisableTransition()
   }
 
   return (

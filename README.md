@@ -2,6 +2,8 @@
 
 # Anse
 
+English | [简体中文](./README.zh-CN.md)
+
 Anse is a fully optimized UI for AI Chats.
 
 - 🍿 **Live preview**: https://anse.app

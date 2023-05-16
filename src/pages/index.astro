@@ -9,15 +9,15 @@ import BuildStores from '@/components/client-only/BuildStores'
 ---
 
 <Layout title="Anse">
-  <div class="h-100dvh w-screen flex">
-    <Sidebar direction="left" class="hidden md:block">
-      <ConversationSidebar client:load />
-    </Sidebar>
-    <Main />
-    <Sidebar direction="right" class="hidden lg:block">
-      <Settings client:only />
-    </Sidebar>
-  </div>
-  <ModalsLayer client:only />
-  <BuildStores client:only />
+    <div class="h-100dvh w-screen flex">
+      <Sidebar direction="left" class="hidden md:block">
+        <ConversationSidebar client:load />
+      </Sidebar>
+      <Main />
+      <Sidebar direction="right" class="hidden lg:block">
+        <Settings client:only />
+      </Sidebar>
+    </div>
+    <ModalsLayer client:only />
+    <BuildStores client:only />
 </Layout>
