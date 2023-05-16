@@ -33,7 +33,7 @@ export function useI18n() {
   providerSettingsMap.listen((value, changedKey) => {
     const general = value[changedKey] as unknown as GeneralSettings
     defaultLocale = general?.locale
-    setCurrentLocale(locales[defaultLocale as string])
+    defaultLocale && setCurrentLocale(locales[defaultLocale as string])
   })
 
   setCurrentLocale(locales[defaultLocale as string])

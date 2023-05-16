@@ -45,7 +45,7 @@ export default (props: Props) => {
               <SettingsUIComponent
                 settings={item}
                 editing={() => true}
-                value={() => props.settingsValue()[item.key as keyof GeneralSettings] || false}
+                value={() => props.settingsValue()[item.key as keyof GeneralSettings] || item.default || ''}
                 setValue={(v) => {
                   props.updateSettings({ [item.key]: v })
                 }}
