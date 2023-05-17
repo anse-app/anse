@@ -1,3 +1,4 @@
+import { Show } from 'solid-js'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
@@ -31,9 +32,8 @@ export default (props: Props) => {
   const htmlString = () => props.showRawCode ? props.text : parseMarkdown(props.text)
 
   return (
-    <div
-      class={`${props.class ?? ''} ${props.showRawCode ? 'whitespace-pre-wrap overflow-auto my-0' : ''}`}
-      innerHTML={htmlString()}
-    />
+    <Show when={props.showRawCode} fallback={<div class={props.class ?? ''} innerHTML={htmlString()} />}>
+      <div class={`${props.class ?? ''} whitespace-pre-wrap overflow-auto my-0`} innerText={htmlString()} />
+    </Show>
   )
 }
