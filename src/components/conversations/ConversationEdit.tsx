@@ -58,7 +58,7 @@ export default (props: Props) => {
       />
       <BotSelect value={props.conversation.bot} onChange={handleProviderBotChange} />
       <Show when={botMeta()?.type !== 'image_generation'}>
-        <div class="py-1 border bg-base-50 border-base rounded-lg text-sm">
+        <div class="py-1 border border-base rounded-lg text-sm">
           <div class="px-4 py-2">
             <h3 class="op-80 shrink-0">System Info</h3>
             <textarea
