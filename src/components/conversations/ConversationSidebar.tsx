@@ -1,11 +1,13 @@
 import { For } from 'solid-js'
 import { useStore } from '@nanostores/solid'
+import { useI18n } from '@/hooks'
 import { conversationMapSortList } from '@/stores/conversation'
 import logo from '@/assets/logo.svg'
 import ConversationSidebarItem from './ConversationSidebarItem'
 import ConversationSidebarAdd from './ConversationSidebarAdd'
 
 export default () => {
+  const { t } = useI18n()
   const $conversationMapSortList = useStore(conversationMapSortList)
 
   return (

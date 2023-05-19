@@ -24,6 +24,7 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
     selectedOption: props.options.find(o => o.value === props.value),
     readOnly: props.readonly,
     onChange: (detail) => {
+      console.log('trigger')
       if (detail) {
         setSelectedItem(props.options.find(o => o.value === detail.value))
         props.onChange(detail.value)
@@ -35,10 +36,8 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
 
   createEffect(on(() => props.value, () => {
     const option = props.options.find(o => o.value === props.value)
-    if (option) {
-      api().setSelectedOption(option)
+    if (option)
       setSelectedItem(option)
-    }
   }))
 
   const selectedComponent = (item: T | null) => {
@@ -81,8 +80,14 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
       <div class="w-$reference-width -mt-2 z-100 shadow-md" {...api().positionerProps}>
         <ul class="bg-base" {...api().contentProps}>
           {props.options.map(item => (
-            <li {...api().getOptionProps({ label: item.label, value: item.value })}>
-              {itemComponent(item, item.value === api().selectedOption?.value)}
+            <li
+              {...api().getOptionProps({ label: item.label, value: item.value })}
+              onClick={() => {
+                setSelectedItem(item)
+                props.onChange(item.value)
+              }}
+            >
+              {itemComponent(item, item.value === selectedItem()?.value)}
             </li>
           ))}
         </ul>

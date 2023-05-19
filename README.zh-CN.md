@@ -47,6 +47,12 @@ Anse 是一个极致优化的 AI 聊天 UI.
 
 获取更多信息，请参考部署文档: https://docs.anse.app/self-deploy
 
+## 开启同步更新
+
+Fork 项目后，您需要在 Fork 项目的操作页面上手动启用工作流和上游同步操作。启用后，每天都会执行自动更新:
+
+![](https://cdn.staticaly.com/gh/yzh990918/static@master/20230518/image.2omctdf8bbk0.webp)
+
 ## 常见问题
 
 Q: TypeError: fetch failed (can't connect to OpenAI Api)

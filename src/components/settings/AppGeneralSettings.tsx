@@ -11,24 +11,24 @@ interface Props {
   updateSettings: (v: Partial<GeneralSettings>) => void
 }
 
-const settingsUIList: SettingsUI[] = [
-  {
-    key: 'requestWithBackend',
-    name: 'Request With Backend',
-    type: 'toggle',
-    default: false,
-  },
-  {
-    key: 'locale',
-    name: 'Change system language',
-    type: 'select',
-    default: 'en',
-    options: localesOptions,
-  },
-]
-
 export default (props: Props) => {
   const { t } = useI18n()
+
+  const settingsUIList = () => ([
+    {
+      key: 'requestWithBackend',
+      name: t('settings.general.requestWithBackend'),
+      type: 'toggle',
+      default: false,
+    },
+    {
+      key: 'locale',
+      name: t('settings.general.locale'),
+      type: 'select',
+      default: 'en',
+      options: localesOptions,
+    },
+  ] as SettingsUI[])
 
   return (
     <div class="px-4 py-3 transition-colors border-b border-base">
@@ -39,7 +39,7 @@ export default (props: Props) => {
         </div>
       </h3>
       <div class="mt-2 flex flex-col">
-        <For each={settingsUIList}>
+        <For each={settingsUIList()}>
           {(item) => {
             return (
               <SettingsUIComponent
