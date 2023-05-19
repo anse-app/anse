@@ -13,7 +13,7 @@ export default () => {
     <div class="fi gap-1 max-w-40vw px-2 overflow-hidden text-sm">
       <Show when={currentConversation()}>
         <Show when={currentConversation().icon}>
-          <div class="fcc w-8 h-8 rounded-full text-xl shrink-0 hidden md:flex">{currentConversation().icon}</div>
+          <div class="fcc -ml-2 w-8 h-8 rounded-full text-xl shrink-0 hidden md:flex">{currentConversation().icon}</div>
         </Show>
         <div class="truncate">
           {currentConversation() ? (currentConversation().name || 'Untitled') : ''}
