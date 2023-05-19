@@ -2,7 +2,6 @@ import { For } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { useI18n } from '@/hooks'
 import { conversationMapSortList } from '@/stores/conversation'
-import logo from '@/assets/logo.svg'
 import ConversationSidebarItem from './ConversationSidebarItem'
 import ConversationSidebarAdd from './ConversationSidebarAdd'
 
@@ -12,16 +11,25 @@ export default () => {
 
   return (
     <div class="h-full flex flex-col bg-sidebar">
-      <header class="fi gap-1.5 h-14 px-6">
-        <img src={logo} alt="logo" class="w-4" />
+      <header class="h-14 fi justify-between px-4 text-xs uppercase">
+        <p>{t('conversations.title')}</p>
+        <div class="fi gap-1">
+          {/* <Button
+            icon="i-carbon-search"
+            onClick={() => {}}
+            size="sm"
+          /> */}
+          <ConversationSidebarAdd />
+        </div>
       </header>
       <div class="flex-1 overflow-auto">
-        <For each={$conversationMapSortList()}>
-          {instance => (
-            <ConversationSidebarItem instance={instance} />
-          )}
-        </For>
-        <ConversationSidebarAdd />
+        <div class="px-2">
+          <For each={$conversationMapSortList()}>
+            {instance => (
+              <ConversationSidebarItem instance={instance} />
+            )}
+          </For>
+        </div>
       </div>
     </div>
   )

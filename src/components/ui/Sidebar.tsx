@@ -8,7 +8,7 @@ interface Props {
 
 export default (props: Props) => {
   const containerBaseClass = {
-    left: 'w-[300px] h-100dvh border-r',
+    left: 'w-[260px] h-100dvh border-r',
     right: 'w-[300px] h-100dvh border-l',
   }[props.direction]
 

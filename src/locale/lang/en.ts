@@ -20,7 +20,7 @@ export const en = {
     },
     conversations: {
       title: 'Conversations',
-      add: 'New Conversation',
+      add: 'New',
       recent: 'Recents',
       noRecent: 'No recents',
     },
