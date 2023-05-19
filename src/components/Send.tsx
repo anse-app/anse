@@ -138,7 +138,7 @@ export default () => {
 
   const stateRootClass = () => {
     if (stateType() === 'normal')
-      return 'bg-base-100 hv-base'
+      return 'hv-base'
     else if (stateType() === 'error')
       return 'bg-red/8'
     else if (stateType() === 'loading')

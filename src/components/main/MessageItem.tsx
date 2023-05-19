@@ -98,7 +98,7 @@ export default (props: Props) => {
     <div
       class="p-6 break-words group relative"
       classList={{
-        'op-70 bg-darker': props.message.role === 'user',
+        'bg-base-50': props.message.role === 'user',
       }}
     >
       <div class="max-w-base flex gap-4 overflow-hidden">
