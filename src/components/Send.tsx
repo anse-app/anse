@@ -115,7 +115,7 @@ export default () => {
     <div class="max-w-base h-full fi flex-row gap-2">
       <div class="flex-1 op-50">Thinking...</div>
       <div
-        class="border border-darker px-2 py-1 rounded-md text-sm op-40 hv-base hover:bg-white"
+        class="border border-base-100 px-2 py-1 rounded-md text-sm op-40 hv-base hover:bg-white"
         onClick={() => { handleAbortFetch() }}
       >
         Abort

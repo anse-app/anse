@@ -18,11 +18,11 @@ export default ({ settings, editing, value, setValue }: Props) => {
   return (
     <div>
       {editing() && (
-        <div class="fcc relative border border-base focus-within:border-darker transition-colors-200">
+        <div class="fcc relative border border-base focus-within:border-base-100 transition-colors-200">
           <input
             type={isOpen() ? 'text' : 'password'}
             value={value()}
-            class="w-full mt-1 bg-transparent pl-2 py-1 pr-8 input-base focus:border-darker"
+            class="w-full mt-1 bg-transparent pl-2 py-1 pr-8 input-base focus:border-base-100"
             onChange={e => setValue(e.currentTarget.value)}
           />
           <div class="absolute top-0 right-0 bottom-0 fcc p-1 w-8 box-border bg-transparent cursor-pointer" onClick={() => { setIsOpen(!isOpen()) }}>

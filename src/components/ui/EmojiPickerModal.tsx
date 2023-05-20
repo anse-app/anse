@@ -23,7 +23,7 @@ export default () => {
       <div class="fi mr-12">
         <input
           type="text"
-          class="w-full px-2 py-1 border border-base input-base  focus:border-darker"
+          class="w-full px-2 py-1 border border-base input-base  focus:border-base-100"
           placeholder="Search an emoji."
           value={search()}
           onInput={(e) => {

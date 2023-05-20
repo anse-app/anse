@@ -31,7 +31,7 @@ export default () => {
           handleChange={handleChange}
         />
       </main>
-      <div class="fcc px-2 py-2 bg-darker border border-base mt-4 hv-base hover:border-darker" onClick={handleButtonClick}>{t('settings.save')}</div>
+      <div class="fcc px-2 py-2 bg-darker border border-base mt-4 hv-base hover:border-base-100" onClick={handleButtonClick}>{t('settings.save')}</div>
     </div>
   )
 }
