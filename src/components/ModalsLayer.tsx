@@ -13,7 +13,7 @@ import Modal from './ui/Modal'
 export default () => {
   return (
     <>
-      <Modal bindValue={showConversationSidebar} direction="left">
+      <Modal bindValue={showConversationSidebar} direction="left" closeBtnClass="hidden">
         <div class="w-[70vw] max-w-[300px] h-full">
           <ConversationSidebar />
         </div>

@@ -44,7 +44,7 @@ export default (props: Props) => {
             <div {...api().backdropProps} class="fixed inset-0 bg-base opacity-60 pointer-events-auto" onclick={() => api().close()} />
           </Portal>
           <div {...api().containerProps}>
-            <div {...api().contentProps} class={`bg-modal transition-transform ease-out max-w-screen max-h-screen overflow-auto border-base shadow-lg ${containerBaseClass}`}>
+            <div {...api().contentProps} class={`bg-modal transition-transform ease-out max-w-screen max-h-screen overflow-auto border-base shadow-lg ring-0 outline-none ${containerBaseClass}`}>
               <button {...api().closeTriggerProps} class={`absolute p-1 rounded-md top-4 right-4 hv-base hv-foreground ${props.closeBtnClass || ''}`}>
                 <div i-carbon-close class="text-xl" />
               </button>
