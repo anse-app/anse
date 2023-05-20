@@ -49,7 +49,7 @@ export default defineConfig({
     'bg-blur': 'bg-light-200/85 dark:bg-[#101010]/85 backdrop-blur-xl backdrop-saturate-150',
     'bg-sidebar': 'bg-light-100 dark:bg-[#101010]',
     'bg-modal': 'bg-light-100 dark:bg-[#181818]',
-    'bg-darker': 'bg-black/6 dark:bg-white/6',
+    'bg-darker': 'bg-black/4 dark:bg-white/4',
     'fg-base': 'text-dark dark:text-[#dadada]',
     'border-base': 'border-light-700 dark:border-[#2a2a2a]',
     'border-b-base': 'border-b-light-700 dark:border-b-[#2a2a2a]',

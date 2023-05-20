@@ -56,7 +56,7 @@ export default () => {
         inputRef.focus()
       }}
     >
-      <div class="flex-1 op-30">Enter Something...</div>
+      <div class="flex-1 op-30 text-sm">Enter Something...</div>
       <div class="i-carbon-send op-50 text-xl" />
     </div>
   )
@@ -156,7 +156,7 @@ export default () => {
     else if (stateType() === 'loading')
       return 'px-6 h-14'
     else if (stateType() === 'editing')
-      return 'h-40'
+      return 'h-50'
     return ''
   }
 

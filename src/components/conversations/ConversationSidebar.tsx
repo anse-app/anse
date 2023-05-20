@@ -12,7 +12,7 @@ export default () => {
   return (
     <div class="h-full flex flex-col bg-sidebar">
       <header class="h-14 fi justify-between px-4 text-xs uppercase">
-        <p>{t('conversations.title')}</p>
+        <p class="px-2">{t('conversations.title')}</p>
         <div class="fi gap-1">
           {/* <Button
             icon="i-carbon-search"
