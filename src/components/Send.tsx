@@ -6,9 +6,10 @@ import { addConversation, conversationMap, currentConversationId } from '@/store
 import { loadingStateMap, streamsMap } from '@/stores/streams'
 import { handlePrompt } from '@/logics/conversation'
 import { globalAbortController } from '@/stores/settings'
-import { useMobileScreen } from '@/hooks'
+import { useI18n, useMobileScreen } from '@/hooks'
 
 export default () => {
+  const { t } = useI18n()
   let inputRef: HTMLTextAreaElement
   const $conversationMap = useStore(conversationMap)
   const $currentConversationId = useStore(currentConversationId)
@@ -56,7 +57,7 @@ export default () => {
         inputRef.focus()
       }}
     >
-      <div class="flex-1 op-30">Enter Something...</div>
+      <div class="flex-1 op-30 text-sm">{t('send.placeholder')}</div>
       <div class="i-carbon-send op-50 text-xl" />
     </div>
   )
@@ -65,7 +66,7 @@ export default () => {
     <div class="h-full relative">
       <textarea
         ref={inputRef!}
-        placeholder="Enter something..."
+        placeholder={t('send.placeholder')}
         autocomplete="off"
         onBlur={() => { isSendBoxFocus.set(false) }}
         onInput={() => { setInputPrompt(inputRef.value) }}
@@ -115,7 +116,7 @@ export default () => {
     <div class="max-w-base h-full fi flex-row gap-2">
       <div class="flex-1 op-50">Thinking...</div>
       <div
-        class="border border-darker px-2 py-1 rounded-md text-sm op-40 hv-base hover:bg-white"
+        class="border border-base-100 px-2 py-1 rounded-md text-sm op-40 hv-base hover:bg-white"
         onClick={() => { handleAbortFetch() }}
       >
         Abort
@@ -138,7 +139,7 @@ export default () => {
 
   const stateRootClass = () => {
     if (stateType() === 'normal')
-      return 'bg-base-100 hv-base'
+      return 'hv-base'
     else if (stateType() === 'error')
       return 'bg-red/8'
     else if (stateType() === 'loading')
@@ -156,7 +157,7 @@ export default () => {
     else if (stateType() === 'loading')
       return 'px-6 h-14'
     else if (stateType() === 'editing')
-      return 'h-40'
+      return 'h-50'
     return ''
   }
 

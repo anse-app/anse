@@ -40,7 +40,7 @@ export default defineConfig({
           name: 'Anse',
           short_name: 'Anse',
           description: 'Anse is a fully optimized UI for AI Chats.',
-          theme_color: '#212129',
+          theme_color: '#101010',
           background_color: '#ffffff',
           icons: [
             {
@@ -54,7 +54,7 @@ export default defineConfig({
               type: 'image/png',
             },
             {
-              src: 'icon.svg',
+              src: 'logo.svg',
               sizes: '32x32',
               type: 'image/svg',
               purpose: 'any maskable',

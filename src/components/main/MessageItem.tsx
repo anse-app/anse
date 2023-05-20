@@ -9,6 +9,7 @@ import { scrollController } from '@/stores/ui'
 import { globalAbortController } from '@/stores/settings'
 import StreamableText from '../StreamableText'
 import { DropDownMenu, Tooltip } from '../ui/base'
+import Button from '../ui/Button'
 import type { MenuItem } from '../ui/base'
 import type { MessageInstance } from '@/types/message'
 
@@ -98,7 +99,7 @@ export default (props: Props) => {
     <div
       class="p-6 break-words group relative"
       classList={{
-        'op-70 bg-darker': props.message.role === 'user',
+        'bg-base-100': props.message.role === 'user',
       }}
     >
       <div class="max-w-base flex gap-4 overflow-hidden">
@@ -135,9 +136,9 @@ export default (props: Props) => {
               class="op-70 bg-darker py-4 px-[calc(max(1.5rem,(100%-48rem)/2))] w-full inset-0 scroll-pa-4 input-base rounded-md"
             />
 
-            <div class="flex justify-end space-x-2 -mt-1">
-              <div class="inline-flex items-center button" onClick={() => setIsEditing(false)}>Cancel</div>
-              <div class="inline-flex items-center button" onClick={() => handleSend()}>Submit</div>
+            <div class="flex justify-end space-x-2 mt-1">
+              <Button size="sm" onClick={() => setIsEditing(false)}>Cancel</Button>
+              <Button size="sm" onClick={() => handleSend()}>Submit</Button>
             </div>
           </Show>
           <Show when={!isEditing()}>

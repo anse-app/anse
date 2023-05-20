@@ -40,7 +40,7 @@ export default (props: Props) => {
       <div class="scroll-list relative flex flex-col h-full overflow-y-scroll" ref={scrollRef!}>
         <For each={props.messages()}>
           {(message, index) => (
-            <div class="border-b border-lighter">
+            <div class="border-b border-base">
               <MessageItem
                 conversationId={props.conversationId}
                 message={message}
