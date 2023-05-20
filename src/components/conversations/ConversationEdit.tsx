@@ -3,6 +3,7 @@ import { useStore } from '@nanostores/solid'
 import BotSelect from '@/components/ui/BotSelect'
 import { getBotMetaById } from '@/stores/provider'
 import { emojiPickerCurrentPick, showEmojiPickerModal } from '@/stores/ui'
+import { useI18n } from '@/hooks'
 import type { Conversation } from '@/types/conversation'
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default (props: Props) => {
+  const { t } = useI18n()
   const [providerBot, setProviderBot] = createSignal(props.conversation.bot || '')
   const $emojiPickerCurrentPick = useStore(emojiPickerCurrentPick)
   const botMeta = () => getBotMetaById(providerBot()) || null
@@ -30,7 +32,6 @@ export default (props: Props) => {
   }
 
   const handleOpenIconSelector = () => {
-    // TODO: Icon selector by `emoji-mart`
     showEmojiPickerModal.set(true)
     emojiPickerCurrentPick.listen((emoji) => {
       props.handleChange({ icon: emoji })
@@ -52,7 +53,7 @@ export default (props: Props) => {
       <input
         type="text"
         class="font-semibold mr-12 mb-3 px-1 truncate outline-0 bg-transparent placeholder:op-40"
-        placeholder="Untitled"
+        placeholder={t('conversations.untitled')}
         value={props.conversation.name}
         onBlur={e => props.handleChange({ name: e.currentTarget.value })}
       />

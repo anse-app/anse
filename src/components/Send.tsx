@@ -6,9 +6,10 @@ import { addConversation, conversationMap, currentConversationId } from '@/store
 import { loadingStateMap, streamsMap } from '@/stores/streams'
 import { handlePrompt } from '@/logics/conversation'
 import { globalAbortController } from '@/stores/settings'
-import { useMobileScreen } from '@/hooks'
+import { useI18n, useMobileScreen } from '@/hooks'
 
 export default () => {
+  const { t } = useI18n()
   let inputRef: HTMLTextAreaElement
   const $conversationMap = useStore(conversationMap)
   const $currentConversationId = useStore(currentConversationId)
@@ -56,7 +57,7 @@ export default () => {
         inputRef.focus()
       }}
     >
-      <div class="flex-1 op-30 text-sm">Enter Something...</div>
+      <div class="flex-1 op-30 text-sm">{t('send.placeholder')}</div>
       <div class="i-carbon-send op-50 text-xl" />
     </div>
   )
@@ -65,7 +66,7 @@ export default () => {
     <div class="h-full relative">
       <textarea
         ref={inputRef!}
-        placeholder="Enter something..."
+        placeholder={t('send.placeholder')}
         autocomplete="off"
         onBlur={() => { isSendBoxFocus.set(false) }}
         onInput={() => { setInputPrompt(inputRef.value) }}

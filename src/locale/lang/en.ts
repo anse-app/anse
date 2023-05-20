@@ -23,6 +23,10 @@ export const en = {
       add: 'New',
       recent: 'Recents',
       noRecent: 'No recents',
+      untitled: 'Untitled',
+    },
+    send: {
+      placeholder: 'Enter Something...',
     },
   },
 } as language

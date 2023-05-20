@@ -17,7 +17,7 @@ export default () => {
               {instance => (
                 <div class="fi gap-2 h-8 max-w-full hv-foreground" onClick={() => currentConversationId.set(instance.id)}>
                   {instance.icon ? instance.icon : <div class="text-sm i-carbon-chat" />}
-                  <div class="flex-1 text-sm truncate">{instance.name || 'Untitled'}</div>
+                  <div class="flex-1 text-sm truncate">{instance.name || t('conversations.untitled')}</div>
                 </div>
               )}
             </For>

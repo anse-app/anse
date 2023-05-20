@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/solid'
 import { currentConversationId, deleteConversationById } from '@/stores/conversation'
 import { showConversationSidebar } from '@/stores/ui'
+import { useI18n } from '@/hooks'
 import type { Conversation } from '@/types/conversation'
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default ({ instance }: Props) => {
+  const { t } = useI18n()
   const $currentConversationId = useStore(currentConversationId)
   const isTouchDevice = 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0
 
@@ -34,7 +36,7 @@ export default ({ instance }: Props) => {
       <div class="fcc w-8 h-8 rounded-full text-xl shrink-0">
         {instance.icon ? instance.icon : <div class="text-base i-carbon-chat" />}
       </div>
-      <div class="flex-1 truncate text-sm">{ instance.name || 'Untitled' }</div>
+      <div class="flex-1 truncate text-sm">{ instance.name || t('conversations.untitled') }</div>
       <div class={isTouchDevice ? '' : 'hidden group-hover:block'}>
         <div
           class="inline-flex p-2 items-center gap-1 rounded-md hv-base"
