@@ -77,11 +77,10 @@ export default (props: Props) => {
   const [menuList, setMenuList] = createSignal<MenuItem[]>([
     { id: 'retry', label: 'Retry send', icon: 'i-carbon:restart', role: 'all', action: handleRetryMessageItem },
     { id: 'raw', label: 'Show raw code', icon: 'i-carbon-code', role: 'system', action: () => setShowRawCode(!showRawCode()) },
-    // TODO: Share message
-    // { id: 'share', label: 'Share message', icon: 'i-carbon:share' },
     { id: 'edit', label: 'Edit message', icon: 'i-carbon:edit', role: 'user', action: handleEditMessageItem },
     { id: 'copy', label: 'Copy message', icon: 'i-carbon-copy', role: 'all', action: handleCopyMessageItem },
     { id: 'delete', label: 'Delete message', icon: 'i-carbon-trash-can', role: 'all', action: handleDeleteMessageItem },
+    { id: 'share', label: 'Share message', icon: 'i-carbon:export', role: 'all' },
   ])
 
   if (props.message.role === 'user')
