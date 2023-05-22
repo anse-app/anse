@@ -24,6 +24,13 @@ export const zhCN = {
       recent: '最近对话',
       noRecent: '暂无最近对话',
       untitled: '未命名对话',
+      confirm: {
+        title: '删除本会话的所有消息',
+        desc: '这将删除本会话的所有消息，且不可恢复',
+        message: '删除这条记录',
+        btn: '确认',
+        cancel: '取消',
+      },
     },
     send: {
       placeholder: '输入内容...',

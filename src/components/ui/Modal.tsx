@@ -11,6 +11,7 @@ interface Props {
   direction: 'top' | 'bottom' | 'left' | 'right'
   children: JSXElement
   closeBtnClass?: string
+  hiddenCloseIcon?: boolean
 }
 
 export default (props: Props) => {
@@ -45,9 +46,9 @@ export default (props: Props) => {
           </Portal>
           <div {...api().containerProps}>
             <div {...api().contentProps} class={`bg-modal transition-transform ease-out max-w-screen max-h-screen overflow-auto border-base shadow-lg ring-0 outline-none ${containerBaseClass}`}>
-              <button {...api().closeTriggerProps} class={`absolute p-1 rounded-md top-4 right-4 hv-base hv-foreground ${props.closeBtnClass || ''}`}>
-                <div i-carbon-close class="text-xl" />
-              </button>
+              {
+                !props.hiddenCloseIcon && <button {...api().closeTriggerProps} class={`absolute p-1 rounded-md top-4 right-4 hv-base hv-foreground ${props.closeBtnClass || ''}`}> <div i-carbon-close class="text-xl" /></button>
+              }
               { props.children }
             </div>
           </div>

@@ -58,6 +58,7 @@ export default defineConfig({
     'hv-foreground': 'transition-opacity cursor-pointer op-70 hover:op-100',
     'input-base': 'bg-transparent placeholder:op-50 dark:placeholder:op-20 focus:(ring-0 outline-none) resize-none',
     'button': 'mt-4 px-3 py-2 text-xs border border-base rounded-lg hv-base hover:border-base-100',
+    'emerald-button': 'mt-4 px-3 py-2 text-xs border rounded-lg text-light-400 border-emerald-600 bg-emerald-600 hover-bg-emerald-700 hover-border-emerald-700',
     'max-w-base': 'max-w-3xl mx-auto',
     'text-error': 'text-red-700 dark:text-red-400/80',
     'border-error': 'border border-red-700 dark:border-red-400/80',
