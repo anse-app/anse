@@ -19,7 +19,7 @@
     "@astrojs/netlify": "2.0.0",
     "@astrojs/node": "^5.1.1",
     "@astrojs/solid-js": "^2.1.0",
-    "@astrojs/vercel": "^3.2.2",
+    "@astrojs/vercel": "^3.4.0",
     "@mapbox/rehype-prism": "^0.8.0",
     "@nanostores/solid": "^0.3.2",
     "@solid-primitives/clipboard": "^1.5.4",
