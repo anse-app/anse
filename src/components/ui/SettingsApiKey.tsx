@@ -1,4 +1,5 @@
 import { createSignal } from 'solid-js'
+import { Show } from 'solid-js/web'
 import { useClipboardCopy } from '@/hooks'
 import SettingsNotDefined from './SettingsNotDefined'
 import type { Accessor } from 'solid-js'
@@ -21,13 +22,15 @@ export default ({ settings, editing, value, setValue }: Props) => {
         <div class="fcc relative border border-base focus-within:border-base-100 transition-colors-200">
           <input
             type={isOpen() ? 'text' : 'password'}
-            value={value()}
+            value={value() || ''}
             class="w-full mt-1 bg-transparent pl-2 py-1 pr-8 input-base focus:border-base-100"
             onChange={e => setValue(e.currentTarget.value)}
           />
-          <div class="absolute top-0 right-0 bottom-0 fcc p-1 w-8 box-border bg-transparent cursor-pointer" onClick={() => { setIsOpen(!isOpen()) }}>
-            <div class={`${isOpen() ? 'i-carbon-view' : 'i-carbon-view-off'} text-sm`} />
-          </div>
+          <Show when={value()}>
+            <div class="absolute top-0 right-0 bottom-0 fcc p-1 w-8 box-border bg-transparent cursor-pointer" onClick={() => { setIsOpen(!isOpen()) }}>
+              <div class={`${isOpen() ? 'i-carbon-view' : 'i-carbon-view-off'} text-sm`} />
+            </div>
+          </Show>
         </div>
       )}
       {!editing() && value() && (
