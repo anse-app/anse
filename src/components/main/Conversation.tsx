@@ -33,7 +33,7 @@ export default () => {
     <Switch
       fallback={(
         <Welcome />
-        )}
+      )}
     >
       <Match when={$currentConversationId() && !currentConversationMessages().length}>
         <ConversationEmpty conversation={currentConversation()} />
@@ -52,8 +52,9 @@ export default () => {
       </Match>
       <Match when={currentBot()?.type === 'image_generation'}>
         <Image
-            // conversationId={$currentConversationId()}
+          // conversationId={$currentConversationId()}
           messages={currentConversationMessages}
+          // fetching={isLoading() || !isStreaming()}
         />
       </Match>
     </Switch>
