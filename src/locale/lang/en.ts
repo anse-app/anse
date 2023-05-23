@@ -24,6 +24,13 @@ export const en = {
       recent: 'Recents',
       noRecent: 'No recents',
       untitled: 'Untitled',
+      confirm: {
+        title: 'Delete all messages in this chat',
+        desc: 'This action cannot be undone.',
+        message: 'Delete this record',
+        btn: 'confirm',
+        cancel: 'cancel',
+      },
     },
     send: {
       placeholder: 'Enter Something...',
