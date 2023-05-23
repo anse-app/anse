@@ -31,6 +31,22 @@ export const zhCN = {
         btn: '确认',
         cancel: '取消',
       },
+      share: {
+        link: {
+          title: '分享链接',
+          copy: '复制链接',
+          create: '创建链接',
+        },
+        save: '保存',
+        messages: {
+          title: '选择消息',
+          selected: '已选择的消息',
+        },
+        tabs: {
+          context: '分享上下文',
+          image: '分享图片',
+        },
+      },
     },
     send: {
       placeholder: '输入内容...',

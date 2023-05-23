@@ -31,6 +31,22 @@ export const en = {
         btn: 'confirm',
         cancel: 'cancel',
       },
+      share: {
+        link: {
+          title: 'Share with link',
+          copy: 'Copy Link',
+          create: 'Create Link',
+        },
+        save: 'Save',
+        messages: {
+          title: 'Select Message',
+          selected: 'Selected Messages',
+        },
+        tabs: {
+          context: 'Share Context',
+          image: 'Share Image',
+        },
+      },
     },
     send: {
       placeholder: 'Enter Something...',
