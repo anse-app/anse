@@ -1,18 +1,16 @@
 import { useStore } from '@nanostores/solid'
 import { currentConversationId } from '@/stores/conversation'
+import { showShareModal } from '@/stores/ui'
 
 export default () => {
   const $currentConversationId = useStore(currentConversationId)
-
-  const handleClearMessage = () => {
-  }
 
   return (
     <>
       {$currentConversationId() && (
         <div
           class="fcc p-2 rounded-md text-xl hv-foreground"
-          onClick={handleClearMessage}
+          onClick={() => { showShareModal.set(true) }}
         >
           <div i-carbon-export />
         </div>

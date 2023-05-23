@@ -34,6 +34,9 @@ dependencies:
   '@unocss/reset':
     specifier: ^0.50.6
     version: 0.50.6
+  '@zag-js/checkbox':
+    specifier: ^0.9.2
+    version: 0.9.2
   '@zag-js/dialog':
     specifier: ^0.9.2
     version: 0.9.2
@@ -50,6 +53,9 @@ dependencies:
     specifier: ^0.9.2
     version: 0.9.2(solid-js@1.6.12)
   '@zag-js/switch':
+    specifier: ^0.9.2
+    version: 0.9.2
+  '@zag-js/tabs':
     specifier: ^0.9.2
     version: 0.9.2
   '@zag-js/toast':
@@ -2675,6 +2681,18 @@ packages:
       '@zag-js/dom-query': 0.9.2
     dev: false
 
+  /@zag-js/checkbox@0.9.2:
+    resolution: {integrity: sha512-xtOTsPURdmTaP7D1AjjMBPnLnGfZV5ZRoWYEqKbR6QoIMBkHoQxyEp/NdE6R2w7hxgKB2vp1DGECFAhSxVu/aw==}
+    dependencies:
+      '@zag-js/anatomy': 0.9.2
+      '@zag-js/core': 0.9.2
+      '@zag-js/dom-query': 0.9.2
+      '@zag-js/form-utils': 0.9.2
+      '@zag-js/types': 0.9.2
+      '@zag-js/utils': 0.9.2
+      '@zag-js/visually-hidden': 0.9.2
+    dev: false
+
   /@zag-js/core@0.9.2:
     resolution: {integrity: sha512-L8MwOCuKnOdWqjSRlgb8HQYuD29yRmi0PrTip+T42YK4+SiBiROeGcExYH2txIpVCk3Gww8TU5TzOHDvKCACyA==}
     dependencies:
@@ -2845,6 +2863,19 @@ packages:
     resolution: {integrity: sha512-CekXUcJ7HqK+MIFXazBD7KIrntOIJZc8lscf3aXEkpbYfTmilad1ZORAR5tnsIkYIoDHcLdxhT69CKR87NMNFA==}
     dependencies:
       '@zag-js/dom-query': 0.9.2
+    dev: false
+
+  /@zag-js/tabs@0.9.2:
+    resolution: {integrity: sha512-6/CzpzsXYnyGpeXrApc+wOi7wSLIGFQXJ8BoVU8QHKpWF6fEL4T40VJVWJJKzpnEMKepyHj2Zz9i15lfuqQAcw==}
+    dependencies:
+      '@zag-js/anatomy': 0.9.2
+      '@zag-js/core': 0.9.2
+      '@zag-js/dom-event': 0.9.2
+      '@zag-js/dom-query': 0.9.2
+      '@zag-js/element-rect': 0.9.2
+      '@zag-js/tabbable': 0.9.2
+      '@zag-js/types': 0.9.2
+      '@zag-js/utils': 0.9.2
     dev: false
 
   /@zag-js/text-selection@0.9.2:
