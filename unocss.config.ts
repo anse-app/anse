@@ -38,6 +38,9 @@ export default defineConfig({
           'padding': '0 0.2em',
           'color': 'var(--prism-keyword)',
         },
+        'pre': {
+          'background-color': 'var(--prism-background) !important',
+        },
       },
     }),
   ],

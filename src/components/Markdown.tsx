@@ -21,7 +21,9 @@ const parseMarkdown = (raw: string) => {
     .use(remarkGfm)
     .use(remarkMath)
     .use(remarkRehype)
-    .use(rehypePrism)
+    .use(rehypePrism, {
+      ignoreMissing: true,
+    })
     .use(rehypeKatex)
     .use(rehypeStringify)
     .processSync(raw)
