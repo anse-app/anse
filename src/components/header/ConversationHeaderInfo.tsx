@@ -1,4 +1,4 @@
-import { Show, createEffect } from 'solid-js'
+import { Show } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { conversationMap, currentConversationId } from '@/stores/conversation'
 import { useI18n } from '@/hooks'
@@ -10,8 +10,6 @@ export default () => {
   const currentConversation = () => {
     return $conversationMap()[$currentConversationId()]
   }
-
-  createEffect(() => { document.title = currentConversation() ? `Anse • ${(currentConversation().name || t('conversations.untitled'))}` : 'Anse' })
 
   return (
     <div class="fi gap-1 max-w-40vw px-2 overflow-hidden text-sm">
