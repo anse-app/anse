@@ -21,3 +21,23 @@ import BuildStores from '@/components/client-only/BuildStores'
     <ModalsLayer client:only />
     <BuildStores client:only />
 </Layout>
+
+
+<script>
+  async function checkCurrentAuth() {
+    const password = localStorage.getItem('pass')
+    const response = await fetch('/api/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        pass: password,
+      }),
+    })
+    const responseJson = await response.json()
+    if (responseJson.code !== 0)
+      window.location.href = '/password'
+  }
+  checkCurrentAuth()
+  </script>
