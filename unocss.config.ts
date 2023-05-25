@@ -17,6 +17,12 @@ export default defineConfig({
     presetIcons(),
     presetTypography({
       cssExtend: {
+        '*:first-child': {
+          'margin-top': 0,
+        },
+        '*:last-child': {
+          'margin-bottom': 0,
+        },
         'h1': {
           'font-size': '1.25em',
           'margin': '1rem 0',

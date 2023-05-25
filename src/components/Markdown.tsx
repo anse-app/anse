@@ -20,7 +20,7 @@ const parseMarkdown = (raw: string) => {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkMath)
-    .use(remarkRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypePrism, {
       ignoreMissing: true,
     })
