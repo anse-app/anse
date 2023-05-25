@@ -12,6 +12,8 @@ export interface TabItem {
 interface Props {
   tabs: TabItem[]
   initValue?: string
+  sticky?: boolean
+  tabClass?: string
 }
 
 export const Tabs = (props: Props) => {
@@ -21,10 +23,10 @@ export const Tabs = (props: Props) => {
 
   return (
     <div {...api().rootProps} class="w-full text-sm font-medium text-center">
-      <div {...api().tablistProps} class="flex flex-wrap -mb-px border-b border-base">
+      <div {...api().tablistProps} class={`flex flex-wrap -mb-px border-b border-base ${props.sticky && 'sticky top-0 bottom-0'} ${props.tabClass}`}>
         <For each={props.tabs}>
           {item => (
-            <button class={`inline-block p-4 border-b-2 border-transparent hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-300 cursor-pointer  ${api().value === item.value && '!border-emerald-600 !text-emerald-600'}`} {...api().getTriggerProps({ value: item.value })}>
+            <button class={`inline-block p-4 border-b-2 border-transparent hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-300 cursor-pointer ${api().value === item.value && '!border-emerald-600 !text-emerald-600'}`} {...api().getTriggerProps({ value: item.value })}>
               {item.label}
             </button>
           )}
@@ -32,7 +34,7 @@ export const Tabs = (props: Props) => {
       </div>
       <For each={props.tabs}>
         {item => (
-          <div class="w-full p-4 text-sm mt-4 border border-base" {...api().getContentProps({ value: item.value })}>
+          <div class="w-full text-sm mt-4 border border-base p-4" {...api().getContentProps({ value: item.value })}>
             {item.content}
           </div>
         )}

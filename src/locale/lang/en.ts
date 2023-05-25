@@ -38,6 +38,7 @@ export const en = {
           create: 'Create Link',
         },
         save: 'Save',
+        copy: 'Copy Context',
         messages: {
           title: 'Select Message',
           selected: 'Selected Messages',
@@ -51,5 +52,6 @@ export const en = {
     send: {
       placeholder: 'Enter Something...',
     },
+    copyed: 'Copyed!',
   },
 } as language
