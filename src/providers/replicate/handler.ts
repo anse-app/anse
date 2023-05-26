@@ -4,16 +4,18 @@ import type { Message } from '@/types/message'
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
   if (payload.botId === 'stable-diffusion')
-    return handleStableDiffusion(payload)
+    return handleReplicateGenerate('db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf', payload)
+  if (payload.botId === 'waifu-diffusion')
+    return handleReplicateGenerate('25d2f75ecda0c0bed34c806b7b70319a53a1bccad3ade1a7496524f013f48983', payload)
 }
 
-const handleStableDiffusion = async(payload: HandlerPayload) => {
+const handleReplicateGenerate = async(modelVersion: string, payload: HandlerPayload) => {
   const prompt = payload.prompt
   const response = await fetchImageGeneration({
     token: payload.globalSettings.token as string,
     method: 'POST',
     body: {
-      version: payload.globalSettings.version as string,
+      version: modelVersion,
       input: {
         prompt,
       },
