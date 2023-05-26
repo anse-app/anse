@@ -34,6 +34,7 @@ export const en = {
     },
     send: {
       placeholder: 'Enter Something...',
+      button: 'Send',
     },
   },
 } as language

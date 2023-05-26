@@ -34,6 +34,7 @@ export const zhCN = {
     },
     send: {
       placeholder: '输入内容...',
+      button: '发送',
     },
   },
 } as language
