@@ -25,7 +25,7 @@ export default () => {
           {item => (
             <div class="flex space-x-2">
               <div class="font-bold w-20 text-left">{item.role}:</div>
-              <div class="text-left flex-1">{item.content}</div>
+              <div class="text-left flex-1 whitespace-normal overflow-auto">{item.content}</div>
             </div>
           )}
         </For>
