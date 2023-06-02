@@ -8,17 +8,26 @@ interface Props {
 }
 
 export const Checkbox = (props: Props) => {
-  const [state, send] = useMachine(checkbox.machine({ id: createUniqueId(), checked: props.initValue ?? false }))
+  const [state, send] = useMachine(checkbox.machine({
+    id: createUniqueId(),
+    checked: props.initValue ?? false,
+    onChange(detail) {
+      console.log('onChange', detail)
+    },
+  }))
 
   const api = createMemo(() => checkbox.connect(state, send, normalizeProps))
 
   return (
     <label {...api().rootProps}>
-      <span {...api().labelProps}>
-        {props.label}
-      </span>
-      <input {...api().inputProps} />
-      <div {...api().controlProps} />
+      <div class="fi justify-revert cursor-pointer text-sm">
+        <input {...api().inputProps} />
+        {api().isChecked ? <div class="i-carbon:checkbox-checked text-xl" /> : <div class="i-carbon:checkbox text-xl" />}
+        <div {...api().labelProps} class="ml-2 truncate flex-1">
+          {props.label}
+        </div>
+        <div {...api().controlProps} />
+      </div>
     </label>
   )
 }

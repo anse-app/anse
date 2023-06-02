@@ -23,7 +23,7 @@ export const Tabs = (props: Props) => {
 
   return (
     <div {...api().rootProps} class="w-full text-sm font-medium text-center">
-      <div {...api().tablistProps} class={`flex flex-wrap -mb-px border-b border-base ${props.sticky && 'sticky top-0 bottom-0'} ${props.tabClass}`}>
+      <div {...api().tablistProps} class={`flex flex-wrap -mb-px border-b border-base ${props.sticky && 'sticky top-0 bottom-0 bg-white'} ${props.tabClass}`}>
         <For each={props.tabs}>
           {item => (
             <button class={`inline-block p-4 border-b-2 border-transparent hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-300 cursor-pointer ${api().value === item.value && '!border-emerald-600 !text-emerald-600'}`} {...api().getTriggerProps({ value: item.value })}>
