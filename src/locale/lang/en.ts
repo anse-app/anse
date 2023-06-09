@@ -42,6 +42,7 @@ export const en = {
         messages: {
           title: 'Select Message',
           selected: 'Selected Messages',
+          selectAll: 'Select All',
         },
         tabs: {
           context: 'Share Context',
@@ -49,6 +50,7 @@ export const en = {
         },
       },
     },
+    empty: 'No data',
     send: {
       placeholder: 'Enter Something...',
     },

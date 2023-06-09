@@ -10,7 +10,7 @@ import type { TabItem } from './base/Tabs'
 export default () => {
   const { t } = useI18n()
   const $currentConversationId = useStore(currentConversationId)
-  const messages = getMessagesByConversationId($currentConversationId())
+  const messages = getMessagesByConversationId($currentConversationId()).filter(item => item.isSelected)
 
   console.log($currentConversationId(), messages)
 
@@ -21,15 +21,21 @@ export default () => {
       value: 'context',
       label: t('conversations.share.tabs.context'),
       content: <div class="flex flex-col gap-2">
-        <div class="emerald-light-button mt-0 cursor-pointer mb-2" onClick={() => copy()}>{copied() ? t('copyed') : t('conversations.share.copy')}</div>
-        <For each={messages}>
-          {item => (
-            <div class="flex space-x-2">
-              <div class="font-bold w-20 text-left">{item.role}:</div>
-              <div class="text-left flex-1 whitespace-normal overflow-auto">{item.content}</div>
+        {messages.length
+          ? (
+            <div class="flex flex-col gap-2">
+              <div class="emerald-light-button mt-0 cursor-pointer mb-2" onClick={() => copy()}>{copied() ? t('copyed') : t('conversations.share.copy')}</div>
+              <For each={messages}>
+                {item => (
+                  <div class="flex space-x-2">
+                    <div class="font-bold w-20 text-left">{item.role}:</div>
+                    <div class="text-left flex-1 whitespace-normal overflow-auto">{item.content}</div>
+                  </div>
+                )}
+              </For>
             </div>
-          )}
-        </For>
+            )
+          : <div class="text-center text-sm">{t('empty')}</div>}
       </div>,
     },
     {
@@ -49,12 +55,12 @@ export default () => {
         <div
           class="border w-full border-base fi justify-between box-border p-4 rounded-md hv-base"
           onclick={() => {
-            showShareModal.set(false)
             showSelectMessageModal.set(true)
+            showShareModal.set(false)
           }}
         >
           <span class="text-xs">{t('conversations.share.messages.selected')}</span>
-          <span class="text-xs op-60">2 Messages</span>
+          <span class="text-xs op-60">{messages.length ? `${messages.length} Messages` : t('conversations.share.messages.title')}</span>
         </div>
         <Tabs tabs={tabs} sticky tabClass="bg-base-100" />
       </div>

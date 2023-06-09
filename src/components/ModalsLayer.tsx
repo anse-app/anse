@@ -42,7 +42,7 @@ export default () => {
           <ShareModal />
         </div>
       </Modal>
-      <Modal bindValue={showSelectMessageModal} direction="bottom" closeBtnClass="top-4 right-4">
+      <Modal bindValue={showSelectMessageModal} direction="bottom" closeBtnClass="top-4 right-4" closeCallback={() => { showShareModal.set(true) }}>
         <div class="max-h-[70vh] w-full">
           <SelectMessageModal />
         </div>

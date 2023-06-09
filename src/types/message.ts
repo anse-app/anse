@@ -8,6 +8,7 @@ export interface MessageInstance extends Message {
   id: string
   stream?: boolean
   dateTime?: number
+  isSelected?: boolean
 }
 
 export interface ErrorMessage {

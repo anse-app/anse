@@ -42,6 +42,7 @@ export const zhCN = {
         messages: {
           title: '选择消息',
           selected: '已选择的消息',
+          selectAll: '全选',
         },
         tabs: {
           context: '分享上下文',
@@ -49,6 +50,7 @@ export const zhCN = {
         },
       },
     },
+    empty: '暂无数据',
     send: {
       placeholder: '输入内容...',
     },
