@@ -2,10 +2,10 @@ import { For, Show } from 'solid-js/web'
 import { createSignal } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { useClipboardCopy } from '@/hooks'
-import { deleteMessageByConversationId, spliceMessageByConversationId, spliceUpdateMessageByConversationId } from '@/stores/messages'
-import { conversationMap } from '@/stores/conversation'
+import { deleteMessageByConversationId, getMessagesByConversationId, spliceMessageByConversationId, spliceUpdateMessageByConversationId, updateMessage } from '@/stores/messages'
+import { conversationMap, currentConversationId } from '@/stores/conversation'
 import { handlePrompt } from '@/logics/conversation'
-import { scrollController } from '@/stores/ui'
+import { scrollController, showShareModal } from '@/stores/ui'
 import { globalAbortController } from '@/stores/settings'
 import StreamableText from '../StreamableText'
 import { DropDownMenu, Tooltip } from '../ui/base'
@@ -23,6 +23,7 @@ interface Props {
 export default (props: Props) => {
   let inputRef: HTMLTextAreaElement
   const $conversationMap = useStore(conversationMap)
+  const $currentConversationId = useStore(currentConversationId)
 
   const [showRawCode, setShowRawCode] = createSignal(false)
   const [copied, setCopied] = createSignal(false)
@@ -58,6 +59,15 @@ export default (props: Props) => {
     inputRef.focus()
   }
 
+  const handleShareMessageItem = () => {
+    const messages = getMessagesByConversationId($currentConversationId())
+    messages.forEach((message) => {
+      updateMessage($currentConversationId(), message.id, { isSelected: props.message.id === message.id },
+      )
+    })
+    showShareModal.set(true)
+  }
+
   const handleSend = () => {
     if (!inputRef.value)
       return
@@ -80,7 +90,7 @@ export default (props: Props) => {
     { id: 'edit', label: 'Edit message', icon: 'i-carbon:edit', role: 'user', action: handleEditMessageItem },
     { id: 'copy', label: 'Copy message', icon: 'i-carbon-copy', role: 'all', action: handleCopyMessageItem },
     { id: 'delete', label: 'Delete message', icon: 'i-carbon-trash-can', role: 'all', action: handleDeleteMessageItem },
-    { id: 'share', label: 'Share message', icon: 'i-carbon:export', role: 'all' },
+    { id: 'share', label: 'Share message', icon: 'i-carbon:export', role: 'all', action: handleShareMessageItem },
   ])
 
   if (props.message.role === 'user')

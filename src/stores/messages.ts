@@ -1,10 +1,11 @@
-import { action, map } from 'nanostores'
+import { action, atom, map } from 'nanostores'
 import { conversationMessagesMapData } from './tests/message.mock'
 import { db } from './storage/message'
 import { updateConversationById } from './conversation'
 import type { MessageInstance } from '@/types/message'
 
 export const conversationMessagesMap = map<Record<string, MessageInstance[]>>({})
+export const shareMessageIds = atom<string[]>([])
 
 export const rebuildMessagesStore = async() => {
   const data = await db.exportData() || {}
