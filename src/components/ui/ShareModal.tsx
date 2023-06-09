@@ -1,5 +1,7 @@
 import { useStore } from '@nanostores/solid'
-import { For } from 'solid-js'
+import { For, Show, createSignal } from 'solid-js'
+import satori from 'satori'
+import * as resvg from '@resvg/resvg-wasm'
 import { useClipboardCopy, useI18n } from '@/hooks'
 import { currentConversationId } from '@/stores/conversation'
 import { getMessagesByConversationId } from '@/stores/messages'
@@ -11,10 +13,61 @@ export default () => {
   const { t } = useI18n()
   const $currentConversationId = useStore(currentConversationId)
   const messages = getMessagesByConversationId($currentConversationId()).filter(item => item.isSelected)
+  const [imageUrl, setImageUrl] = createSignal('')
+  const [loading, setLoading] = createSignal(false)
 
   console.log($currentConversationId(), messages)
 
   const [copied, copy] = useClipboardCopy(messages.map(item => `${item.role}: ${item.content}`).join('\n'))
+
+  const handleLoadImage = async() => {
+    let _result = ''
+    setLoading(true)
+    try {
+      const fontData = await fetch('https://cdn.jsdelivr.net/gh/yzh990918/static@master/20230609/Inter-Medium.388xm374fse8.ttf').then(res => res.arrayBuffer())
+      _result = await satori(
+        // TODO: context image dom
+        {
+          type: 'div',
+          props: {
+            children: 'hello, world',
+            style: { color: 'black' },
+          },
+        },
+        {
+          width: 600,
+          height: 400,
+          fonts: [
+            {
+              name: 'Inter-Medium',
+              data: fontData,
+              style: 'normal',
+            },
+          ],
+        },
+      )
+      await resvg.initWasm(fetch('https://unpkg.com/@resvg/resvg-wasm/index_bg.wasm'))
+      const res = new resvg.Resvg(_result, {
+        fitTo: {
+          mode: 'width',
+          value: 600,
+        },
+      })
+
+      const png = res.render()
+      const pngBuffer = png.asPng()
+      const url = URL.createObjectURL(new Blob([pngBuffer], { type: 'image/png' }))
+      if (url) {
+        setLoading(false)
+        setImageUrl(url)
+        console.log(url)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const tabs: TabItem[] = [
     {
@@ -41,7 +94,28 @@ export default () => {
     {
       value: 'image',
       label: t('conversations.share.tabs.image'),
-      content: <div class="flex">image</div>,
+      content: <div class="flex flex-col gap-2">
+        {messages.length
+          ? (
+            <div class="flex flex-col gap-2">
+              <div class="inline-block text-left">
+                <Show when={imageUrl().length}>
+                  <div class="button inline-block mt-0 cursor-pointer mb-2" onClick={() => { window.open(imageUrl()) }}>{t('conversations.share.image.open')}</div>
+                </Show>
+                <Show when={!imageUrl().length}>
+                  <div class="emerald-light-button inline-block mt-0 cursor-pointer mb-2" onClick={() => handleLoadImage()}>{loading() ? t('conversations.share.image.loading') : t('conversations.share.image.btn')}</div>
+                </Show>
+              </div>
+              <Show when={loading()}>
+                <div class="i-carbon:circle-solid text-slate-400 animate-ping mx-auto" />
+              </Show>
+              <Show when={imageUrl().length}>
+                <img src={imageUrl()} alt="" />
+              </Show>
+            </div>
+            )
+          : <div class="text-center text-sm">{t('empty')}</div>}
+      </div>,
     },
   ]
 

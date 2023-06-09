@@ -48,6 +48,11 @@ export const en = {
           context: 'Share Context',
           image: 'Share Image',
         },
+        image: {
+          btn: 'Generate Image',
+          open: 'Open in Tab',
+          loading: 'Generating...',
+        },
       },
     },
     empty: 'No data',

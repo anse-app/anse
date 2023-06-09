@@ -48,6 +48,11 @@ export const zhCN = {
           context: '分享上下文',
           image: '分享图片',
         },
+        image: {
+          btn: '生成图片',
+          open: '新窗口打开',
+          loading: '生成中...',
+        },
       },
     },
     empty: '暂无数据',
