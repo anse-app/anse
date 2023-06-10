@@ -21,6 +21,7 @@ export const zhCN = {
     conversations: {
       title: '对话列表',
       add: '新对话',
+      store: '提示词商店',
       recent: '最近对话',
       noRecent: '暂无最近对话',
       untitled: '未命名对话',

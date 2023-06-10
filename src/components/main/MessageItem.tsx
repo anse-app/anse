@@ -6,7 +6,6 @@ import { deleteMessageByConversationId, spliceMessageByConversationId, spliceUpd
 import { conversationMap } from '@/stores/conversation'
 import { handlePrompt } from '@/logics/conversation'
 import { scrollController } from '@/stores/ui'
-import { globalAbortController } from '@/stores/settings'
 import StreamableText from '../StreamableText'
 import { DropDownMenu, Tooltip } from '../ui/base'
 import Button from '../ui/Button'
@@ -45,10 +44,8 @@ export default (props: Props) => {
   }
 
   const handleRetryMessageItem = () => {
-    const controller = new AbortController()
-    globalAbortController.set(controller)
     spliceMessageByConversationId(props.conversationId, props.message)
-    handlePrompt(currentConversation(), '', controller.signal)
+    handlePrompt(currentConversation(), '')
     // TODO: scrollController seems not working
     scrollController().scrollToBottom()
   }
@@ -61,16 +58,13 @@ export default (props: Props) => {
   const handleSend = () => {
     if (!inputRef.value)
       return
-    const controller = new AbortController()
     const currentMessage: MessageInstance = {
       ...props.message,
       content: inputPrompt(),
     }
-
-    globalAbortController.set(controller)
     spliceUpdateMessageByConversationId(props.conversationId, currentMessage)
     setIsEditing(false)
-    handlePrompt(currentConversation(), '', controller.signal)
+    handlePrompt(currentConversation(), '')
     scrollController().scrollToBottom()
   }
 
