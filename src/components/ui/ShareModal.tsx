@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/solid'
-import { For, Show, createSignal } from 'solid-js'
+import { For, Show, createEffect, createSignal } from 'solid-js'
 import satori from 'satori'
 import * as resvg from '@resvg/resvg-wasm'
-import { useClipboardCopy, useI18n } from '@/hooks'
+import { useClipboardCopy, useDark, useI18n } from '@/hooks'
 import { currentConversationId } from '@/stores/conversation'
 import { getMessagesByConversationId } from '@/stores/messages'
 import { showSelectMessageModal, showShareModal } from '@/stores/ui'
@@ -14,11 +14,25 @@ export default () => {
   const $currentConversationId = useStore(currentConversationId)
   const messages = getMessagesByConversationId($currentConversationId()).filter(item => item.isSelected)
   const [imageUrl, setImageUrl] = createSignal('')
+  const [imageBuffer, setImageBuffer] = createSignal<Blob>()
   const [loading, setLoading] = createSignal(false)
+  const [isDark] = useDark()
 
   console.log($currentConversationId(), messages)
 
   const [copied, copy] = useClipboardCopy(messages.map(item => `${item.role}: ${item.content}`).join('\n'))
+
+  const copyImage = () => {
+    const [,copy] = useClipboardCopy(imageBuffer()!)
+    copy()
+  }
+
+  createEffect(async() => {
+    try {
+      await resvg.initWasm(fetch('https://unpkg.com/@resvg/resvg-wasm/index_bg.wasm'))
+    } catch (error) {
+    }
+  }, [])
 
   const handleLoadImage = async() => {
     let _result = ''
@@ -26,12 +40,17 @@ export default () => {
     try {
       const fontData = await fetch('https://cdn.jsdelivr.net/gh/yzh990918/static@master/20230609/Inter-Medium.388xm374fse8.ttf').then(res => res.arrayBuffer())
       _result = await satori(
-        // TODO: context image dom
         {
           type: 'div',
           props: {
-            children: 'hello, world',
-            style: { color: 'black' },
+            tw: isDark() ? 'flex flex-col items-stretch w-full h-full text-white bg-[#3333333] p-0' : 'flex flex-col items-stretch w-full h-full text-black  bg-white/90 p-0',
+            children: messages.map(item => ({
+              type: 'div',
+              props: {
+                tw: 'flex items-center w-full h-12 px-4',
+                children: item.content as string,
+              },
+            })),
           },
         },
         {
@@ -46,7 +65,6 @@ export default () => {
           ],
         },
       )
-      await resvg.initWasm(fetch('https://unpkg.com/@resvg/resvg-wasm/index_bg.wasm'))
       const res = new resvg.Resvg(_result, {
         fitTo: {
           mode: 'width',
@@ -56,6 +74,7 @@ export default () => {
 
       const png = res.render()
       const pngBuffer = png.asPng()
+      setImageBuffer(new Blob([pngBuffer], { type: 'image/png' }))
       const url = URL.createObjectURL(new Blob([pngBuffer], { type: 'image/png' }))
       if (url) {
         setLoading(false)
@@ -100,7 +119,8 @@ export default () => {
             <div class="flex flex-col gap-2">
               <div class="inline-block text-left">
                 <Show when={imageUrl().length}>
-                  <div class="button inline-block mt-0 cursor-pointer mb-2" onClick={() => { window.open(imageUrl()) }}>{t('conversations.share.image.open')}</div>
+                  <div class="button inline-block mt-0 cursor-pointer mb-2" onClick={() => { copyImage() }}>{t('conversations.share.image.copy')}</div>
+                  <div class="button inline-block mt-0 cursor-pointer mb-2 ml-2" onClick={() => { window.open(imageUrl()) }}>{t('conversations.share.image.open')}</div>
                 </Show>
                 <Show when={!imageUrl().length}>
                   <div class="emerald-light-button inline-block mt-0 cursor-pointer mb-2" onClick={() => handleLoadImage()}>{loading() ? t('conversations.share.image.loading') : t('conversations.share.image.btn')}</div>

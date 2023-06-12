@@ -52,6 +52,7 @@ export const zhCN = {
           btn: '生成图片',
           open: '新窗口打开',
           loading: '生成中...',
+          copy: '复制图片',
         },
       },
     },

@@ -1,11 +1,11 @@
 import { createEffect, createSignal } from 'solid-js'
 import { writeClipboard } from '@solid-primitives/clipboard'
 
-export const useClipboardCopy = (source: string, delay = 1000) => {
+export const useClipboardCopy = (source: string | Blob, delay = 1000) => {
   const [copied, setCopied] = createSignal(false)
 
   const copy = async() => {
-    writeClipboard(source)
+    writeClipboard(typeof source === 'string' ? source : [new ClipboardItem({ [source.type]: source })])
     setCopied(true)
   }
 

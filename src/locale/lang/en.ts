@@ -52,6 +52,7 @@ export const en = {
           btn: 'Generate Image',
           open: 'Open in Tab',
           loading: 'Generating...',
+          copy: 'Copy Image',
         },
       },
     },
