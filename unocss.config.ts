@@ -110,6 +110,10 @@ export default defineConfig({
         outline: none;
         -webkit-appearance: none
       }
+      img { display: initial; }
+      .clipped {
+        clip-path: inset(0 100% 0 0);
+      }
     `,
   }],
 })

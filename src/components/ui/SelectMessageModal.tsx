@@ -13,8 +13,6 @@ export default () => {
   const [checkAll, setCheckAll] = createSignal(messages.every(item => item.isSelected))
   const [selectedMessages, setSelectedMessages] = createSignal(messages)
 
-  console.log(messages, selectedMessages())
-
   const handleToggleMessages = (id: string) => {
     messages.forEach((item) => {
       if (item.id === id)
@@ -46,9 +44,9 @@ export default () => {
         <div class="text-base">{t('conversations.share.messages.title')}</div>
       </div>
       <div class="flex flex-col p-6 h-100 overflow-auto relative">
-        <div class="border border-base b-b-0 last:b-b-1 p-4 hv-base">
+        {/* <div class="border border-base b-b-0 last:b-b-1 p-4 hv-base">
           <Checkbox setValue={() => handleSelectAll()} initValue={checkAll()} label={`${t('conversations.share.messages.selectAll')}`} />
-        </div>
+        </div> */}
         <For each={selectedMessages()}>
           {(item) => {
             return (

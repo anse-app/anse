@@ -1,8 +1,7 @@
 import { useStore } from '@nanostores/solid'
-import { For, Show, createEffect, createSignal } from 'solid-js'
-import satori from 'satori'
-import * as resvg from '@resvg/resvg-wasm'
-import { useClipboardCopy, useDark, useI18n } from '@/hooks'
+import { For, Show, createSignal } from 'solid-js'
+import html2canvas from 'html2canvas'
+import { useClipboardCopy, useI18n } from '@/hooks'
 import { currentConversationId } from '@/stores/conversation'
 import { getMessagesByConversationId } from '@/stores/messages'
 import { showSelectMessageModal, showShareModal } from '@/stores/ui'
@@ -16,7 +15,6 @@ export default () => {
   const [imageUrl, setImageUrl] = createSignal('')
   const [imageBuffer, setImageBuffer] = createSignal<Blob>()
   const [loading, setLoading] = createSignal(false)
-  const [isDark] = useDark()
 
   console.log($currentConversationId(), messages)
 
@@ -27,60 +25,23 @@ export default () => {
     copy()
   }
 
-  createEffect(async() => {
-    try {
-      await resvg.initWasm(fetch('https://unpkg.com/@resvg/resvg-wasm/index_bg.wasm'))
-    } catch (error) {
-    }
-  }, [])
-
   const handleLoadImage = async() => {
-    let _result = ''
     setLoading(true)
     try {
-      const fontData = await fetch('https://cdn.jsdelivr.net/gh/yzh990918/static@master/20230609/Inter-Medium.388xm374fse8.ttf').then(res => res.arrayBuffer())
-      _result = await satori(
-        {
-          type: 'div',
-          props: {
-            tw: isDark() ? 'flex flex-col items-stretch w-full h-full text-white bg-[#3333333] p-0' : 'flex flex-col items-stretch w-full h-full text-black  bg-white/90 p-0',
-            children: messages.map(item => ({
-              type: 'div',
-              props: {
-                tw: 'flex items-center w-full h-12 px-4',
-                children: item.content as string,
-              },
-            })),
-          },
-        },
-        {
-          width: 600,
-          height: 400,
-          fonts: [
-            {
-              name: 'Inter-Medium',
-              data: fontData,
-              style: 'normal',
-            },
-          ],
-        },
-      )
-      const res = new resvg.Resvg(_result, {
-        fitTo: {
-          mode: 'width',
-          value: 600,
-        },
+      const messageWrapper = document.getElementById('message_list_wrapper') as HTMLDivElement
+      messageWrapper.style.display = 'block'
+      const canvas = await html2canvas(messageWrapper, {
+        useCORS: true,
       })
-
-      const png = res.render()
-      const pngBuffer = png.asPng()
-      setImageBuffer(new Blob([pngBuffer], { type: 'image/png' }))
-      const url = URL.createObjectURL(new Blob([pngBuffer], { type: 'image/png' }))
-      if (url) {
-        setLoading(false)
-        setImageUrl(url)
-        console.log(url)
-      }
+      messageWrapper.style.display = 'none'
+      canvas.toBlob((res) => {
+        if (res) {
+          setImageBuffer(res)
+          const url = URL.createObjectURL(res)
+          setLoading(false)
+          setImageUrl(url)
+        }
+      })
     } catch (error) {
       console.log(error)
     } finally {

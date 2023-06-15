@@ -1,6 +1,6 @@
 import * as checkbox from '@zag-js/checkbox'
 import { normalizeProps, useMachine } from '@zag-js/solid'
-import { createEffect, createMemo, createUniqueId } from 'solid-js'
+import { createMemo, createUniqueId } from 'solid-js'
 
 interface Props {
   initValue?: boolean
@@ -16,10 +16,6 @@ export const Checkbox = (props: Props) => {
       props.setValue(detail.checked as boolean)
     },
   }))
-
-  createEffect(() => {
-    console.log('props', props.initValue)
-  })
 
   const api = createMemo(() => checkbox.connect(state, send, normalizeProps))
 

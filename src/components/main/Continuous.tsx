@@ -38,18 +38,35 @@ export default (props: Props) => {
   return (
     <>
       <div class="scroll-list relative flex flex-col h-full overflow-y-scroll" ref={scrollRef!}>
-        <For each={props.messages()}>
-          {(message, index) => (
-            <div class="border-b border-base">
-              <MessageItem
-                conversationId={props.conversationId}
-                message={message}
-                handleStreaming={handleStreamableTextUpdate}
-                index={index()}
-              />
-            </div>
-          )}
-        </For>
+        <div class="w-full max-w-screen-xl">
+          <For each={props.messages()}>
+            {(message, index) => (
+              <div class="border-b border-base">
+                <MessageItem
+                  conversationId={props.conversationId}
+                  message={message}
+                  handleStreaming={handleStreamableTextUpdate}
+                  index={index()}
+                />
+              </div>
+            )}
+          </For>
+        </div>
+        {/* use for html2Canvas */}
+        <div id="message_list_wrapper" class="w-full max-w-screen-xl m-auto clipped hidden">
+          <For each={props.messages().filter(item => item.isSelected)}>
+            {(message, index) => (
+              <div class="border-b border-base">
+                <MessageItem
+                  conversationId={props.conversationId}
+                  message={message}
+                  handleStreaming={handleStreamableTextUpdate}
+                  index={index()}
+                />
+              </div>
+            )}
+          </For>
+        </div>
       </div>
       <Show when={!isScrollBottom() && !$isSendBoxFocus()}>
         <div
