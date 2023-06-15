@@ -21,6 +21,7 @@ export const en = {
     conversations: {
       title: 'Conversations',
       add: 'New',
+      store: 'Prompt Store',
       recent: 'Recents',
       noRecent: 'No recents',
       untitled: 'Untitled',

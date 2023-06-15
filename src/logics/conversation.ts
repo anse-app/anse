@@ -2,7 +2,7 @@ import destr from 'destr'
 import { getBotMetaById, getProviderById } from '@/stores/provider'
 import { updateConversationById } from '@/stores/conversation'
 import { clearMessagesByConversationId, getMessagesByConversationId, pushMessageByConversationId } from '@/stores/messages'
-import { getGeneralSettings, getSettingsByProviderId } from '@/stores/settings'
+import { getGeneralSettings, getSettingsByProviderId, globalAbortController } from '@/stores/settings'
 import { setLoadingStateByConversationId, setStreamByConversationId } from '@/stores/streams'
 import { currentErrorMessage } from '@/stores/ui'
 import { generateRapidProviderPayload, promptHelper } from './helper'
@@ -10,7 +10,7 @@ import type { HandlerPayload, PromptResponse } from '@/types/provider'
 import type { Conversation } from '@/types/conversation'
 import type { ErrorMessage, Message } from '@/types/message'
 
-export const handlePrompt = async(conversation: Conversation, prompt?: string, signal?: AbortSignal) => {
+export const handlePrompt = async(conversation: Conversation, prompt?: string) => {
   const generalSettings = getGeneralSettings()
   const bot = getBotMetaById(conversation.bot)
   const [providerId, botId] = conversation.bot.split(':')
@@ -49,10 +49,12 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
       })),
     ],
   }
+  const controller = new AbortController()
+  globalAbortController.set(controller)
   try {
     providerResponse = await getProviderResponse(provider.id, handlerPayload, {
       caller: callMethod,
-      signal,
+      signal: controller.signal,
     })
   } catch (e) {
     const error = e as Error

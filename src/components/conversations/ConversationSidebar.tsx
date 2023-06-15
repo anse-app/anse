@@ -4,6 +4,7 @@ import { useI18n } from '@/hooks'
 import { conversationMapSortList } from '@/stores/conversation'
 import ConversationSidebarItem from './ConversationSidebarItem'
 import ConversationSidebarAdd from './ConversationSidebarAdd'
+import ConversationSidebarPromptStore from './ConversationSidebarPromptStore'
 
 export default () => {
   const { t } = useI18n()
@@ -30,6 +31,9 @@ export default () => {
             )}
           </For>
         </div>
+      </div>
+      <div class="p-4">
+        <ConversationSidebarPromptStore />
       </div>
     </div>
   )

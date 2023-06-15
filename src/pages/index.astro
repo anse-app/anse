@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import Main from '@/components/Main.astro'
+import MainExplore from '@/components/MainExplore.astro'
 import ConversationSidebar from '@/components/conversations/ConversationSidebar'
 import Settings from '@/components/settings/SettingsSidebar'
 import ModalsLayer from '@/components/ModalsLayer'
@@ -9,15 +10,16 @@ import BuildStores from '@/components/client-only/BuildStores'
 ---
 
 <Layout title="Anse">
-    <div class="h-100vh w-screen flex">
-      <Sidebar direction="left" class="hidden md:block">
-        <ConversationSidebar client:only />
-      </Sidebar>
-      <Main />
-      <Sidebar direction="right" class="hidden lg:block">
-        <Settings client:only />
-      </Sidebar>
-    </div>
-    <ModalsLayer client:only />
-    <BuildStores client:only />
+  <div class="h-100vh w-screen flex">
+    <Sidebar direction="left" class="hidden md:block">
+      <ConversationSidebar client:only />
+    </Sidebar>
+    <Main />
+    <!-- <MainExplore /> -->
+    <Sidebar direction="right" class="hidden lg:block">
+      <Settings client:only />
+    </Sidebar>
+  </div>
+  <ModalsLayer client:only />
+  <BuildStores client:only />
 </Layout>

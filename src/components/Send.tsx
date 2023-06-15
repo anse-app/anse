@@ -140,9 +140,7 @@ export default () => {
     if (!currentConversation())
       addConversation()
 
-    const controller = new AbortController()
-    globalAbortController.set(controller)
-    handlePrompt(currentConversation(), inputRef.value, controller.signal)
+    handlePrompt(currentConversation(), inputRef.value)
     clearPrompt()
     scrollController().scrollToBottom()
   }
