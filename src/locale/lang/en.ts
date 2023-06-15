@@ -59,6 +59,7 @@ export const en = {
     empty: 'No data',
     send: {
       placeholder: 'Enter Something...',
+      button: 'Send',
     },
     copyed: 'Copyed!',
   },

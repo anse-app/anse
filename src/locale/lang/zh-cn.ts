@@ -59,6 +59,7 @@ export const zhCN = {
     empty: '暂无数据',
     send: {
       placeholder: '输入内容...',
+      button: '发送',
     },
     copyed: '已拷贝!',
   },

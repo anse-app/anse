@@ -20,8 +20,10 @@ const parseMarkdown = (raw: string) => {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkMath)
-    .use(remarkRehype)
-    .use(rehypePrism)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypePrism, {
+      ignoreMissing: true,
+    })
     .use(rehypeKatex)
     .use(rehypeStringify)
     .processSync(raw)

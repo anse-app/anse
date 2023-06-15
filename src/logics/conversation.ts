@@ -90,7 +90,7 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
   if (providerResponse && bot.type === 'chat_continuous' && !conversation.name) {
     const inputText = conversation.systemInfo || prompt!
     const rapidPayload = generateRapidProviderPayload(promptHelper.summarizeText(inputText), provider.id)
-    const generatedTitle = await getProviderResponse(provider.id, rapidPayload).catch(() => {}) as string || inputText
+    const generatedTitle = await getProviderResponse(provider.id, rapidPayload, { caller: callMethod }).catch(() => {}) as string || inputText
     updateConversationById(conversation.id, {
       name: generatedTitle.replace(/^['"\s]+|['"\s]+$/g, ''),
     })
@@ -124,7 +124,20 @@ const getProviderResponse = async(providerId: string, payload: HandlerPayload, o
 
 // Called by both client and server
 export const callProviderHandler = async(providerId: string, payload: HandlerPayload, signal?: AbortSignal) => {
-  console.log('callProviderHandler', payload)
+  // To filter out sensitive fields, such as `apiKey` and `prompt`
+  console.log('callProviderHandler', {
+    conversationId: payload.conversationId,
+    conversationType: payload.conversationType,
+    botId: payload.botId,
+    globalSettings: {
+      baseUrl: payload.globalSettings?.baseUrl,
+      model: payload.globalSettings?.model,
+      maxTokens: payload.globalSettings?.maxTokens,
+      temperature: payload.globalSettings?.temperature,
+      top_p: payload.globalSettings?.top_p,
+    },
+    botSettings: payload.botSettings,
+  })
 
   const provider = getProviderById(providerId)
   if (!provider) return

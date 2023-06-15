@@ -11,17 +11,12 @@ interface Props {
 
 export const Toggle = (inputProps: Props) => {
   const props = mergeProps({}, inputProps)
-  let hack_FirstTimeRender = true
   const [state, send] = useMachine(zagSwitch.machine({
     id: createUniqueId(),
     readOnly: props.readOnly,
     checked: props.value(),
     onChange({ checked }) {
-      if (hack_FirstTimeRender) {
-        hack_FirstTimeRender = false
-        return
-      }
-      props.setValue(!checked)
+      props.setValue(checked)
     },
   }))
 

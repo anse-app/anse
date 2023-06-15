@@ -11,6 +11,7 @@ import type { GeneralSettings } from '@/types/app'
 export default () => {
   const { t } = useI18n()
   const $providerSettingsMap = useStore(providerSettingsMap)
+  // bug: someTimes providerSettingsMap() is {}
   const generalSettings = () => {
     return ($providerSettingsMap().general || {}) as unknown as GeneralSettings
   }
