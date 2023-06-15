@@ -32,6 +32,7 @@ export const en = {
         cancel: 'cancel',
       },
       share: {
+        title: 'Share Conversation',
         link: {
           title: 'Share with link',
           copy: 'Copy Link',

@@ -32,6 +32,7 @@ export const zhCN = {
         cancel: '取消',
       },
       share: {
+        title: '分享对话',
         link: {
           title: '分享链接',
           copy: '复制链接',

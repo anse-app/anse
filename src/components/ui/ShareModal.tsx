@@ -87,9 +87,6 @@ export default () => {
                   <div class="emerald-light-button inline-block mt-0 cursor-pointer mb-2" onClick={() => handleLoadImage()}>{loading() ? t('conversations.share.image.loading') : t('conversations.share.image.btn')}</div>
                 </Show>
               </div>
-              <Show when={loading()}>
-                <div class="i-carbon:circle-solid text-slate-400 animate-ping mx-auto" />
-              </Show>
               <Show when={imageUrl().length}>
                 <img src={imageUrl()} alt="" />
               </Show>
@@ -103,8 +100,9 @@ export default () => {
   return (
     <div class="w-full">
       <div class="fi justify-between border-base b-b-1 px-6 py-4">
-        <div class="text-base">{t('conversations.share.link.title')}</div>
-        <button class="button mt-0">{t('conversations.share.link.create')}</button>
+        <div class="text-base">{t('conversations.share.title')}</div>
+        {/* TODO */}
+        {/* <button class="button mt-0">{t('conversations.share.link.create')}</button> */}
       </div>
       <div class="fcc flex-col space-y-2 p-6">
         <div
