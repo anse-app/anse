@@ -147,7 +147,7 @@ export default (props: Props) => {
 
             <div class="flex justify-end space-x-2 mt-1">
               <Button size="sm" onClick={() => setIsEditing(false)}>Cancel</Button>
-              <Button size="sm" onClick={() => handleSend()}>Submit</Button>
+              <Button size="sm" variant="primary" onClick={() => handleSend()}>Submit</Button>
             </div>
           </Show>
           <Show when={!isEditing()}>
