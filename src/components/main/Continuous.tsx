@@ -38,7 +38,7 @@ export default (props: Props) => {
   return (
     <>
       <div class="scroll-list relative flex flex-col h-full overflow-y-scroll" ref={scrollRef!}>
-        <div class="w-full max-w-screen-xl">
+        <div class="w-full">
           <For each={props.messages()}>
             {(message, index) => (
               <div class="border-b border-base">
@@ -53,7 +53,7 @@ export default (props: Props) => {
           </For>
         </div>
         {/* use for html2Canvas */}
-        <div id="message_list_wrapper" class="w-full max-w-screen-xl m-auto clipped hidden">
+        <div id="message_list_wrapper" class="w-full m-auto clipped hidden">
           <For each={props.messages().filter(item => item.isSelected)}>
             {(message, index) => (
               <div class="border-b border-base">
