@@ -68,6 +68,7 @@ export default defineConfig({
     'input-base': 'bg-transparent placeholder:op-50 dark:placeholder:op-20 focus:(ring-0 outline-none) resize-none',
     'button': 'mt-4 px-3 py-2 text-xs border border-base rounded-lg hv-base hover:border-base-100',
     'emerald-button': 'mt-4 px-3 py-2 text-xs border rounded-lg text-light-400 border-emerald-600 bg-emerald-600 hover-bg-emerald-700 hover-border-emerald-700',
+    'emerald-light-button': 'mt-4 px-3 py-2 text-xs border rounded-lg text-emerald-400 bg-emerald/12 border-emerald-400 hover-bg-emerald-600 hover-border-emerald-600 hover-text-light-700',
     'max-w-base': 'max-w-3xl mx-auto',
     'text-error': 'text-red-700 dark:text-red-400/80',
     'border-error': 'border border-red-700 dark:border-red-400/80',
@@ -117,6 +118,10 @@ export default defineConfig({
       button,select,input,option {
         outline: none;
         -webkit-appearance: none
+      }
+      img { display: initial; }
+      .clipped {
+        clip-path: inset(0 100% 0 0);
       }
     `,
   }],

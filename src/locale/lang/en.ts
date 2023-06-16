@@ -31,10 +31,37 @@ export const en = {
         btn: 'confirm',
         cancel: 'cancel',
       },
+      share: {
+        title: 'Share Conversation',
+        link: {
+          title: 'Share with link',
+          copy: 'Copy Link',
+          create: 'Create Link',
+        },
+        save: 'Save',
+        copy: 'Copy Context',
+        messages: {
+          title: 'Select Message',
+          selected: 'Selected Messages',
+          selectAll: 'Select All',
+        },
+        tabs: {
+          context: 'Share Context',
+          image: 'Share Image',
+        },
+        image: {
+          btn: 'Generate Image',
+          open: 'Open in Tab',
+          loading: 'Generating...',
+          copy: 'Copy Image',
+        },
+      },
     },
+    empty: 'No data',
     send: {
       placeholder: 'Enter Something...',
       button: 'Send',
     },
+    copyed: 'Copyed!',
   },
 } as language

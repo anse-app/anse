@@ -8,6 +8,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     'react/jsx-key': 'off',
     'import/namespace': 'off',
+    'react/jsx-closing-tag-location': 'off',
   },
   overrides: [
     {

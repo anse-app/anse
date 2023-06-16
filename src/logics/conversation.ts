@@ -28,6 +28,7 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
       role: 'user',
       content: prompt,
       dateTime: new Date().getTime(),
+      isSelected: false,
     })
   }
 
@@ -80,6 +81,7 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
       content: typeof providerResponse === 'string' ? providerResponse : '',
       stream: providerResponse instanceof ReadableStream,
       dateTime: new Date().getTime(),
+      isSelected: false,
     })
   }
   setLoadingStateByConversationId(conversation.id, false)

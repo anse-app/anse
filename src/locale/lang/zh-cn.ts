@@ -31,10 +31,37 @@ export const zhCN = {
         btn: '确认',
         cancel: '取消',
       },
+      share: {
+        title: '分享对话',
+        link: {
+          title: '分享链接',
+          copy: '复制链接',
+          create: '创建链接',
+        },
+        save: '保存',
+        copy: '复制上下文',
+        messages: {
+          title: '选择消息',
+          selected: '已选择的消息',
+          selectAll: '全选',
+        },
+        tabs: {
+          context: '分享上下文',
+          image: '分享图片',
+        },
+        image: {
+          btn: '生成图片',
+          open: '新窗口打开',
+          loading: '生成中...',
+          copy: '复制图片',
+        },
+      },
     },
+    empty: '暂无数据',
     send: {
       placeholder: '输入内容...',
       button: '发送',
     },
+    copyed: '已拷贝!',
   },
 } as language
