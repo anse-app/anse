@@ -16,8 +16,6 @@ export default () => {
   const [imageBuffer, setImageBuffer] = createSignal<Blob>()
   const [loading, setLoading] = createSignal(false)
 
-  console.log($currentConversationId(), messages)
-
   const [copied, copy] = useClipboardCopy(messages.map(item => `${item.role}: ${item.content}`).join('\n'))
 
   const copyImage = () => {
