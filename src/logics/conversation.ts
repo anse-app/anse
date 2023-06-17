@@ -74,6 +74,19 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
         messageId,
         stream: providerResponse,
       })
+    } else if (typeof providerResponse === 'object' && providerResponse?.name && providerResponse?.arguments) {
+      // function call
+      console.log('function call', providerResponse)
+      pushMessageByConversationId(conversation.id, {
+        id: messageId,
+        role: 'function',
+        content: providerResponse,
+        stream: false,
+        dateTime: new Date().getTime(),
+        isSelected: false,
+      })
+      setLoadingStateByConversationId(conversation.id, false)
+      return
     }
     pushMessageByConversationId(conversation.id, {
       id: messageId,

@@ -1,5 +1,5 @@
 import type { ConversationType } from './conversation'
-import type { Message } from './message'
+import type { FunctionCallMessage, Message } from './message'
 
 export interface Provider {
   id: string
@@ -38,7 +38,7 @@ export interface HandlerPayload {
   messages: Message[]
 }
 
-export type PromptResponse = string | ReadableStream | null | undefined
+export type PromptResponse = string | ReadableStream | FunctionCallMessage | null | undefined
 
 interface SettingsUIBase {
   key: string

@@ -1,10 +1,27 @@
-export interface Message {
+interface MessageBase {
+  role: 'system' | 'user' | 'assistant' | 'function'
+  content: string | FunctionCallMessage
+}
+
+interface MessageText extends MessageBase {
   role: 'system' | 'user' | 'assistant'
   content: string
 }
 
+interface MessageFunction extends MessageBase {
+  role: 'function'
+  content: FunctionCallMessage
+}
+
+export type Message = MessageText | MessageFunction
+
+export interface FunctionCallMessage {
+  name: string
+  arguments: Record<string, any>
+}
+
 /** Used in app */
-export interface MessageInstance extends Message {
+export type MessageInstance = Message & {
   id: string
   stream?: boolean
   dateTime?: number

@@ -3,12 +3,9 @@ import { parseStream } from './parser'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
-  if (payload.botId === 'chat_continuous')
-    return handleChatCompletion(payload, signal)
-  if (payload.botId === 'chat_single')
-    return handleChatCompletion(payload, signal)
-  if (payload.botId === 'image_generation')
-    return handleImageGeneration(payload)
+  if (payload.botId === 'chat_continuous') return handleChatCompletion(payload, signal)
+  if (payload.botId === 'chat_single') return handleChatCompletion(payload, signal)
+  if (payload.botId === 'image_generation') return handleImageGeneration(payload)
 }
 
 export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, globalSettings) => {
@@ -29,8 +26,7 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     messages: [{ role: 'user', content: prompt }],
   } as HandlerPayload
   const result = await handleChatCompletion(rapidPromptPayload)
-  if (typeof result === 'string')
-    return result
+  if (typeof result === 'string') return result
   return ''
 }
 
@@ -44,7 +40,24 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
       temperature: payload.globalSettings.temperature as number,
       max_tokens: payload.globalSettings.maxTokens as number,
       top_p: payload.globalSettings.topP as number,
-      stream: payload.globalSettings.stream as boolean ?? true,
+      // stream: payload.globalSettings.stream as boolean ?? true,
+      stream: false,
+      functions: [
+        {
+          name: 'web_browsing',
+          description: 'Can browse a website, and return its content',
+          parameters: {
+            type: 'object',
+            properties: {
+              url: {
+                type: 'string',
+                description: 'Web address to be read.',
+              },
+            },
+            required: ['url'],
+          },
+        },
+      ],
     },
     signal,
   })
@@ -59,6 +72,15 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     return parseStream(response)
   } else {
     const resJson = await response.json()
+    if (resJson.choices[0].finish_reason === 'function_call') {
+      const rawFunctionMeta = resJson.choices[0].message.function_call
+      const functionMeta = {
+        name: rawFunctionMeta.name,
+        arguments: JSON.parse(rawFunctionMeta.arguments),
+      }
+      console.log('functionMeta', functionMeta)
+      return functionMeta
+    }
     return resJson.choices[0].message.content as string
   }
 }
