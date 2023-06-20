@@ -6,7 +6,7 @@ import { addConversation, conversationMap, currentConversationId } from '@/store
 import { loadingStateMap, streamsMap } from '@/stores/streams'
 import { handlePrompt } from '@/logics/conversation'
 import { globalAbortController } from '@/stores/settings'
-import { useI18n, useMobileScreen } from '@/hooks'
+import { useI18n } from '@/hooks'
 import Button from './ui/Button'
 
 export default () => {
@@ -21,7 +21,6 @@ export default () => {
   const $globalAbortController = useStore(globalAbortController)
 
   const [inputPrompt, setInputPrompt] = createSignal('')
-  const [footerClass, setFooterClass] = createSignal('')
   const isEditing = () => inputPrompt() || $isSendBoxFocus()
   const currentConversation = () => {
     return $conversationMap()[$currentConversationId()]
@@ -32,10 +31,6 @@ export default () => {
   onMount(() => {
     createShortcut(['Control', 'Enter'], () => {
       $isSendBoxFocus() && handleSend()
-    })
-
-    useMobileScreen(() => {
-      setFooterClass('sticky bottom-0 left-0 right-0 overflow-hidden')
     })
   })
 
@@ -172,7 +167,7 @@ export default () => {
   }
 
   return (
-    <div class={`relative shrink-0 border-t border-base pb-[env(safe-area-inset-bottom)] transition transition-colors duration-300  ${stateRootClass()} ${footerClass()}`}>
+    <div class={`sticky bottom-0 left-0 right-0 overflow-hidden shrink-0 border-t border-base pb-[env(safe-area-inset-bottom)] transition transition-colors duration-300  ${stateRootClass()}`}>
       <div class={`relative transition transition-height duration-240 ${stateHeightClass()}`}>
         <Switch fallback={<EmptyState />}>
           <Match when={stateType() === 'error'}>
