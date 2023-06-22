@@ -2,7 +2,7 @@
 
 # Anse
 
-[English](./README.md) | 简体中文
+[English](./README.md) | 简体中文 | [日本語](./README_JA-JP.md)
 
 Anse 是一个极致优化的 AI 聊天 UI.
 

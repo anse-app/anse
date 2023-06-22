@@ -2,7 +2,7 @@
 
 # Anse
 
-English | [简体中文](./README.zh-CN.md)
+English | [简体中文](./README.zh-CN.md) | [日本語](./README_JA-JP.md)
 
 Anse is a fully optimized UI for AI Chats.
 
