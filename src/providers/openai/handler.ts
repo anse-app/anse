@@ -1,5 +1,6 @@
 import { fetchChatCompletion, fetchImageGeneration } from './api'
 import { parseStream } from './parser'
+import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
@@ -35,14 +36,35 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
 }
 
 const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal) => {
+  // An array to store the chat messages
+  const messages: Message[] = []
+
+  let maxTokens = payload.globalSettings.maxTokens as number
+  let messageHistorySize = payload.globalSettings.messageHistorySize as number
+
+  // Iterate through the message history
+  while (messageHistorySize > 0) {
+    messageHistorySize--
+    // Get the last message from the payload
+    const m = payload.messages.pop()
+    if (m === undefined)
+      break
+
+    if (maxTokens - m.content.length < 0)
+      break
+
+    maxTokens -= m.content.length
+    messages.unshift(m)
+  }
+
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
     body: {
+      messages,
+      max_tokens: maxTokens,
       model: payload.globalSettings.model as string,
-      messages: payload.messages,
       temperature: payload.globalSettings.temperature as number,
-      max_tokens: payload.globalSettings.maxTokens as number,
       top_p: payload.globalSettings.topP as number,
       stream: payload.globalSettings.stream as boolean ?? true,
     },
