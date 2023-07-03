@@ -4,6 +4,7 @@ import { useLargeScreen } from '@/hooks'
 import ConversationHeaderInfo from './ConversationHeaderInfo'
 import ConversationMessageClearButton from './ConversationMessageClearButton'
 import ConversationMessageShareButton from './ConversationMessageShareButton'
+import ConversationMessageSettingButton from './ConversationMessageSettingButton'
 
 export default () => {
   onMount(() => {
@@ -25,6 +26,7 @@ export default () => {
         <ConversationHeaderInfo />
       </div>
       <div class="fi gap-1 overflow-hidden">
+        <ConversationMessageSettingButton />
         <ConversationMessageClearButton />
         <ConversationMessageShareButton />
         <div
