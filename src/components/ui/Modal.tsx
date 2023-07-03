@@ -21,6 +21,7 @@ export default (props: Props) => {
     // https://github.com/chakra-ui/zag/issues/596
     closeOnOutsideClick: false,
     onClose: () => {
+      props.bindValue.set(false)
       props.closeCallback && props.closeCallback()
     },
   }))

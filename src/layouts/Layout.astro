@@ -1,4 +1,6 @@
 ---
+import { pwaInfo } from 'virtual:pwa-info'
+
 export interface Props {
   title: string;
 }
@@ -18,17 +20,9 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content="Get answers from AI, elegantly." />
-    { import.meta.env.HEAD_SCRIPTS ? <Fragment set:html={import.meta.env.HEAD_SCRIPTS} /> : null }
-    <!-- netlify-disable-blocks -->
-    {
-      import.meta.env.PROD && (
-        <>
-          <script is:inline src="/registerSW.js" />
-          <link rel="manifest" href="/manifest.webmanifest" />
-        </>
-      )
-    }
-    <!-- netlify-disable-end -->
+    {import.meta.env.HEAD_SCRIPTS && <Fragment set:html={import.meta.env.HEAD_SCRIPTS} />}
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+    {import.meta.env.PROD && pwaInfo?.registerSW && <Fragment set:html={pwaInfo.registerSW.scriptTag} />}
   </head>
   <body class="bg-base fg-base">
     <slot />
@@ -39,7 +33,6 @@ const { title } = Astro.props;
 (function() {
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   const setting = localStorage.getItem('theme') || 'auto'
-  if (setting === 'dark' || (prefersDark && setting !== 'light'))
-    document.documentElement.classList.toggle('dark', true)
+  if (setting === 'dark' || (prefersDark && setting !== 'light')) document.documentElement.classList.toggle('dark', true)
 })()
 </script>
