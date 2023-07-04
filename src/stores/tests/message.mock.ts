@@ -1,4 +1,3 @@
-
 import type { MessageInstance } from '@/types/message'
 
 const testMarkdown: MessageInstance[] = [

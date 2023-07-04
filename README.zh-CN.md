@@ -67,10 +67,6 @@ Q: 无需代理部署教程即可加速国内访问？?
 
 A: 你可以参考此教程: https://github.com/anse-app/chatgpt-demo/discussions/270
 
-Q: `PWA` 不工作？
-
-A: 当前的 PWA 不支持 Netlify 部署，您可以选择 vercel 或 node 部署。
-
 ## 参与贡献
 
 这个项目的存在要感谢所有做出贡献的人。
