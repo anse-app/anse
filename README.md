@@ -65,9 +65,6 @@ Q: Accelerate domestic access without the need for proxy deployment tutorial?
 
 A: You can refer to this tutorial: https://github.com/anse-app/chatgpt-demo/discussions/270
 
-Q: `PWA` is not working?
-
-A: Current `PWA` does not support deployment on Netlify, you can choose vercel or node deployment.
 ## Contributing
 
 This project exists thanks to all those who contributed.
