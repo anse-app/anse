@@ -1,6 +1,6 @@
 interface MessageBase {
   role: 'system' | 'user' | 'assistant' | 'function'
-  content: string | FunctionCallMessage
+  content: string
 }
 
 interface MessageText extends MessageBase {
@@ -10,7 +10,9 @@ interface MessageText extends MessageBase {
 
 interface MessageFunction extends MessageBase {
   role: 'function'
-  content: FunctionCallMessage
+  input: FunctionCallMessage
+  name: string
+  content: string
 }
 
 export type Message = MessageText | MessageFunction

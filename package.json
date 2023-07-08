@@ -21,6 +21,7 @@
     "@astrojs/solid-js": "^2.2.0",
     "@astrojs/vercel": "^3.6.0",
     "@mapbox/rehype-prism": "^0.8.0",
+    "@mozilla/readability": "^0.4.4",
     "@nanostores/solid": "^0.4.2",
     "@solid-primitives/clipboard": "^1.5.6",
     "@solid-primitives/keyboard": "^1.2.3",

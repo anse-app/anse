@@ -52,7 +52,7 @@ export default (props: Props) => {
           </Show>
           <Show when={!isEditing()}>
             {/* <div class="op-50 text-sm">{JSON.stringify(props.message)}</div> */}
-            { props.message.role === 'function' && <MessageItemFunctionCall meta={props.message.content} /> }
+            { props.message.role === 'function' && <MessageItemFunctionCall meta={props.message.input} result={props.message.content} /> }
             { props.message.role !== 'function' && (
               <StreamableText
                 text={props.message.content}

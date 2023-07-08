@@ -1,7 +1,16 @@
+import pluginWebBrowsing from '@anse/plugin-web-browsing'
 import { fetchChatCompletion, fetchImageGeneration } from './api'
 import { parseStream } from './parser'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
+
+const pluginList = [pluginWebBrowsing].map((plugin) => {
+  return {
+    name: plugin.name,
+    description: plugin.description,
+    parameters: plugin.parameters,
+  }
+})
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
   if (payload.botId === 'chat_continuous') return handleChatCompletion(payload, signal)
@@ -35,51 +44,36 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
   // An array to store the chat messages
   const messages: Message[] = []
 
-  let maxTokens = payload.globalSettings.maxTokens as number
-  let messageHistorySize = payload.globalSettings.messageHistorySize as number
+  const maxTokens = payload.globalSettings.maxTokens as number
+  const messageHistorySize = payload.globalSettings.messageHistorySize as number
 
   // Iterate through the message history
-  while (messageHistorySize > 0) {
-    messageHistorySize--
-    // Get the last message from the payload
-    const m = payload.messages.pop()
-    if (m === undefined)
-      break
+  // while (messageHistorySize > 0) {
+  //   messageHistorySize--
+  //   // Get the last message from the payload
+  //   const m = payload.messages.pop()
+  //   if (m === undefined)
+  //     break
 
-    if (maxTokens - m.content.length < 0)
-      break
+  //   if (maxTokens - m.content.length < 0)
+  //     break
 
-    maxTokens -= m.content.length
-    messages.unshift(m)
-  }
+  //   maxTokens -= m.content.length
+  //   messages.unshift(m)
+  // }
 
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
     body: {
-      messages,
+      messages: payload.messages,
       max_tokens: maxTokens,
       model: payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
       top_p: payload.globalSettings.topP as number,
       // stream: payload.globalSettings.stream as boolean ?? true,
       stream: false,
-      functions: [
-        {
-          name: 'web_browsing',
-          description: 'Can browse a website, and return its content',
-          parameters: {
-            type: 'object',
-            properties: {
-              url: {
-                type: 'string',
-                description: 'Web address to be read.',
-              },
-            },
-            required: ['url'],
-          },
-        },
-      ],
+      functions: pluginList,
     },
     signal,
   })

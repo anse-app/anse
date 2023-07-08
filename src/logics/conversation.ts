@@ -1,7 +1,8 @@
 import destr from 'destr'
+import pluginWebBrowsing from '@anse/plugin-web-browsing'
 import { getBotMetaById, getProviderById } from '@/stores/provider'
 import { updateConversationById } from '@/stores/conversation'
-import { clearMessagesByConversationId, getMessagesByConversationId, pushMessageByConversationId } from '@/stores/messages'
+import { clearMessagesByConversationId, deleteMessageByConversationId, getMessagesByConversationId, pushMessageByConversationId } from '@/stores/messages'
 import { getGeneralSettings, getSettingsByProviderId } from '@/stores/settings'
 import { setLoadingStateByConversationId, setStreamByConversationId } from '@/stores/streams'
 import { currentErrorMessage } from '@/stores/ui'
@@ -32,6 +33,7 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
     })
   }
 
+  // Send prompt to provider
   setLoadingStateByConversationId(conversation.id, true)
   let providerResponse: PromptResponse
   const handlerPayload: HandlerPayload = {
@@ -46,10 +48,12 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
       ...(destr(conversation.mockMessages) || []) as Message[],
       ...getMessagesByConversationId(conversation.id).map(message => ({
         role: message.role,
+        name: message.name || undefined,
         content: message.content,
       })),
     ],
   }
+  console.log('handlerPayload', handlerPayload)
   try {
     providerResponse = await getProviderResponse(provider.id, handlerPayload, {
       caller: callMethod,
@@ -77,15 +81,49 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
     } else if (typeof providerResponse === 'object' && providerResponse?.name && providerResponse?.arguments) {
       // function call
       console.log('function call', providerResponse)
+      // pushMessageByConversationId(conversation.id, {
+      //   id: messageId,
+      //   role: 'assistant',
+      //   input: providerResponse,
+      //   content: null,
+      //   stream: false,
+      //   dateTime: new Date().getTime(),
+      //   isSelected: false,
+      // })
       pushMessageByConversationId(conversation.id, {
-        id: messageId,
+        id: `${messageId}_`,
         role: 'function',
-        content: providerResponse,
+        input: providerResponse,
+        name: '',
+        content: '',
         stream: false,
         dateTime: new Date().getTime(),
         isSelected: false,
       })
       setLoadingStateByConversationId(conversation.id, false)
+      const url = providerResponse.arguments.url
+      // const webBody = await fetch(website).then(res => res.text())
+      // const dom = new DOMParser().parseFromString(webBody, 'text/html')
+      // console.log('dom', dom)
+      // const article = new Readability.Readability(dom).parse()
+      // console.log('website', website, article)
+      // const result = article?.textContent || 'no content'
+      // replace lase message
+      const result = await pluginWebBrowsing.handleCall({ url })
+      deleteMessageByConversationId(conversation.id, {
+        id: `${messageId}_`,
+      })
+      pushMessageByConversationId(conversation.id, {
+        id: `${messageId}_`,
+        role: 'function',
+        input: providerResponse,
+        name: 'web_browsing',
+        content: result,
+        stream: false,
+        dateTime: new Date().getTime(),
+        isSelected: false,
+      })
+      handlePrompt(conversation)
       return
     }
     pushMessageByConversationId(conversation.id, {
