@@ -88,6 +88,10 @@ export default defineConfig({
       --c-shadow: #00000008;
       }
 
+      html,body {
+        height: 100%;
+      }
+
       html.dark {
         --c-scroll: #333333;
         --c-scroll-hover: #555555;
