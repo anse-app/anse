@@ -72,7 +72,7 @@ export default () => {
           class="h-full w-full absolute inset-0 py-4 px-[calc(max(1.5rem,(100%-48rem)/2))] scroll-pa-4 input-base text-sm"
         />
       </div>
-      <div class="fi justify-between gap-2 h-14 px-[calc(max(1.5rem,(100%-48rem)/2)-0.5rem)] border-t border-base">
+      <div class="fi justify-between gap-2 h-14 px-[calc(max(1.5rem,(100%-48rem)/2)-0.5rem)]">
         <div>
           {/* <Button
             icon="i-carbon-plug"
