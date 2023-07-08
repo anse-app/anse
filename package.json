@@ -16,6 +16,7 @@
     "postinstall": "npx simple-git-hooks"
   },
   "dependencies": {
+    "@anse-app/plugin-web-browsing": "^0.0.1",
     "@astrojs/netlify": "2.3.0",
     "@astrojs/node": "^5.3.0",
     "@astrojs/solid-js": "^2.2.0",

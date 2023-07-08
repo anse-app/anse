@@ -1,4 +1,4 @@
-import pluginWebBrowsing from '@anse/plugin-web-browsing'
+import pluginWebBrowsing from '@anse-app/plugin-web-browsing'
 import { fetchChatCompletion, fetchImageGeneration } from './api'
 import { parseStream } from './parser'
 import type { Message } from '@/types/message'

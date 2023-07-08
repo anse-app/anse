@@ -1,5 +1,5 @@
 import destr from 'destr'
-import pluginWebBrowsing from '@anse/plugin-web-browsing'
+import pluginWebBrowsing from '@anse-app/plugin-web-browsing'
 import { getBotMetaById, getProviderById } from '@/stores/provider'
 import { updateConversationById } from '@/stores/conversation'
 import { clearMessagesByConversationId, deleteMessageByConversationId, getMessagesByConversationId, pushMessageByConversationId } from '@/stores/messages'

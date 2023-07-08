@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@anse-app/plugin-web-browsing':
+    specifier: ^0.0.1
+    version: 0.0.1
   '@astrojs/netlify':
     specifier: 2.3.0
     version: 2.3.0(astro@2.7.3)
@@ -184,6 +187,12 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
+
+  /@anse-app/plugin-web-browsing@0.0.1:
+    resolution: {integrity: sha512-IAXD4Wq4/Gd9ZFdmNA+WPnpxkr/nNFJwyt4A5gb+EGQ8GrvrZ60oMsY+rcJUWSzePxnYvPeDWghUIZY1O824mQ==}
+    dependencies:
+      '@mozilla/readability': 0.4.4
+    dev: false
 
   /@antfu/install-pkg@0.1.1:
     resolution: {integrity: sha512-LyB/8+bSfa0DFGC06zpCEfs89/XoWZwws5ygEa5D+Xsm3OfI+aXQ86VgVG7Acyef+rSZ5HE7J8rrxzrQeM3PjQ==}
