@@ -24,12 +24,18 @@ export const en = {
       recent: 'Recents',
       noRecent: 'No recents',
       untitled: 'Untitled',
+      promopt: {
+        system: 'System Info',
+        desc: 'You are a helpful assistant, answer as concisely as possible...',
+      },
+      emoji: 'Search an emoji ~',
       confirm: {
         title: 'Delete all messages in this chat',
         desc: 'This action cannot be undone.',
         message: 'Delete this record',
         btn: 'confirm',
         cancel: 'cancel',
+        submit: 'submit',
       },
       share: {
         title: 'Share Conversation',
@@ -57,6 +63,9 @@ export const en = {
         },
       },
     },
+    docs: 'Docs',
+    github: 'Github',
+    scroll: 'Scroll to bottom',
     empty: 'No data',
     send: {
       placeholder: 'Enter Something...',

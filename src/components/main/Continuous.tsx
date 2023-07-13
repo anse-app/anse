@@ -3,6 +3,7 @@ import { useStore } from '@nanostores/solid'
 import { createScrollPosition } from '@solid-primitives/scroll'
 import { leading, throttle } from '@solid-primitives/scheduled'
 import { isSendBoxFocus } from '@/stores/ui'
+import { useI18n } from '@/hooks'
 import MessageItem from './MessageItem'
 import type { Accessor } from 'solid-js'
 import type { MessageInstance } from '@/types/message'
@@ -14,6 +15,7 @@ interface Props {
 
 export default (props: Props) => {
   let scrollRef: HTMLDivElement
+  const { t } = useI18n()
   const $isSendBoxFocus = useStore(isSendBoxFocus)
   const [isScrollBottom, setIsScrollBottom] = createSignal(false)
   const scroll = createScrollPosition(() => scrollRef)
@@ -74,7 +76,7 @@ export default (props: Props) => {
           onClick={() => scrollRef!.scrollTo({ top: scrollRef.scrollHeight, behavior: 'smooth' })}
         >
           <div class="fcc h-8 max-w-base text-xs op-50 gap-1">
-            <div>Scroll to bottom</div>
+            <div>{ t('scroll')}</div>
             <div i-carbon-arrow-down />
           </div>
         </div>

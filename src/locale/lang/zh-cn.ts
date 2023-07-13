@@ -24,12 +24,18 @@ export const zhCN = {
       recent: '最近对话',
       noRecent: '暂无最近对话',
       untitled: '未命名对话',
+      promopt: {
+        system: '系统信息',
+        desc: '你是个乐于助人的助手，回答尽量简洁...',
+      },
+      emoji: '搜索一个表情 ~',
       confirm: {
         title: '删除本会话的所有消息',
         desc: '这将删除本会话的所有消息，且不可恢复',
         message: '删除这条记录',
         btn: '确认',
         cancel: '取消',
+        submit: '提交',
       },
       share: {
         title: '分享对话',
@@ -57,6 +63,9 @@ export const zhCN = {
         },
       },
     },
+    docs: '文档',
+    github: '源码',
+    scroll: '滚动到底部',
     empty: '暂无数据',
     send: {
       placeholder: '输入内容...',

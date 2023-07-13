@@ -1,10 +1,12 @@
 import { Suspense, createSignal } from 'solid-js'
 import { EmojiPicker } from 'solid-emoji-picker'
+import { useI18n } from '@/hooks'
 import { emojiPickerCurrentPick, showEmojiPickerModal } from '@/stores/ui'
 import type { Emoji } from 'solid-emoji-picker'
 import '@/assets/emoji-picker.css'
 
 export default () => {
+  const { t } = useI18n()
   const [search, setSearch] = createSignal('')
 
   const emojiFilter = (emoji: Emoji) => {
@@ -24,7 +26,7 @@ export default () => {
         <input
           type="text"
           class="w-full px-2 py-1 border border-base input-base  focus:border-base-100"
-          placeholder="Search an emoji."
+          placeholder={t('conversations.emoji')}
           value={search()}
           onInput={(e) => {
             setSearch(e.currentTarget.value)
