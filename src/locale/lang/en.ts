@@ -31,7 +31,7 @@ export const en = {
       emoji: 'Search an emoji ~',
       confirm: {
         title: 'Delete all messages in this chat',
-        desc: 'This action cannot be undone.',
+        desc: 'This action cannot be unback.',
         message: 'Delete this record',
         btn: 'confirm',
         cancel: 'cancel',
@@ -57,7 +57,7 @@ export const en = {
         },
         image: {
           btn: 'Generate Image',
-          open: 'Open in Tab',
+          open: 'Open in New Tab',
           loading: 'Generating...',
           copy: 'Copy Image',
         },
@@ -71,6 +71,6 @@ export const en = {
       placeholder: 'Enter Something...',
       button: 'Send',
     },
-    copyed: 'Copyed!',
+    copyed: 'Copied',
   },
 } as language
