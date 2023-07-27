@@ -167,7 +167,7 @@ export default () => {
   }
 
   return (
-    <div class={`sticky bottom-0 left-0 right-0 overflow-hidden shrink-0 border-t border-base pb-[env(safe-area-inset-bottom)] transition transition-colors duration-300  ${stateRootClass()}`}>
+    <div class={`sticky -bottom-1px left-0 right-0 overflow-hidden shrink-0 border-t border-base pb-[env(safe-area-inset-bottom)] transition transition-colors duration-300 -translate-y-1px ${stateRootClass()}`}>
       <div class={`relative transition transition-height duration-240 ${stateHeightClass()}`}>
         <Switch fallback={<EmptyState />}>
           <Match when={stateType() === 'error'}>
