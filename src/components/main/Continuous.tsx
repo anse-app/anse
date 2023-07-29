@@ -4,7 +4,7 @@ import { createScrollPosition } from '@solid-primitives/scroll'
 import { leading, throttle } from '@solid-primitives/scheduled'
 import { isSendBoxFocus } from '@/stores/ui'
 import { useI18n } from '@/hooks'
-import MessageItem from './MessageItem'
+import MessageItem from './message-item/MessageItem'
 import type { Accessor } from 'solid-js'
 import type { MessageInstance } from '@/types/message'
 

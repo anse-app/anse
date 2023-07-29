@@ -23,13 +23,13 @@ export default (props: Props) => {
   }
 
   const handleDeleteMessageItem = () => {
-    deleteMessageByConversationId(props.conversationId, props.message)
+    deleteMessageByConversationId(props.conversationId, props.message.id)
   }
 
   const handleRetryMessageItem = () => {
     const controller = new AbortController()
     globalAbortController.set(controller)
-    spliceMessageByConversationId(props.conversationId, props.message)
+    spliceMessageByConversationId(props.conversationId, props.message.id)
     // handlePrompt(currentConversation(), '', controller.signal)
     // TODO: scrollController seems not working
     scrollController().scrollToBottom()
