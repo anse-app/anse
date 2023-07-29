@@ -24,3 +24,7 @@ interface PluginParameters {
   }>
   required?: string[]
 }
+
+export interface PluginPayload {
+  parameters: Record<string, PromptProp>
+}

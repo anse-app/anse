@@ -1,5 +1,4 @@
 import destr from 'destr'
-import pluginWebBrowsing from '@anse-app/plugin-web-browsing'
 import { getBotMetaById, getProviderById } from '@/stores/provider'
 import { updateConversationById } from '@/stores/conversation'
 import { clearMessagesByConversationId, deleteMessageByConversationId, getMessagesByConversationId, pushMessageByConversationId } from '@/stores/messages'
@@ -9,7 +8,7 @@ import { currentErrorMessage } from '@/stores/ui'
 import { generateRapidProviderPayload, promptHelper } from './helper'
 import type { HandlerPayload, PromptResponse } from '@/types/provider'
 import type { Conversation } from '@/types/conversation'
-import type { ErrorMessage, Message } from '@/types/message'
+import type { ErrorMessage, FunctionCallMessage, Message } from '@/types/message'
 
 export const handlePrompt = async(conversation: Conversation, prompt?: string, signal?: AbortSignal) => {
   const generalSettings = getGeneralSettings()
@@ -46,11 +45,20 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
     messages: [
       ...(conversation.systemInfo ? [{ role: 'system', content: conversation.systemInfo }] : []) as Message[],
       ...(destr(conversation.mockMessages) || []) as Message[],
-      ...getMessagesByConversationId(conversation.id).map(message => ({
-        role: message.role,
-        name: message.name || undefined,
-        content: message.content,
-      })),
+      ...getMessagesByConversationId(conversation.id).map((message) => {
+        if (message.role === 'function') {
+          return {
+            role: message.role,
+            name: message.name,
+            content: message.content,
+          }
+        } else {
+          return {
+            role: message.role,
+            content: message.content,
+          }
+        }
+      }),
     ],
   }
   console.log('handlerPayload', handlerPayload)
@@ -78,50 +86,31 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
         messageId,
         stream: providerResponse,
       })
-    } else if (typeof providerResponse === 'object' && providerResponse?.name && providerResponse?.arguments) {
+    } else if (typeof providerResponse === 'object' && providerResponse?.type === 'function_call') {
       // function call
       console.log('function call', providerResponse)
-      // pushMessageByConversationId(conversation.id, {
-      //   id: messageId,
-      //   role: 'assistant',
-      //   input: providerResponse,
-      //   content: null,
-      //   stream: false,
-      //   dateTime: new Date().getTime(),
-      //   isSelected: false,
-      // })
       pushMessageByConversationId(conversation.id, {
         id: `${messageId}_`,
         role: 'function',
-        input: providerResponse,
         name: '',
         content: '',
         stream: false,
         dateTime: new Date().getTime(),
         isSelected: false,
+        functionCallInput: providerResponse as FunctionCallMessage,
       })
       setLoadingStateByConversationId(conversation.id, false)
-      const url = providerResponse.arguments.url
-      // const webBody = await fetch(website).then(res => res.text())
-      // const dom = new DOMParser().parseFromString(webBody, 'text/html')
-      // console.log('dom', dom)
-      // const article = new Readability.Readability(dom).parse()
-      // console.log('website', website, article)
-      // const result = article?.textContent || 'no content'
-      // replace lase message
-      const result = await pluginWebBrowsing.handleCall({ url })
-      deleteMessageByConversationId(conversation.id, {
-        id: `${messageId}_`,
-      })
+      const pluginResponse = await getPluginResponse(providerResponse)
+      deleteMessageByConversationId(conversation.id, `${messageId}_`)
       pushMessageByConversationId(conversation.id, {
         id: `${messageId}_`,
         role: 'function',
-        input: providerResponse,
         name: 'web_browsing',
-        content: result,
+        content: pluginResponse,
         stream: false,
         dateTime: new Date().getTime(),
         isSelected: false,
+        functionCallInput: providerResponse as FunctionCallMessage,
       })
       handlePrompt(conversation)
       return
@@ -200,4 +189,20 @@ export const callProviderHandler = async(providerId: string, payload: HandlerPay
     response = await provider.handlePrompt?.(payload, signal)
 
   return response
+}
+
+const getPluginResponse = async(payload: FunctionCallMessage) => {
+  const backendResponse = await fetch(`/api/plugin/${payload.name}`, {
+    method: 'POST',
+    body: JSON.stringify({
+      parameters: payload.arguments,
+    }),
+  })
+  if (!backendResponse.ok) {
+    const error = await backendResponse.json()
+    throw new Error('Request failed', {
+      cause: error?.error,
+    })
+  }
+  return backendResponse.text()
 }

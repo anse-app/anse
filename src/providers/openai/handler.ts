@@ -1,16 +1,8 @@
-import pluginWebBrowsing from '@anse-app/plugin-web-browsing'
+import { pluginMetaList } from '@/stores/plugin'
 import { fetchChatCompletion, fetchImageGeneration } from './api'
 import { parseStream } from './parser'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
-
-const pluginList = [pluginWebBrowsing].map((plugin) => {
-  return {
-    name: plugin.name,
-    description: plugin.description,
-    parameters: plugin.parameters,
-  }
-})
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
   if (payload.botId === 'chat_continuous') return handleChatCompletion(payload, signal)
@@ -71,9 +63,8 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
       model: payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
       top_p: payload.globalSettings.topP as number,
-      // stream: payload.globalSettings.stream as boolean ?? true,
-      stream: false,
-      functions: pluginList,
+      stream: payload.globalSettings.stream as boolean ?? true,
+      functions: pluginMetaList,
     },
     signal,
   })
@@ -90,12 +81,12 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     const resJson = await response.json()
     if (resJson.choices[0].finish_reason === 'function_call') {
       const rawFunctionMeta = resJson.choices[0].message.function_call
-      const functionMeta = {
+      const payload = {
+        type: 'function_call',
         name: rawFunctionMeta.name,
         arguments: JSON.parse(rawFunctionMeta.arguments),
       }
-      console.log('functionMeta', functionMeta)
-      return functionMeta
+      return payload
     }
     return resJson.choices[0].message.content as string
   }

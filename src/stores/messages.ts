@@ -65,10 +65,10 @@ export const clearMessagesByConversationId = action(
 export const deleteMessageByConversationId = action(
   conversationMessagesMap,
   'deleteMessageByConversationId',
-  (map, id: string, payload: MessageInstance) => {
+  (map, id: string, messageId: string) => {
     const oldMessages = map.get()[id] || []
-    map.setKey(id, [...oldMessages.filter(message => message.id !== payload.id)])
-    db.setItem(id, [...oldMessages.filter(message => message.id !== payload.id)])
+    map.setKey(id, [...oldMessages.filter(message => message.id !== messageId)])
+    db.setItem(id, [...oldMessages.filter(message => message.id !== messageId)])
     updateConversationById(id, {
       lastUseTime: Date.now(),
     })
@@ -78,9 +78,9 @@ export const deleteMessageByConversationId = action(
 export const spliceMessageByConversationId = action(
   conversationMessagesMap,
   'spliceMessagesByConversationId',
-  (map, id: string, payload: MessageInstance) => {
+  (map, id: string, messageId: string) => {
     const oldMessages = map.get()[id] || []
-    const currentIndex = oldMessages.findIndex(message => message.id === payload.id)
+    const currentIndex = oldMessages.findIndex(message => message.id === messageId)
     map.setKey(id, [...oldMessages.slice(0, currentIndex + 1)])
     db.setItem(id, [...oldMessages.slice(0, currentIndex + 1)])
     updateConversationById(id, {

@@ -10,7 +10,6 @@ interface MessageText extends MessageBase {
 
 interface MessageFunction extends MessageBase {
   role: 'function'
-  input: FunctionCallMessage
   name: string
   content: string
 }
@@ -18,6 +17,7 @@ interface MessageFunction extends MessageBase {
 export type Message = MessageText | MessageFunction
 
 export interface FunctionCallMessage {
+  type: 'function_call'
   name: string
   arguments: Record<string, any>
 }
@@ -28,6 +28,7 @@ export type MessageInstance = Message & {
   stream?: boolean
   dateTime?: number
   isSelected?: boolean
+  functionCallInput?: FunctionCallMessage
 }
 
 export interface ErrorMessage {

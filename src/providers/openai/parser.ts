@@ -17,9 +17,20 @@ export const parseStream = (rawResponse: Response) => {
           }
           try {
             const json = JSON.parse(data)
-            const text = json.choices[0].delta?.content || ''
-            const queue = encoder.encode(text)
-            controller.enqueue(queue)
+            const contentDelta = json.choices[0].delta
+            if (!contentDelta)
+              controller.error(new Error('No content delta'))
+            if (contentDelta.function_call) {
+              // if (contentDelta.function_call.name)
+              //   functionCallPayload.name = contentDelta.function_call.name
+              // if (contentDelta.function_call.arguments)
+              //   functionCallPayload.argumentsRaw += contentDelta.function_call.arguments.replace(/\n/g, '')
+              const queue = encoder.encode(`function:${JSON.stringify(contentDelta.function_call)}}`)
+              controller.enqueue(queue)
+            } else {
+              const queue = encoder.encode(contentDelta.content || '')
+              controller.enqueue(queue)
+            }
           } catch (e) {
             controller.error(e)
           }
