@@ -9,7 +9,7 @@ import disableBlocks from './plugins/disableBlocks'
 
 const envAdapter = () => {
   switch (process.env.OUTPUT) {
-    case 'vercel': return vercel()
+    case 'vercel': return vercel({ analytics: false }) // Set `analytics` to `true` if you want to use Vercel Analytics
     case 'netlify': return netlify()
     default: return node({ mode: 'standalone' })
   }

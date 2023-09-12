@@ -57,6 +57,7 @@
     "solid-emoji-picker": "^0.2.0",
     "solid-js": "1.7.7",
     "solid-transition-group": "^0.2.2",
+    "solidjs-use": "^2.3.0",
     "unified": "^10.1.2"
   },
   "devDependencies": {
