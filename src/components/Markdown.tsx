@@ -1,5 +1,5 @@
-import { Show, createSignal, createEffect } from 'solid-js'
-import { useClipboard, useEventListener } from 'solidjs-use'
+import { Show, createSignal, createEffect, on } from 'solid-js'
+import { useEventListener } from 'solidjs-use'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
@@ -8,6 +8,7 @@ import remarkRehype from 'remark-rehype'
 import rehypeKatex from 'rehype-katex'
 import rehypeStringify from 'rehype-stringify'
 import rehypePrism from '@mapbox/rehype-prism'
+import { useClipboardCopy } from '@/hooks'
 import 'katex/dist/katex.min.css'
 
 interface Props {
@@ -33,36 +34,18 @@ const parseMarkdown = (raw: string) => {
 
 export default (props: Props) => {
   const [source] = createSignal('')
-  const { copy } = useClipboard({ source, copiedDuring: 1000 })
-  const [copied, setCopied] = createSignal<Array<boolean>>([])
+  const [copied, copy] = useClipboardCopy(source())
+  const [copiedIndex, setCopiedIndex] = createSignal(-1)
 
   useEventListener('click', (e) => {
     const el = e.target as HTMLElement
-    let code = null
-    let index = -1
-
     if (el.matches('div > div.code-copy-btn')) {
-      code = decodeURIComponent(el.dataset.code!)
-      index = parseInt(el.dataset.index!)
-      copy(code)
+      setCopiedIndex(parseInt(el.dataset.index!))
+      copy(decodeURIComponent(el.dataset.code!))
     }
     if (el.matches('div > div.code-copy-btn > i')) {
-      code = decodeURIComponent(el.parentElement?.dataset.code!)
-      index = parseInt(el.parentElement?.dataset.index!)
-      copy(code)
-    }
-
-    if (index >= 0) {
-      const newCopied = [...copied()]
-      newCopied[index] = true
-      setCopied(newCopied)
-
-      // Reset the button state after 1 second
-      setTimeout(() => {
-        const resetCopied = [...copied()]
-        resetCopied[index] = false
-        setCopied(resetCopied)
-      }, 1000)
+      setCopiedIndex(parseInt(el.parentElement?.dataset.index!))
+      copy(decodeURIComponent(el.parentElement?.dataset.code!))
     }
   })
 
@@ -82,7 +65,7 @@ export default (props: Props) => {
 
       const result = `<div class="relative">
         <div data-code=${encodeURIComponent(code)} data-index=${index} class="code-copy-btn group">
-          ${copied()[index] === true ? '<i class="i-carbon-checkmark"></i>' : '<i class="i-carbon-copy"></i>'}
+          ${copied() && copiedIndex() === index ? '<i class="i-carbon-checkmark"></i>' : '<i class="i-carbon-copy"></i>'}
         </div>
         ${match}
       </div>`
@@ -93,11 +76,9 @@ export default (props: Props) => {
     return newHtml
   }
 
-  createEffect(() => {
-    const codeBlocks = props.text.match(/```[\s\S]*?```/g)
-    const initialCopied = codeBlocks ? new Array(codeBlocks.length).fill(false) : []
-    setCopied(initialCopied)
-  })
+  createEffect(on(() => props.text, () => {
+    setCopiedIndex(-1)
+  }))
 
   return (
     <Show when={props.showRawCode} fallback={<div class={props.class ?? ''} innerHTML={htmlString()} />}>
