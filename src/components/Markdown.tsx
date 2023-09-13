@@ -78,9 +78,9 @@ export default (props: Props) => {
       const parser = new DOMParser()
       const doc = parser.parseFromString(match, 'text/html')
       const codeElement = doc.querySelector('code')
-      const code = codeElement ? codeElement.textContent : ''
+      const code = codeElement?.textContent || ''
 
-      const result = `<div relative>
+      const result = `<div class="relative">
         <div data-code=${encodeURIComponent(code)} data-index=${index} class="code-copy-btn group">
           ${copied()[index] === true ? '<i class="i-carbon-checkmark"></i>' : '<i class="i-carbon-copy"></i>'}
         </div>
