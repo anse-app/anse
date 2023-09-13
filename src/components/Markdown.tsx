@@ -1,4 +1,4 @@
-import { Show, createSignal } from 'solid-js'
+import { Show, createSignal, createEffect } from 'solid-js'
 import { useClipboard, useEventListener } from 'solidjs-use'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
@@ -33,20 +33,36 @@ const parseMarkdown = (raw: string) => {
 
 export default (props: Props) => {
   const [source] = createSignal('')
-  const { copy, copied } = useClipboard({ source, copiedDuring: 1000 })
+  const { copy } = useClipboard({ source, copiedDuring: 1000 })
+  const [copied, setCopied] = createSignal<Array<boolean>>([])
 
   useEventListener('click', (e) => {
     const el = e.target as HTMLElement
     let code = null
+    let index = -1
 
-    if (el.matches('div > div.copy-btn')) {
+    if (el.matches('div > div.code-copy-btn')) {
       code = decodeURIComponent(el.dataset.code!)
+      index = parseInt(el.dataset.index!)
       copy(code)
     }
-    if (el.matches('div > div.copy-btn > svg')) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+    if (el.matches('div > div.code-copy-btn > i')) {
       code = decodeURIComponent(el.parentElement?.dataset.code!)
+      index = parseInt(el.parentElement?.dataset.index!)
       copy(code)
+    }
+
+    if (index >= 0) {
+      const newCopied = [...copied()]
+      newCopied[index] = true
+      setCopied(newCopied)
+
+      // Reset the button state after 1 second
+      setTimeout(() => {
+        const resetCopied = [...copied()]
+        resetCopied[index] = false
+        setCopied(resetCopied)
+      }, 1000)
     }
   })
 
@@ -57,29 +73,31 @@ export default (props: Props) => {
 
     // Replace the code block with a custom HTML structure that includes a copy button
     const codeBlockRegex = /<pre[^>]*><code[^>]*>([\s\S]*?)<\/code><\/pre>/g
+    let index = 0
     const newHtml = raw.replace(codeBlockRegex, (match) => {
       const parser = new DOMParser()
       const doc = parser.parseFromString(match, 'text/html')
       const codeElement = doc.querySelector('code')
       const code = codeElement ? codeElement.textContent : ''
 
-      return `<div relative>
-        <div data-code=${encodeURIComponent(code)} class="copy-btn code-copy-btn group">
-          ${
-            copied()
-              ? '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="currentColor" d="m13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z"/></svg>'
-              : '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="currentColor" d="M28 10v18H10V10h18m0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Z"/><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"/></svg>'
-          }
-          <div class="group-hover:op-90 code-copy-tips">
-            ${copied() ? 'Copied' : 'Copy'}
-          </div>
+      const result = `<div relative>
+        <div data-code=${encodeURIComponent(code)} data-index=${index} class="code-copy-btn group">
+          ${copied()[index] === true ? '<i class="i-carbon-checkmark"></i>' : '<i class="i-carbon-copy"></i>'}
         </div>
         ${match}
       </div>`
+      index++
+      return result
     })
 
     return newHtml
   }
+
+  createEffect(() => {
+    const codeBlocks = props.text.match(/```[\s\S]*?```/g)
+    const initialCopied = codeBlocks ? new Array(codeBlocks.length).fill(false) : []
+    setCopied(initialCopied)
+  })
 
   return (
     <Show when={props.showRawCode} fallback={<div class={props.class ?? ''} innerHTML={htmlString()} />}>
