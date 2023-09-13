@@ -4,8 +4,8 @@ import { writeClipboard } from '@solid-primitives/clipboard'
 export const useClipboardCopy = (source: string | Blob, delay = 1000) => {
   const [copied, setCopied] = createSignal(false)
 
-  const copy = async() => {
-    writeClipboard(typeof source === 'string' ? source : [new ClipboardItem({ [source.type]: source })])
+  const copy = async(value = source) => {
+    writeClipboard(typeof value === 'string' ? value : [new ClipboardItem({ [value.type]: value })])
     setCopied(true)
   }
 
