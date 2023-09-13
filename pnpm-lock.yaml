@@ -26,6 +26,9 @@ dependencies:
   '@solid-primitives/clipboard':
     specifier: ^1.5.6
     version: 1.5.6(solid-js@1.7.7)
+  '@solid-primitives/event-listener':
+    specifier: ^2.3.0
+    version: 2.3.0(solid-js@1.7.7)
   '@solid-primitives/keyboard':
     specifier: ^1.2.3
     version: 1.2.3(solid-js@1.7.7)
@@ -128,9 +131,6 @@ dependencies:
   solid-transition-group:
     specifier: ^0.2.2
     version: 0.2.2(solid-js@1.7.7)
-  solidjs-use:
-    specifier: ^2.3.0
-    version: 2.3.0
   unified:
     specifier: ^10.1.2
     version: 10.1.2
@@ -2119,12 +2119,12 @@ packages:
       solid-js: 1.7.7
     dev: false
 
-  /@solid-primitives/event-listener@2.2.13(solid-js@1.7.7):
-    resolution: {integrity: sha512-8GtVEq0ECZoa5Klo1jjfGPfwg0zVJ8TNnNkWu8FqRkh0CkhbhCVJAKwjleem9K/qL6zUDfJihLjhqGBTBbb+8w==}
+  /@solid-primitives/event-listener@2.3.0(solid-js@1.7.7):
+    resolution: {integrity: sha512-0DS7DQZvCExWSpurVZC9/wjI8RmkhuOtWOy6Pp1Woq9ElMT9/bfjNpkwXsOwisLpcTqh9eUs17kp7jtpWcC20w==}
     peerDependencies:
       solid-js: ^1.6.12
     dependencies:
-      '@solid-primitives/utils': 6.2.0(solid-js@1.7.7)
+      '@solid-primitives/utils': 6.2.1(solid-js@1.7.7)
       solid-js: 1.7.7
     dev: false
 
@@ -2133,7 +2133,7 @@ packages:
     peerDependencies:
       solid-js: ^1.6.12
     dependencies:
-      '@solid-primitives/event-listener': 2.2.13(solid-js@1.7.7)
+      '@solid-primitives/event-listener': 2.3.0(solid-js@1.7.7)
       '@solid-primitives/rootless': 1.4.1(solid-js@1.7.7)
       '@solid-primitives/utils': 6.2.0(solid-js@1.7.7)
       solid-js: 1.7.7
@@ -2170,7 +2170,7 @@ packages:
     peerDependencies:
       solid-js: ^1.6.12
     dependencies:
-      '@solid-primitives/event-listener': 2.2.13(solid-js@1.7.7)
+      '@solid-primitives/event-listener': 2.3.0(solid-js@1.7.7)
       '@solid-primitives/rootless': 1.4.1(solid-js@1.7.7)
       '@solid-primitives/static-store': 0.0.4(solid-js@1.7.7)
       solid-js: 1.7.7
@@ -2201,14 +2201,12 @@ packages:
       solid-js: 1.7.7
     dev: false
 
-  /@solidjs-use/shared@2.3.0:
-    resolution: {integrity: sha512-xuPNzZ9fwigkmYXTO+a8kaT45XQCPt6jVlyiDDYCD9NRZheRJOZWiUcVjYHzjececbWTctcY8NFdsXVyxARHKg==}
+  /@solid-primitives/utils@6.2.1(solid-js@1.7.7):
+    resolution: {integrity: sha512-TsecNzxiO5bLfzqb4OOuzfUmdOROcssuGqgh5rXMMaasoFZ3GoveUgdY1wcf17frMJM7kCNGNuK34EjErneZkg==}
+    peerDependencies:
+      solid-js: ^1.6.12
     dependencies:
-      '@solidjs-use/solid-to-vue': 2.3.0
-    dev: false
-
-  /@solidjs-use/solid-to-vue@2.3.0:
-    resolution: {integrity: sha512-I2onRwzdYl2eq20M3hcTkVIeYq4hNoBpHvRJB9yzoyXRDSyp7R2glIbvdBzpsXqnTvX7HJhB2KePfxYXFvyJxw==}
+      solid-js: 1.7.7
     dev: false
 
   /@surma/rollup-plugin-off-main-thread@2.2.3:
@@ -2350,10 +2348,6 @@ packages:
 
   /@types/unist@2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
-
-  /@types/web-bluetooth@0.0.16:
-    resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
-    dev: false
 
   /@types/yargs-parser@21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
@@ -8548,13 +8542,6 @@ packages:
       '@solid-primitives/refs': 1.0.4(solid-js@1.7.7)
       '@solid-primitives/transition-group': 1.0.2(solid-js@1.7.7)
       solid-js: 1.7.7
-    dev: false
-
-  /solidjs-use@2.3.0:
-    resolution: {integrity: sha512-ZyH2jiUSQU+5S5vd8zyvqz9X2ikhMjJhDeh/TjRzjLDJlZ1RuZaMxdM+jGsrJxo3X/xBW9kDpYNONXs6wYrQCQ==}
-    dependencies:
-      '@solidjs-use/shared': 2.3.0
-      '@types/web-bluetooth': 0.0.16
     dev: false
 
   /source-map-js@1.0.2:

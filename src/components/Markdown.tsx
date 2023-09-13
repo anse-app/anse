@@ -1,5 +1,5 @@
 import { Show, createSignal, createEffect, on } from 'solid-js'
-import { useEventListener } from 'solidjs-use'
+import { makeEventListener } from '@solid-primitives/event-listener'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
@@ -37,7 +37,7 @@ export default (props: Props) => {
   const [copied, copy] = useClipboardCopy(source())
   const [copiedIndex, setCopiedIndex] = createSignal(-1)
 
-  useEventListener('click', (e) => {
+  makeEventListener(document, 'click', (e) => {
     const el = e.target as HTMLElement
     if (el.matches('div > div.code-copy-btn')) {
       setCopiedIndex(parseInt(el.dataset.index!))
