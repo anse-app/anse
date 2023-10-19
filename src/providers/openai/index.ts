@@ -14,6 +14,7 @@ const providerOpenAI = () => {
         key: 'apiKey',
         name: 'API Key',
         type: 'api-key',
+        default: import.meta.env.PUBLIC_OPENAI_API_KEY,
       },
       {
         key: 'baseUrl',

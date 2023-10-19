@@ -1,4 +1,5 @@
-import { Show, createSignal, createEffect, on } from 'solid-js'
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+import { Show, createEffect, createSignal, on } from 'solid-js'
 import { makeEventListener } from '@solid-primitives/event-listener'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
