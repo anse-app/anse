@@ -22,18 +22,21 @@ interface Props {
   max: number
   step: number
   disabled?: boolean
-  isInputEditable?: boolean
+  canEditSliderViaInput?: boolean
   setValue: (v: number) => void
 }
 
 export const Slider = (selectProps: Props) => {
-  const props = mergeProps({
-    min: 0,
-    max: 10,
-    step: 1,
-    disabled: false,
-    isInputEditable: true,
-  }, selectProps)
+  const props = mergeProps(
+    {
+      min: 0,
+      max: 10,
+      step: 1,
+      disabled: false,
+      canEditSliderViaInput: true,
+    },
+    selectProps,
+  )
 
   const formatSliderValue = (value: number) => {
     if (!value) return 0
@@ -65,12 +68,12 @@ export const Slider = (selectProps: Props) => {
     <div {...api().rootProps}>
       <div class="text-xs op-50 focus-within:op-100 fb items-center">
         <div />
-        {!props.isInputEditable && (
+        {!props.canEditSliderViaInput && (
           <output {...api().outputProps}>
             {formatSliderValue(api().value)}
           </output>
         )}
-        {props.isInputEditable && (
+        {props.canEditSliderViaInput && (
           <input
             type="text"
             spellcheck={false}
