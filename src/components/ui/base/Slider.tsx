@@ -1,7 +1,7 @@
 import * as slider from '@zag-js/slider'
 import { normalizeProps, useMachine } from '@zag-js/solid'
 import { createMemo, createSignal, createUniqueId, mergeProps } from 'solid-js'
-import type { Accessor } from 'solid-js'
+import type { Accessor, JSX } from 'solid-js'
 
 function adjustValueToStep(
   value: number,
@@ -9,8 +9,6 @@ function adjustValueToStep(
   min: number,
   max: number,
 ) {
-  if (!value) return 0
-
   // Ensure value is a multiple of step, starting from min.
   const adjustedValue = Math.round((value - min) / step) * step + min
 
@@ -29,6 +27,7 @@ interface Props {
   max: number
   step: number
   disabled?: boolean
+  isInputEditable?: boolean
   setValue: (v: number) => void
 }
 
@@ -38,6 +37,7 @@ export const Slider = (selectProps: Props) => {
     max: 10,
     step: 1,
     disabled: false,
+    isInputEditable: true,
   }, selectProps)
 
   const formatSliderValue = (value: number) => {
@@ -59,30 +59,32 @@ export const Slider = (selectProps: Props) => {
       if (!details) return
 
       const value = formatSliderValue(details.value)
-
-      if (details.value)
-        props.setValue(value)
-
+      props.setValue(value)
       setInput(value)
     },
   }))
 
   const api = createMemo(() => slider.connect(state, send, normalizeProps))
 
-  const onInput = (e: Event) => {
-    const target = e.target as HTMLInputElement
-    const value = target.value
+  const onInput: JSX.InputEventHandler<HTMLInputElement, InputEvent> = (
+    e,
+  ) => {
+    const target = e.target
+    let value = Number(target.value)
 
-    api().setValue(Number(value))
+    if (Number.isNaN(value)) value = props.value()
+
+    api().setValue(value)
   }
 
-  const onBlur = (e: Event) => {
-    const target = e.target as HTMLInputElement
+  const onBlur: JSX.FocusEventHandler<HTMLInputElement, FocusEvent> = (
+    event,
+  ) => {
+    const target = event.target
     let value = Number(target.value)
 
     // if input is not a number, reset to default value
-    if (Number.isNaN(value))
-      value = props.value()
+    if (Number.isNaN(value)) value = props.value()
 
     value = adjustValueToStep(value, props.step, props.min, props.max)
     setInput(value)
@@ -90,16 +92,25 @@ export const Slider = (selectProps: Props) => {
 
   return (
     <div {...api().rootProps}>
-      <div class="text-xs op-50 fb items-center">
+      <div class="text-xs op-50 focus-within:op-100 fb items-center">
         <div />
-        <output {...api().outputProps}>
-          <input
-            class="bg-transparent border border-base w-[80px] text-right px-2 py-1 focus:border-base-100 transition-colors-200"
-            onInput={onInput}
-            onBlur={onBlur}
-            value={input()}
-          />
-        </output>
+        {!props.isInputEditable && (
+          <output {...api().outputProps}>
+            {formatSliderValue(api().value)}
+          </output>
+        )}
+        {props.isInputEditable && (
+        <input
+          class="bg-transparent border border-transparent w-[80px] text-right px-2 py-1 focus:border-base-100 transition-colors-200"
+          onInput={onInput}
+          onBlur={onBlur}
+          value={input()}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter')
+              e.currentTarget.blur()
+          }}
+        />
+        )}
       </div>
       <div class="mt-2" {...api().controlProps}>
         <div {...api().trackProps}>
