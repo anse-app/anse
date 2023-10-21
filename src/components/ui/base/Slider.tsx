@@ -1,7 +1,7 @@
 import * as slider from '@zag-js/slider'
 import { normalizeProps, useMachine } from '@zag-js/solid'
 import { createMemo, createSignal, createUniqueId, mergeProps } from 'solid-js'
-import type { Accessor, JSX } from 'solid-js'
+import type { Accessor } from 'solid-js'
 
 function adjustValueToStep(
   value: number,
@@ -9,13 +9,8 @@ function adjustValueToStep(
   min: number,
   max: number,
 ) {
-  // Ensure value is a multiple of step, starting from min.
   const adjustedValue = Math.round((value - min) / step) * step + min
-
-  // Ensure the adjusted value is within the min and max range.
   const boundedValue = Math.min(Math.max(adjustedValue, min), max)
-
-  // Limit the number of decimal places based on the step.
   const decimalPlaces = (step.toString().split('.')[1] || []).length
 
   return parseFloat(boundedValue.toFixed(decimalPlaces))
@@ -66,30 +61,6 @@ export const Slider = (selectProps: Props) => {
 
   const api = createMemo(() => slider.connect(state, send, normalizeProps))
 
-  const onInput: JSX.InputEventHandler<HTMLInputElement, InputEvent> = (
-    e,
-  ) => {
-    const target = e.target
-    let value = Number(target.value)
-
-    if (Number.isNaN(value)) value = props.value()
-
-    api().setValue(value)
-  }
-
-  const onBlur: JSX.FocusEventHandler<HTMLInputElement, FocusEvent> = (
-    event,
-  ) => {
-    const target = event.target
-    let value = Number(target.value)
-
-    // if input is not a number, reset to default value
-    if (Number.isNaN(value)) value = props.value()
-
-    value = adjustValueToStep(value, props.step, props.min, props.max)
-    setInput(value)
-  }
-
   return (
     <div {...api().rootProps}>
       <div class="text-xs op-50 focus-within:op-100 fb items-center">
@@ -100,16 +71,52 @@ export const Slider = (selectProps: Props) => {
           </output>
         )}
         {props.isInputEditable && (
-        <input
-          class="bg-transparent border border-transparent w-[80px] text-right px-2 py-1 focus:border-base-100 transition-colors-200"
-          onInput={onInput}
-          onBlur={onBlur}
-          value={input()}
-          onKeyUp={(e) => {
-            if (e.key === 'Enter')
-              e.currentTarget.blur()
-          }}
-        />
+          <input
+            type="text"
+            spellcheck={false}
+            autocomplete="off"
+            autocorrect="off"
+            aria-valuemax={props.max}
+            aria-valuemin={props.min}
+            aria-valuenow={input()}
+            aria-controls={api().hiddenInputProps.id}
+            aria-live="off"
+            aria-label="Enter custom value to adjust slider"
+            data-scope="slider"
+            data-part="control"
+            class="bg-transparent border border-transparent w-[80px] text-right px-2 py-1 focus:border-base-100 transition-colors-200"
+            value={input()}
+            onInput={(e) => {
+              const target = e.target
+              if (!target) return
+
+              let value = Number(target.value)
+
+              if (Number.isNaN(value)) value = props.value()
+
+              api().setValue(value)
+            }}
+            onBlur={(e) => {
+              const target = e.target
+              if (!target) return
+
+              let value = Number(target.value)
+
+              if (Number.isNaN(value)) value = props.value()
+
+              value = adjustValueToStep(
+                value,
+                props.step,
+                props.min,
+                props.max,
+              )
+
+              setInput(value)
+            }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') e.currentTarget.blur()
+            }}
+          />
         )}
       </div>
       <div class="mt-2" {...api().controlProps}>
