@@ -3,19 +3,6 @@ import { normalizeProps, useMachine } from '@zag-js/solid'
 import { createMemo, createSignal, createUniqueId, mergeProps } from 'solid-js'
 import type { Accessor } from 'solid-js'
 
-function adjustValueToStep(
-  value: number,
-  step: number,
-  min: number,
-  max: number,
-) {
-  const adjustedValue = Math.round((value - min) / step) * step + min
-  const boundedValue = Math.min(Math.max(adjustedValue, min), max)
-  const decimalPlaces = (step.toString().split('.')[1] || []).length
-
-  return parseFloat(boundedValue.toFixed(decimalPlaces))
-}
-
 interface Props {
   value: Accessor<number>
   min: number
@@ -84,7 +71,7 @@ export const Slider = (selectProps: Props) => {
             aria-valuenow={input()}
             aria-controls={api().hiddenInputProps.id}
             aria-live="off"
-            aria-label="Enter custom value to adjust slider"
+            aria-label="Enter value to adjust slider"
             data-scope="slider"
             class="bg-transparent border border-transparent w-[80px] text-right px-2 py-1 hover:border-base focus:border-base-100 transition-colors-200"
             value={input()}
@@ -131,4 +118,33 @@ export const Slider = (selectProps: Props) => {
       </div>
     </div>
   )
+}
+
+/**
+ * Adjusts the given value to the nearest multiple of 'step'
+ * and ensures that the result lies within the range [min, max].
+ *
+ * @param value - The value to be adjusted.
+ * @param step - The step size to which the value should be adjusted.
+ * @param min - The minimum allowable value.
+ * @param max - The maximum allowable value.
+ *
+ * @returns The adjusted value.
+ */
+function adjustValueToStep(
+  value: number,
+  step: number,
+  min: number,
+  max: number,
+) {
+  // Adjust the value to the nearest step
+  const adjustedValue = Math.round((value - min) / step) * step + min
+
+  // Clamp the value to the min and max
+  const boundedValue = Math.min(Math.max(adjustedValue, min), max)
+
+  // Round the value to the nearest decimal place
+  const decimalPlaces = (step.toString().split('.')[1] || []).length
+
+  return parseFloat(boundedValue.toFixed(decimalPlaces))
 }
