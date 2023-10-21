@@ -84,7 +84,7 @@ export const Slider = (selectProps: Props) => {
             aria-label="Enter custom value to adjust slider"
             data-scope="slider"
             data-part="control"
-            class="bg-transparent border border-transparent w-[80px] text-right px-2 py-1 focus:border-base-100 transition-colors-200"
+            class="bg-transparent border border-transparent w-[80px] text-right px-2 py-1 hover:border-base focus:border-base-100 transition-colors-200"
             value={input()}
             onInput={(e) => {
               const target = e.target
