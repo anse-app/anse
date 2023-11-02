@@ -3,9 +3,13 @@ import type { HandlerPayload, Provider } from '@/types/provider'
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
   if (payload.botId === 'stable-diffusion')
-    return handleReplicateGenerate('db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf', payload)
+    return handleReplicateGenerate('ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4', payload)
+  if (payload.botId === 'stable-diffusion-v1')
+    return handleReplicateGenerate('b3d14e1cd1f9470bbb0bb68cac48e5f483e5be309551992cc33dc30654a82bb7', payload)
   if (payload.botId === 'waifu-diffusion')
     return handleReplicateGenerate('25d2f75ecda0c0bed34c806b7b70319a53a1bccad3ade1a7496524f013f48983', payload)
+  if (payload.botId === 'sdxl')
+    return handleReplicateGenerate('2a865c9a94c9992b6689365b75db2d678d5022505ed3f63a5f53929a31a46947', payload)
 }
 
 const handleReplicateGenerate = async(modelVersion: string, payload: HandlerPayload) => {
