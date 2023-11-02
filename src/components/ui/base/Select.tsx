@@ -1,6 +1,7 @@
 import { createEffect, createMemo, createSignal, createUniqueId, mergeProps, on } from 'solid-js'
 import * as select from '@zag-js/select'
 import { normalizeProps, useMachine } from '@zag-js/solid'
+import { Portal } from 'solid-js/web'
 import type { JSXElement } from 'solid-js'
 import type { SelectOptionType } from '@/types/provider'
 
@@ -77,21 +78,24 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
           {!props.readonly && <div i-carbon-caret-down />}
         </button>
       </div>
-      <div class="w-$reference-width -mt-2 z-100 shadow-md" {...api().positionerProps}>
-        <ul class="bg-base" {...api().contentProps}>
-          {props.options.map(item => (
-            <li
-              {...api().getOptionProps({ label: item.label, value: item.value })}
-              onClick={() => {
-                setSelectedItem(item)
-                props.onChange(item.value)
-              }}
-            >
-              {itemComponent(item, item.value === selectedItem()?.value)}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Portal>
+
+        <div class="w-$reference-width -mt-2 z-100 shadow-md" {...api().positionerProps}>
+          <ul class="bg-base" {...api().contentProps}>
+            {props.options.map(item => (
+              <li
+                {...api().getOptionProps({ label: item.label, value: item.value })}
+                onClick={() => {
+                  setSelectedItem(item)
+                  props.onChange(item.value)
+                }}
+              >
+                {itemComponent(item, item.value === selectedItem()?.value)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Portal>
     </div>
   )
 }
