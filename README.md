@@ -71,7 +71,7 @@ This project exists thanks to all those who contributed.
 
 Thank you to all our supporters!🙏
 
-[![img](https://contrib.rocks/image?repo=anse-app/anse)](https://github.com/anse-app/anse/graphs/contributors)
+[![img](https://contributors.nn.ci/api?repo=anse-app/anse)](https://github.com/anse-app/anse/graphs/contributors)
 
 ## License
 

@@ -71,7 +71,7 @@ A: こちらのチュートリアルをご参照ください: https://github.com
 
 サポーターの皆さん、ありがとうございました！🙏
 
-[![img](https://contrib.rocks/image?repo=anse-app/anse)](https://github.com/anse-app/anse/graphs/contributors)
+[![img](https://contributors.nn.ci/api?repo=anse-app/anse)](https://github.com/anse-app/anse/graphs/contributors)
 
 ## ライセンス
 
