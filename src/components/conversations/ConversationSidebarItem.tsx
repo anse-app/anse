@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/solid'
 import { currentConversationId, deleteConversationById } from '@/stores/conversation'
-import { showConversationSidebar } from '@/stores/ui'
+import { showConversationEditModal, showConversationSidebar } from '@/stores/ui'
 import { useI18n } from '@/hooks'
 import type { Conversation } from '@/types/conversation'
 
@@ -19,6 +19,10 @@ export default ({ instance }: Props) => {
     currentConversationId.set(instance.id)
     showConversationSidebar.set(false)
   }
+  const handleDblClick = (e: MouseEvent) => {
+    e.stopPropagation()
+    showConversationEditModal.set(true)
+  }
   const handleDelete = (e: MouseEvent, conversationId: string) => {
     e.stopPropagation()
     currentConversationId.set('')
@@ -32,6 +36,7 @@ export default ({ instance }: Props) => {
         instance.id === $currentConversationId() ? 'bg-base-200' : '',
       ].join(' ')}
       onClick={handleClick}
+      onDblClick={handleDblClick}
     >
       <div class="fcc w-8 h-8 rounded-full text-xl shrink-0">
         {instance.icon ? instance.icon : <div class="text-base i-carbon-chat" />}
