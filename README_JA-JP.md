@@ -50,7 +50,7 @@ Anse は AI チャット用に完全に最適化された UI です。
 
 プロジェクトをフォークした後、フォークしたプロジェクトのアクションページでワークフローとアップストリーム同期アクションを手動で有効にする必要があります。有効にすると、自動更新が毎日スケジュールされます:
 
-![](https://cdn.staticaly.com/gh/yzh990918/static@master/20230518/image.2omctdf8bbk0.webp)
+![](https://cdn.jsdelivr.net/gh/yzh990918/static@master/20230518/image.2omctdf8bbk0.webp)
 ## よくある質問
 
 Q: TypeError: フェッチに失敗しました。
