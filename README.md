@@ -50,7 +50,7 @@ For more details, please refer to this document: https://docs.anse.app/self-depl
 
 After forking the project, you need to manually enable Workflows and Upstream Sync Action on the Actions page of the forked project. Once enabled, automatic updates will be scheduled every day:
 
-![](https://cdn.staticaly.com/gh/yzh990918/static@master/20230518/image.2omctdf8bbk0.webp)
+![](https://cdn.jsdelivr.net/gh/yzh990918/static@master/20230518/image.2omctdf8bbk0.webp)
 ## Frequently Asked Questions
 
 Q: TypeError: fetch failed (can't connect to OpenAI Api)
