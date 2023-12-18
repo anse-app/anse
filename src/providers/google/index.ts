@@ -63,7 +63,7 @@ const providerGoogle = () => {
     ],
     handlePrompt,
     handleRapidPrompt,
-    }
+  }
   return provider
 }
 

@@ -1,15 +1,15 @@
-import { fetchChatCompletion } from "./api"
+import { fetchChatCompletion } from './api'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
-export const handlePrompt: Provider['handlePrompt'] = async (payload, signal?: AbortSignal) => {
+export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
   if (payload.botId === 'chat_continuous')
     return handleChatCompletion(payload, signal)
   if (payload.botId === 'chat_single')
     return handleChatCompletion(payload, signal)
 }
 
-export const handleRapidPrompt: Provider['handleRapidPrompt'] = async (prompt, globalSettings) => {
+export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, globalSettings) => {
   const rapidPromptPayload = {
     conversationId: 'temp',
     conversationType: 'chat_single',
@@ -53,7 +53,7 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
     body: {
-      contents: messages.map((m) => ({ role: m.role, parts: [{ text: m.content }] })),
+      contents: messages.map(m => ({ role: m.role, parts: [{ text: m.content }] })),
     },
     model: payload.globalSettings.model as string,
   })
