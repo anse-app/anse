@@ -34,7 +34,6 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
 
   setLoadingStateByConversationId(conversation.id, true)
   let providerResponse: PromptResponse
-  const systemRole = provider.name === 'Google' ? 'user' : 'system'
   const handlerPayload: HandlerPayload = {
     conversationId: conversation.id,
     conversationType: bot.type,
@@ -43,8 +42,7 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
     botSettings: {},
     prompt,
     messages: [
-      ...(conversation.systemInfo ? [{ role: systemRole, content: conversation.systemInfo }] : []) as Message[],
-      ...(provider.name === 'Google' && conversation.systemInfo ? [{ role: 'model', content: 'OK' }] : []) as Message[], // Google Gemini API currently only support odd number of messages. 
+      ...(conversation.systemInfo ? [{ role: 'system', content: conversation.systemInfo }] : []) as Message[],
       ...(destr(conversation.mockMessages) || []) as Message[],
       ...getMessagesByConversationId(conversation.id).map(message => ({
         role: message.role,
@@ -79,7 +77,7 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
     }
     pushMessageByConversationId(conversation.id, {
       id: messageId,
-      role: provider.name === 'Google' ? 'model' : 'assistant',
+      role: 'assistant',
       content: typeof providerResponse === 'string' ? providerResponse : '',
       stream: providerResponse instanceof ReadableStream,
       dateTime: new Date().getTime(),
