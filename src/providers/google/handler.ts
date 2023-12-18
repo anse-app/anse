@@ -1,4 +1,5 @@
 import { fetchChatCompletion } from './api'
+import { parseMessageList } from './parser'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
@@ -53,7 +54,7 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
     body: {
-      contents: messages.map(m => ({ role: m.role, parts: [{ text: m.content }] })),
+      contents: parseMessageList(messages),
     },
     model: payload.globalSettings.model as string,
   })
