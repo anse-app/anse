@@ -16,6 +16,16 @@ const providerGoogle = () => {
         type: 'api-key',
       },
       {
+        key: 'model',
+        name: 'Google model',
+        description: 'Custom model for Google API.',
+        type: 'select',
+        options: [
+          { value: 'gemini-pro', label: 'gemini-pro' },
+        ],
+        default: 'gemini-pro',
+      },
+      {
         key: 'maxTokens',
         name: 'Max Tokens',
         description: 'The maximum number of tokens to generate in the completion.',
