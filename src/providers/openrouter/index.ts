@@ -2,14 +2,17 @@ import {
   handlePrompt,
   handleRapidPrompt,
 } from './handler'
+import Models from './models.json'
 import type { Provider } from '@/types/provider'
 
-const providerOpenAI = () => {
+const models = Models.data.map(m => ({ value: m.id, label: `${m.name}${m.pricing.prompt === '0' ? '[free]' : ''}` }))
+
+const providerOpenRouter = () => {
   const provider: Provider = {
-    id: 'provider-azure',
-    icon: 'i-simple-icons:microsoftazure', // @unocss-include
-    name: 'Azure OpenAI',
-    models: [],
+    id: 'provider-openrouter',
+    icon: 'i-simple-icons-openai', // @unocss-include
+    name: 'OpenRouter',
+    models,
     globalSettings: [
       {
         key: 'apiKey',
@@ -18,15 +21,18 @@ const providerOpenAI = () => {
       },
       {
         key: 'baseUrl',
-        name: 'Endpoint',
-        description: 'OpenAI Endpoint',
+        name: 'Base URL',
+        description: 'Custom base url for OpenRouter API.',
         type: 'input',
+        default: 'https://openrouter.ai/api',
       },
       {
         key: 'model',
-        name: 'Azure deployment name',
-        description: 'Custom model name for Azure OpenAI.',
-        type: 'input',
+        name: 'OpenRouter model',
+        description: 'Custom gpt model for OpenRouter API.',
+        type: 'select',
+        options: models,
+        default: 'openrouter/auto',
       },
       {
         key: 'maxTokens',
@@ -82,12 +88,6 @@ const providerOpenAI = () => {
         name: 'Single Chat',
         settings: [],
       },
-      {
-        id: 'image_generation',
-        type: 'image_generation',
-        name: 'DALL·E',
-        settings: [],
-      },
     ],
     handlePrompt,
     handleRapidPrompt,
@@ -95,4 +95,4 @@ const providerOpenAI = () => {
   return provider
 }
 
-export default providerOpenAI
+export default providerOpenRouter

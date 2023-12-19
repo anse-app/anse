@@ -1,7 +1,8 @@
 import { Show, createSignal, onMount } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import BotSelect from '@/components/ui/BotSelect'
-import { getBotMetaById } from '@/stores/provider'
+import ModelSelect from '@/components/ui/ModelSelect'
+import { getBotMetaById, getModelsByBotId } from '@/stores/provider'
 import { emojiPickerCurrentPick, showEmojiPickerModal } from '@/stores/ui'
 import { useI18n } from '@/hooks'
 import type { Conversation } from '@/types/conversation'
@@ -14,8 +15,10 @@ interface Props {
 export default (props: Props) => {
   const { t } = useI18n()
   const [providerBot, setProviderBot] = createSignal(props.conversation.bot || '')
+  const [providerModel, setProviderModel] = createSignal(props.conversation.model || '')
   const $emojiPickerCurrentPick = useStore(emojiPickerCurrentPick)
   const botMeta = () => getBotMetaById(providerBot()) || null
+  const modelsList = () => getModelsByBotId(providerBot())
 
   onMount(() => {
     emojiPickerCurrentPick.set(undefined)
@@ -28,6 +31,12 @@ export default (props: Props) => {
       payload.systemInfo = undefined
       payload.mockMessages = undefined
     }
+    props.handleChange(payload)
+  }
+
+  const handleProviderModelChange = (e: string) => {
+    setProviderModel(e)
+    const payload: Partial<Conversation> = { model: e }
     props.handleChange(payload)
   }
 
@@ -58,6 +67,9 @@ export default (props: Props) => {
         onBlur={e => props.handleChange({ name: e.currentTarget.value })}
       />
       <BotSelect value={props.conversation.bot} onChange={handleProviderBotChange} />
+      <Show when={modelsList().length > 0}>
+        <ModelSelect value={props.conversation.model} models={modelsList()} onChange={handleProviderModelChange} />
+      </Show>
       <Show when={botMeta()?.type !== 'image_generation'}>
         <div class="py-1 border border-base rounded-lg text-sm">
           <div class="px-4 py-2">

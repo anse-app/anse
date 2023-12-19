@@ -6,6 +6,7 @@ export interface Conversation {
   bot: string
   name: string
   icon: string
+  model: string
   systemInfo?: string
   mockMessages?: string
   lastUseTime: number

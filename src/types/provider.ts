@@ -11,6 +11,7 @@ export interface Provider {
   globalSettings?: SettingsUI[]
   /** Bots list. Each bot provides a list of presets including conversation types, settings items, etc. */
   bots: Bot[]
+  models: { value: string, label: string }[]
   /** Whether the Provider can accept frontend or backend calls, or both. */
   supportCallMethod?: 'both' | 'frontend' | 'backend'
   // Handle a prompt in conversation
@@ -32,6 +33,7 @@ export interface HandlerPayload {
   conversationId: string
   conversationType: ConversationType
   botId: string
+  model: string
   globalSettings: SettingsPayload
   botSettings: SettingsPayload
   prompt?: string

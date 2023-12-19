@@ -1,5 +1,5 @@
 import { fetchChatCompletion } from './api'
-import { parseMessageList } from './parser'
+import { parseStream } from './parser'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
@@ -15,22 +15,26 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     conversationId: 'temp',
     conversationType: 'chat_single',
     botId: 'temp',
-    model: 'gemini-pro',
+    model: 'openrouter/auto',
     globalSettings: {
       ...globalSettings,
-      model: 'gemini-pro',
+      model: 'openrouter/auto',
+      temperature: 0.4,
+      maxTokens: 2048,
+      top_p: 1,
+      stream: false,
     },
     botSettings: {},
     prompt,
-    messages: { contents: [{ role: 'user', parts: [{ text: prompt }] }] },
-  } as unknown as HandlerPayload
+    messages: [{ role: 'user', content: prompt }],
+  } as HandlerPayload
   const result = await handleChatCompletion(rapidPromptPayload)
   if (typeof result === 'string')
     return result
   return ''
 }
 
-export const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal) => {
+const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal) => {
   // An array to store the chat messages
   const messages: Message[] = []
 
@@ -54,19 +58,28 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
 
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
+    baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
     body: {
-      contents: parseMessageList(messages),
+      messages,
+      max_tokens: maxTokens,
+      model: payload.model || payload.globalSettings.model as string,
+      temperature: payload.globalSettings.temperature as number,
+      top_p: payload.globalSettings.topP as number,
+      stream: payload.globalSettings.stream as boolean ?? true,
     },
-    model: payload.model || payload.globalSettings.model as string,
+    signal,
   })
-
-  if (response.ok) {
-    const json = await response.json()
-    // console.log('json', json)
-    const output = json.candidates[0].content.parts[0].text || json
-    return output as string
+  if (!response.ok) {
+    const responseJson = await response.json()
+    console.log('responseJson', responseJson)
+    const errMessage = responseJson.error?.message || response.statusText || 'Unknown error'
+    throw new Error(errMessage, { cause: responseJson.error })
   }
-
-  const text = await response.text()
-  throw new Error(`Failed to fetch chat completion: ${text}`)
+  const isStream = response.headers.get('content-type')?.includes('text/event-stream')
+  if (isStream) {
+    return parseStream(response)
+  } else {
+    const resJson = await response.json()
+    return resJson.choices[0].message.content as string
+  }
 }

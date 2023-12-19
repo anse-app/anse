@@ -6,6 +6,7 @@ const providerReplicate = () => {
     id: 'provider-replicate',
     icon: 'i-carbon-replicate', // @unocss-include
     name: 'Replicate',
+    models: [],
     globalSettings: [
       {
         key: 'token',

@@ -4,11 +4,16 @@ import {
 } from './handler'
 import type { Provider } from '@/types/provider'
 
+const models = [
+  { value: 'gemini-pro', label: 'gemini-pro' },
+]
+
 const providerGoogle = () => {
   const provider: Provider = {
     id: 'provider-google',
     icon: 'i-simple-icons-google', // @unocss-include
     name: 'Google',
+    models,
     globalSettings: [
       {
         key: 'apiKey',
@@ -20,9 +25,7 @@ const providerGoogle = () => {
         name: 'Google model',
         description: 'Custom model for Google API.',
         type: 'select',
-        options: [
-          { value: 'gemini-pro', label: 'gemini-pro' },
-        ],
+        options: models,
         default: 'gemini-pro',
       },
       {

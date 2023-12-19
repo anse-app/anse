@@ -1,4 +1,5 @@
 import providerOpenAI from '@/providers/openai'
+import providerOpenRouter from '@/providers/openrouter'
 import providerAzure from '@/providers/azure'
 import providerGoogle from '@/providers/google'
 import providerReplicate from '@/providers/replicate'
@@ -7,6 +8,7 @@ import type { BotMeta } from '@/types/app'
 
 export const providerList = [
   providerOpenAI(),
+  providerOpenRouter(),
   providerAzure(),
   providerReplicate(),
   providerGoogle(),
@@ -17,6 +19,7 @@ export const providerMetaList = providerList.map(provider => ({
   name: provider.name,
   icon: provider.icon,
   bots: provider.bots,
+  models: provider.models,
 }))
 
 export const platformSettingsUIList = providerList.map(provider => ({
@@ -33,6 +36,7 @@ const botMetaMap = providerMetaList.reduce((acc, provider) => {
         value: `${provider.id}:${bot.id}`,
         type: bot.type,
         label: bot.name,
+        models: provider.models,
         provider: {
           id: provider.id,
           name: provider.name,
@@ -53,4 +57,8 @@ export const getProviderById = (id: string) => {
 
 export const getBotMetaById = (id: string) => {
   return botMetaMap[id] || null
+}
+
+export const getModelsByBotId = (id: string) => {
+  return botMetaMap[id].models
 }
