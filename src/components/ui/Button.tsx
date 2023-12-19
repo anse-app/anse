@@ -4,6 +4,7 @@ import type { JSXElement } from 'solid-js'
 interface Props {
   icon?: string
   text?: string
+  title?: string
   size?: 'sm' | 'md' | 'lg'
   variant?: 'normal' | 'primary' | 'ghost'
   prefix?: JSXElement
@@ -41,7 +42,7 @@ export default (props: Props) => {
         <div>{props.prefix}</div>
       </Show>
       <Show when={props.icon}>
-        <div class={`${iconSizeClass()} ${props.icon}`} />
+        <div class={`${iconSizeClass()} ${props.icon}`} title={props.title} />
       </Show>
       <Show when={content}>
         <div>{content}</div>

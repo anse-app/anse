@@ -73,15 +73,22 @@ export default () => {
         />
       </div>
       <div class="fi justify-between gap-2 h-14 px-[calc(max(1.5rem,(100%-48rem)/2)-0.5rem)]">
-        <div>
+        <div class="flex-1">
           {/* <Button
             icon="i-carbon-plug"
             onClick={() => {}}
           /> */}
         </div>
         <Button
+          icon="i-carbon-image"
+          onClick={handleSend}
+          title="上传图片"
+          variant="normal"
+        />
+        <Button
           icon="i-carbon-send"
           onClick={handleSend}
+          title="发送"
           variant={inputPrompt() ? 'primary' : 'normal'}
           // prefix={t('send.button')}
         />

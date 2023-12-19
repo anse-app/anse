@@ -10,7 +10,7 @@ const models = Models.data.map(m => ({ value: m.id, label: `${m.name}${m.pricing
 const providerOpenRouter = () => {
   const provider: Provider = {
     id: 'provider-openrouter',
-    icon: 'i-simple-icons-openai', // @unocss-include
+    icon: 'i-simple-icons-alwaysdata', // @unocss-include
     name: 'OpenRouter',
     models,
     globalSettings: [
