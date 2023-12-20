@@ -79,16 +79,20 @@ export default () => {
             onClick={() => {}}
           /> */}
         </div>
+        {
+          /**
         <Button
           icon="i-carbon-image"
           onClick={handleSend}
           title="上传图片"
           variant="normal"
         />
+           */
+        }
         <Button
           icon="i-carbon-send"
           onClick={handleSend}
-          title="发送"
+          // title="发送"
           variant={inputPrompt() ? 'primary' : 'normal'}
           // prefix={t('send.button')}
         />
