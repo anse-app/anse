@@ -25,7 +25,6 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
     selectedOption: props.options.find(o => o.value === props.value),
     readOnly: props.readonly,
     onChange: (detail) => {
-      console.log('trigger')
       if (detail) {
         setSelectedItem(props.options.find(o => o.value === detail.value))
         props.onChange(detail.value)
@@ -81,7 +80,7 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
       <Portal>
 
         <div class="w-$reference-width -mt-2 z-100 shadow-md" {...api().positionerProps}>
-          <ul class="bg-base" {...api().contentProps}>
+          <ul class="bg-base max-h-100 overflow-y-auto" {...api().contentProps}>
             {props.options.map(item => (
               <li
                 {...api().getOptionProps({ label: item.label, value: item.value })}
