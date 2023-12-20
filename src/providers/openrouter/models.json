@@ -358,26 +358,6 @@
       }
     },
     {
-      "id": "nousresearch/nous-hermes-2-vision-7b",
-      "name": "Nous: Hermes 2 Vision 7B (alpha)",
-      "pricing": {
-        "prompt": "0.000005",
-        "completion": "0.000005"
-      },
-      "context_length": 4096,
-      "architecture": {
-        "tokenizer": "Mistral",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "max_completion_tokens": null
-      },
-      "per_request_limits": {
-        "prompt_tokens": "8465528",
-        "completion_tokens": "8465528"
-      }
-    },
-    {
       "id": "meta-llama/llama-2-13b-chat",
       "name": "Meta: Llama v2 13B Chat",
       "pricing": {
@@ -578,26 +558,6 @@
       }
     },
     {
-      "id": "openai/gpt-4-vision-preview",
-      "name": "OpenAI: GPT-4 Vision (preview)",
-      "pricing": {
-        "prompt": "0.00001",
-        "completion": "0.00003"
-      },
-      "context_length": 128000,
-      "architecture": {
-        "tokenizer": "GPT",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "max_completion_tokens": 4096
-      },
-      "per_request_limits": {
-        "prompt_tokens": "4232764",
-        "completion_tokens": "1410921"
-      }
-    },
-    {
       "id": "openai/text-davinci-002",
       "name": "OpenAI: Davinci 2",
       "pricing": {
@@ -731,26 +691,6 @@
       },
       "top_provider": {
         "max_completion_tokens": 8192
-      },
-      "per_request_limits": {
-        "prompt_tokens": "169310579",
-        "completion_tokens": "84655289"
-      }
-    },
-    {
-      "id": "google/gemini-pro-vision",
-      "name": "Google: Gemini Pro Vision (preview)",
-      "pricing": {
-        "prompt": "0.00000025",
-        "completion": "0.0000005"
-      },
-      "context_length": 16384,
-      "architecture": {
-        "tokenizer": "Gemini",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "max_completion_tokens": 2048
       },
       "per_request_limits": {
         "prompt_tokens": "169310579",
