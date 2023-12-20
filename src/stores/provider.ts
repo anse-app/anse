@@ -3,6 +3,7 @@ import providerOpenRouter from '@/providers/openrouter'
 import providerAzure from '@/providers/azure'
 import providerGoogle from '@/providers/google'
 import providerReplicate from '@/providers/replicate'
+import providerFal from '@/providers/fal'
 import { allConversationTypes } from '@/types/conversation'
 import type { BotMeta } from '@/types/app'
 
@@ -10,8 +11,9 @@ export const providerList = [
   providerOpenAI(),
   providerOpenRouter(),
   providerAzure(),
-  providerReplicate(),
   providerGoogle(),
+  providerReplicate(),
+  providerFal(),
 ]
 
 export const providerMetaList = providerList.map(provider => ({

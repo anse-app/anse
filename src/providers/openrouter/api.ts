@@ -16,5 +16,5 @@ export const fetchChatCompletion = async(payload: OpenAIFetchPayload) => {
     body: JSON.stringify(payload.body),
     signal: payload.signal,
   }
-  return fetch(`${payload.baseUrl}/v1/chat/completions`, initOptions)
+  return fetch('https://openrouter.ai/api/v1/chat/completions', initOptions)
 }

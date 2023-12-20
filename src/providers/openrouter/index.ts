@@ -19,13 +19,13 @@ const providerOpenRouter = () => {
         name: 'API Key',
         type: 'api-key',
       },
-      {
-        key: 'baseUrl',
-        name: 'Base URL',
-        description: 'Custom base url for OpenRouter API.',
-        type: 'input',
-        default: 'https://openrouter.ai/api',
-      },
+      // {
+      //   key: 'baseUrl',
+      //   name: 'Base URL',
+      //   description: 'Custom base url for OpenRouter API.',
+      //   type: 'input',
+      //   default: 'https://openrouter.ai/api',
+      // },
       {
         key: 'model',
         name: 'OpenRouter model',
