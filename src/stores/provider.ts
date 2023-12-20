@@ -4,12 +4,14 @@ import providerAzure from '@/providers/azure'
 import providerGoogle from '@/providers/google'
 import providerReplicate from '@/providers/replicate'
 import providerFal from '@/providers/fal'
+import providerGlm from '@/providers/chatglm'
 import { allConversationTypes } from '@/types/conversation'
 import type { BotMeta } from '@/types/app'
 
 export const providerList = [
   providerOpenAI(),
   providerOpenRouter(),
+  providerGlm(),
   providerAzure(),
   providerGoogle(),
   providerReplicate(),

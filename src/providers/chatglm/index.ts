@@ -2,16 +2,15 @@ import {
   handlePrompt,
   handleRapidPrompt,
 } from './handler'
-import Models from './models.json'
 import type { Provider } from '@/types/provider'
 
-const models = Models.data.map(m => ({ value: m.id, label: `${m.name}${m.pricing.prompt === '0' ? '[free]' : ''}` }))
+const models = [{ label: 'ChatGLM-Turbo', value: 'chatglm_turbo' }, { label: 'CharacterGLM', value: 'characterglm' }]
 
-const providerOpenRouter = () => {
+const providerGlm = () => {
   const provider: Provider = {
-    id: 'provider-openrouter',
-    icon: 'i-simple-icons-alwaysdata', // @unocss-include https://icones.js.org/
-    name: 'OpenRouter',
+    id: 'provider-chatglm',
+    icon: 'i-carbon-navaid-ndb', // @unocss-include
+    name: '智谱AI',
     models,
     globalSettings: [
       {
@@ -19,20 +18,13 @@ const providerOpenRouter = () => {
         name: 'API Key',
         type: 'api-key',
       },
-      // {
-      //   key: 'baseUrl',
-      //   name: 'Base URL',
-      //   description: 'Custom base url for OpenRouter API.',
-      //   type: 'input',
-      //   default: 'https://openrouter.ai/api',
-      // },
       {
         key: 'model',
-        name: 'OpenRouter model',
-        description: 'Custom gpt model for OpenRouter API.',
+        name: 'ChatGLM model',
+        description: 'Custom gpt model for ChatGLM API.',
         type: 'select',
         options: models,
-        default: 'openrouter/auto',
+        default: 'chatglm_turbo',
       },
       {
         key: 'maxTokens',
@@ -95,4 +87,4 @@ const providerOpenRouter = () => {
   return provider
 }
 
-export default providerOpenRouter
+export default providerGlm

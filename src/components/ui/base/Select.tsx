@@ -85,7 +85,8 @@ export const Select = <T extends SelectOptionType>(inputProps: Props<T>) => {
             {props.options.map(item => (
               <li
                 {...api().getOptionProps({ label: item.label, value: item.value })}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation()
                   setSelectedItem(item)
                   props.onChange(item.value)
                 }}

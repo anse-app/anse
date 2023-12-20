@@ -15,10 +15,10 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     conversationId: 'temp',
     conversationType: 'chat_single',
     botId: 'temp',
-    model: 'openrouter/auto',
+    model: 'chatglm_turbo',
     globalSettings: {
       ...globalSettings,
-      model: 'openrouter/auto',
+      model: 'chatglm_turbo',
       temperature: 0.4,
       maxTokens: 2048,
       top_p: 1,
@@ -59,12 +59,11 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
     body: {
-      messages,
+      prompt: messages,
       max_tokens: maxTokens,
       model: payload.model || payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
       top_p: payload.globalSettings.topP as number,
-      stream: payload.globalSettings.stream as boolean ?? true,
     },
     signal,
   })
@@ -79,6 +78,6 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     return parseStream(response)
   } else {
     const resJson = await response.json()
-    return resJson.choices[0].message.content as string
+    return resJson.data.choices[0].content as string
   }
 }

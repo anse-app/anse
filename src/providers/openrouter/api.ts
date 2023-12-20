@@ -1,6 +1,5 @@
 export interface OpenAIFetchPayload {
   apiKey: string
-  baseUrl: string
   body: Record<string, any>
   signal?: AbortSignal
 }
