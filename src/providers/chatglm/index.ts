@@ -4,7 +4,10 @@ import {
 } from './handler'
 import type { Provider } from '@/types/provider'
 
-const models = [{ label: 'ChatGLM-Turbo', value: 'chatglm_turbo' }, { label: 'CharacterGLM', value: 'characterglm' }]
+const models = [
+  { label: 'ChatGLM-Turbo', value: 'chatglm_turbo' },
+  // { label: 'CharacterGLM', value: 'characterglm' }
+]
 
 const providerGlm = () => {
   const provider: Provider = {
