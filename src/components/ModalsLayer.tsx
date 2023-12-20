@@ -17,7 +17,7 @@ import Modal from './ui/Modal'
 export default () => {
   return (
     <>
-      <Modal bindValue={showConversationSidebar} direction="left" closeBtnClass="hidden">
+      <Modal bindValue={showConversationSidebar} closeOnOutsideClick direction="left" closeBtnClass="hidden">
         <div class="w-[70vw] max-w-[300px] h-full">
           <ConversationSidebar />
         </div>
@@ -37,7 +37,7 @@ export default () => {
           <EmojiPickerModal />
         </div>
       </Modal>
-      <Modal bindValue={showShareModal} direction="bottom" closeBtnClass="hidden">
+      <Modal bindValue={showShareModal} closeOnOutsideClick direction="bottom" closeBtnClass="hidden">
         <div class="max-h-[70vh] w-full">
           <ShareModal />
         </div>
