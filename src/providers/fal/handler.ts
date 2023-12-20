@@ -2,7 +2,7 @@ import { fetchImageGeneration } from './api'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
-  if (payload.botId === 'stable-diffusion-xl-base-1.0')
+  if (payload.botId === 'stable-diffusion-with-LoRAs')
     return handleFalGenerate('110602490-lora', 'stabilityai/stable-diffusion-xl-base-1.0', payload)
   if (payload.botId === 'stable-diffusion-xl')
     return handleFalGenerate('110602490-fast-sdxl', '', payload)
@@ -32,7 +32,7 @@ const handleFalGenerate = async(predictionId: string, modelName: string, payload
     })
   }
   const resJson = await response.json()
-  return resJson.output[0].url
+  return resJson.images[0].url
 
   // return waitImageWithPrediction(resJson, payload.globalSettings.token as string)
 }
