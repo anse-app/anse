@@ -1,4 +1,4 @@
-import { Match, Switch, createSignal, onMount } from 'solid-js'
+import { Match, Show, Switch, createSignal, onMount } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { createShortcut } from '@solid-primitives/keyboard'
 import { currentErrorMessage, isSendBoxFocus, scrollController } from '@/stores/ui'
@@ -9,9 +9,19 @@ import { globalAbortController } from '@/stores/settings'
 import { useI18n } from '@/hooks'
 import Button from './ui/Button'
 
+export function blobToBase64(blob: File): Promise<string> {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result as string)
+    reader.readAsDataURL(blob)
+  })
+}
+
 export default () => {
   const { t } = useI18n()
   let inputRef: HTMLTextAreaElement
+  const [uploadPicture, setUploadPicture] = createSignal<HTMLInputElement>()
+  const [inputImage, setInputImage] = createSignal('')
   const $conversationMap = useStore(conversationMap)
   const $currentConversationId = useStore(currentConversationId)
   const $isSendBoxFocus = useStore(isSendBoxFocus)
@@ -79,20 +89,44 @@ export default () => {
             onClick={() => {}}
           /> */}
         </div>
-        {
-          /**
-        <Button
-          icon="i-carbon-image"
-          onClick={handleSend}
-          title="上传图片"
-          variant="normal"
-        />
-           */
-        }
+        <Show when={!inputImage() && currentConversation()?.model?.includes('vision')}>
+          <>
+            <input
+              type="file"
+              accept="image/*"
+              ref={el => setUploadPicture(el)}
+              style={{ width: 0, visibility: 'hidden' }}
+              onChange={async(e) => {
+                if (e.target.files?.length === 0) return
+                const file = e.target.files![0]
+                const url = await blobToBase64(file)
+                setInputImage(url)
+              }}
+            />
+            <Button
+              icon="i-carbon-image"
+              onClick={() => uploadPicture()?.click()}
+              title="上传图片"
+              variant={inputPrompt() ? 'primary' : 'normal'}
+            />
+          </>
+        </Show>
+        <Show when={inputImage()}>
+          <img
+            src={inputImage()}
+            onClick={() => setInputImage('')}
+            title="点击删除"
+            class="rounded-md"
+            style={{
+              width: '40px',
+              height: '40px',
+            }}
+          />
+        </Show>
         <Button
           icon="i-carbon-send"
           onClick={handleSend}
-          // title="发送"
+          title="发送"
           variant={inputPrompt() ? 'primary' : 'normal'}
           // prefix={t('send.button')}
         />
@@ -120,6 +154,7 @@ export default () => {
 
   const clearPrompt = () => {
     setInputPrompt('')
+    setInputImage('')
     isSendBoxFocus.set(false)
   }
 
@@ -148,7 +183,7 @@ export default () => {
 
     const controller = new AbortController()
     globalAbortController.set(controller)
-    handlePrompt(currentConversation(), inputRef.value, controller.signal)
+    handlePrompt(currentConversation(), inputImage() ? `![${inputImage()}]${inputRef.value}` : inputRef.value, controller.signal)
     clearPrompt()
     scrollController().scrollToBottom()
   }

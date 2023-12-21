@@ -6,6 +6,7 @@ export const generateRapidProviderPayload = (prompt: string, providerId: string)
     conversationId: 'temp',
     conversationType: 'chat_single',
     botId: 'temp',
+    model: '',
     globalSettings: getSettingsByProviderId(providerId),
     botSettings: {},
     prompt,

@@ -10,6 +10,7 @@ const models = [
   { value: 'gpt-4-0314', label: 'gpt-4-0314' },
   { value: 'gpt-4-0613', label: 'gpt-4-0613' },
   { value: 'gpt-4-1106-preview', label: 'gpt-4-1106-preview' },
+  { value: 'gpt-4-vision-preview', label: 'gpt-4-vision-preview' },
   { value: 'gpt-4-32k', label: 'gpt-4-32k' },
   { value: 'gpt-4-32k-0314', label: 'gpt-4-32k-0314' },
   { value: 'gpt-4-32k-0613', label: 'gpt-4-32k-0613' },

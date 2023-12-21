@@ -6,6 +6,7 @@ import type { Provider } from '@/types/provider'
 
 const models = [
   { value: 'gemini-pro', label: 'gemini-pro' },
+  { value: 'gemini-pro-vision', label: 'gemini-pro-vision' },
 ]
 
 const providerGoogle = () => {
