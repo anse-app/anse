@@ -67,7 +67,7 @@ export default (props: Props) => {
         onBlur={e => props.handleChange({ name: e.currentTarget.value })}
       />
       <BotSelect value={props.conversation.bot} onChange={handleProviderBotChange} />
-      <Show when={modelsList().length > 0}>
+      <Show when={modelsList().length > 0 && props.conversation.bot.includes('chat')}>
         <ModelSelect value={props.conversation.model} models={modelsList()} onChange={handleProviderModelChange} />
       </Show>
       <Show when={botMeta()?.type !== 'image_generation'}>

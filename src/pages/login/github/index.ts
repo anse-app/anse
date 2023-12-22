@@ -1,5 +1,4 @@
 import { githubAuth } from '../../../logics/lucia'
-
 import type { APIRoute } from 'astro'
 
 export const get: APIRoute = async(context) => {

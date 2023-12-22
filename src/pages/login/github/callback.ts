@@ -1,6 +1,5 @@
 import { OAuthRequestError } from '@lucia-auth/oauth'
 import { auth, githubAuth } from '../../../logics/lucia.js'
-
 import type { APIRoute } from 'astro'
 
 export const get: APIRoute = async(context) => {
