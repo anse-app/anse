@@ -183,7 +183,7 @@ export default () => {
 
     const controller = new AbortController()
     globalAbortController.set(controller)
-    handlePrompt(currentConversation(), inputImage() ? `![${inputImage()}]${inputRef.value}` : inputRef.value, controller.signal)
+    handlePrompt(currentConversation(), inputImage() ? `![](${inputImage()}) ${inputRef.value}` : inputRef.value, controller.signal)
     clearPrompt()
     scrollController().scrollToBottom()
   }

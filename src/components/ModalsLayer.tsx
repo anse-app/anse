@@ -22,7 +22,7 @@ export default () => {
           <ConversationSidebar />
         </div>
       </Modal>
-      <Modal bindValue={showSettingsSidebar} direction="right">
+      <Modal bindValue={showSettingsSidebar} closeOnOutsideClick direction="right">
         <div class="w-screen sm:w-[70vw] sm:max-w-[300px] h-full">
           <SettingsSidebar />
         </div>

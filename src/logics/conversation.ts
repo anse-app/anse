@@ -16,10 +16,33 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
   const [providerId, botId] = conversation.bot.split(':')
   const provider = getProviderById(providerId)
   if (!provider) return
+  if (prompt && (conversation.model || '').includes('vision') && prompt.indexOf('![') === 0) {
+    // 提取图片
+    let text = ''
+    let url = ''
+    prompt.replace(/!\[\]\(([^\\]+)\) (.*)/g, (_, $1, $2) => {
+      text = $2
+      url = $1
+      return ''
+    })
+    // @ts-expect-error
+    prompt = [
+      { type: 'text', text },
+      {
+        type: 'image_url',
+        image_url: {
+          url,
+          detail: 'auto',
+        },
+      },
+    ]
+  }
+
   let callMethod = generalSettings.requestWithBackend ? 'backend' : 'frontend' as 'frontend' | 'backend'
   if (provider.supportCallMethod === 'frontend' || provider.supportCallMethod === 'backend')
     callMethod = provider.supportCallMethod
 
+  console.log(prompt)
   if (bot.type !== 'chat_continuous')
     clearMessagesByConversationId(conversation.id)
   if (prompt) {
