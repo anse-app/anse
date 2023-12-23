@@ -42,8 +42,9 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
   if (provider.supportCallMethod === 'frontend' || provider.supportCallMethod === 'backend')
     callMethod = provider.supportCallMethod
 
-  // if (bot.type !== 'chat_continuous')
-  //   clearMessagesByConversationId(conversation.id)
+  console.log(prompt)
+  if (bot.type !== 'chat_continuous')
+    clearMessagesByConversationId(conversation.id)
   if (prompt) {
     pushMessageByConversationId(conversation.id, {
       id: `${conversation.id}:user:${Date.now()}`,
