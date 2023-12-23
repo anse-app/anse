@@ -359,26 +359,6 @@
       }
     },
     {
-      "id": "nousresearch/nous-hermes-2-vision-7b",
-      "name": "Nous: Hermes 2 Vision 7B (alpha)",
-      "pricing": {
-        "prompt": "0.000005",
-        "completion": "0.000005"
-      },
-      "context_length": 4096,
-      "architecture": {
-        "tokenizer": "Mistral",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "max_completion_tokens": null
-      },
-      "per_request_limits": {
-        "prompt_tokens": "8465528",
-        "completion_tokens": "8465528"
-      }
-    },
-    {
       "id": "meta-llama/llama-2-13b-chat",
       "name": "Meta: Llama v2 13B Chat",
       "pricing": {
