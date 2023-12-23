@@ -8,6 +8,7 @@ interface Props {
     id: string
     icon?: string
     name: string
+    href: string
     settingsUI?: SettingsUI[]
   }
   settingsValue: Accessor<SettingsPayload>
@@ -42,10 +43,10 @@ export default ({ config, settingsValue, setSettings }: Props) => {
       }}
     >
       <h3 class="fi gap-2">
-        <div class="flex-1 fi gap-1.5 overflow-hidden">
+        <a href={config.href} target="_blank" rel="noreferrer" class="flex-1 fi gap-1.5 overflow-hidden">
           {config.icon && <div class={config.icon} />}
           <div class="flex-1 text-sm truncate">{config.name}</div>
-        </div>
+        </a>
         {!editing() && (
           <div onClick={() => setEditing(true)} class="p-1 inline-flex items-center rounded-md hv-base hv-foreground">
             <div class="i-carbon-edit" />

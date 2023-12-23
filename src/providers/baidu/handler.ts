@@ -103,5 +103,9 @@ const handleImageGeneration = async(payload: HandlerPayload) => {
     throw new Error(errMessage)
   }
   const resJson = await response.json()
+
+  if (resJson.error_code)
+    throw new Error(resJson)
+
   return `data:image/jpeg;base64,${resJson.data[0].b64_image}`
 }

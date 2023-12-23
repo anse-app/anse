@@ -14,6 +14,7 @@ const providerGlm = () => {
     id: 'provider-chatglm',
     icon: 'i-carbon-navaid-ndb', // @unocss-include
     name: '智谱AI',
+    href: 'https://open.bigmodel.cn/usercenter/apikeys',
     models,
     globalSettings: [
       {

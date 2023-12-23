@@ -6,6 +6,7 @@ const providerFal = () => {
     id: 'provider-fal',
     icon: 'i-carbon-flash-filled', // @unocss-include
     name: 'Fal.ai',
+    href: 'https://www.fal.ai/dashboard/keys',
     models: [],
     globalSettings: [
       {

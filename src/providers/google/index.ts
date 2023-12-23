@@ -14,6 +14,7 @@ const providerGoogle = () => {
     id: 'provider-google',
     icon: 'i-simple-icons-google', // @unocss-include
     name: 'Google',
+    href: 'https://makersuite.google.com/app/apikey',
     models,
     globalSettings: [
       {

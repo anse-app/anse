@@ -26,6 +26,7 @@ const providerOpenAI = () => {
     id: 'provider-openai',
     icon: 'i-simple-icons-openai', // @unocss-include
     name: 'OpenAI',
+    href: 'https://platform.openai.com/',
     models,
     globalSettings: [
       {

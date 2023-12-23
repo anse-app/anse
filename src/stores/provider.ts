@@ -32,6 +32,7 @@ export const platformSettingsUIList = providerList.map(provider => ({
   id: provider.id,
   icon: provider.icon,
   name: provider.name,
+  href: provider.href,
   settingsUI: provider.globalSettings,
 }))
 

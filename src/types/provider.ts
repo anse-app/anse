@@ -7,6 +7,8 @@ export interface Provider {
   icon: string
   /** Name of provider. */
   name: string
+  /** Href of provider. */
+  href: string
   /** Global settings of the provider. */
   globalSettings?: SettingsUI[]
   /** Bots list. Each bot provides a list of presets including conversation types, settings items, etc. */

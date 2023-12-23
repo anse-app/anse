@@ -9,6 +9,7 @@ const providerOpenAI = () => {
     id: 'provider-azure',
     icon: 'i-simple-icons:microsoftazure', // @unocss-include
     name: 'Azure OpenAI',
+    href: 'https://azure.microsoft.com/en-us/products/ai-services/openai-service',
     models: [],
     globalSettings: [
       {

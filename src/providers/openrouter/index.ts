@@ -12,6 +12,7 @@ const providerOpenRouter = () => {
     id: 'provider-openrouter',
     icon: 'i-simple-icons-alwaysdata', // @unocss-include https://icones.js.org/
     name: 'OpenRouter',
+    href: 'https://openrouter.ai/keys',
     models,
     globalSettings: [
       {
@@ -19,13 +20,6 @@ const providerOpenRouter = () => {
         name: 'API Key',
         type: 'api-key',
       },
-      // {
-      //   key: 'baseUrl',
-      //   name: 'Base URL',
-      //   description: 'Custom base url for OpenRouter API.',
-      //   type: 'input',
-      //   default: 'https://openrouter.ai/api',
-      // },
       {
         key: 'model',
         name: 'OpenRouter model',
