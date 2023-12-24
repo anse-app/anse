@@ -1,7 +1,7 @@
 import { lucia } from 'lucia'
 import { pg } from '@lucia-auth/adapter-postgresql'
 import { astro } from 'lucia/middleware'
-import { db } from '@vercel/postgres'
+import { db, sql } from '@vercel/postgres'
 import { github } from '@lucia-auth/oauth/providers'
 
 // expect error (see next section)
@@ -28,3 +28,12 @@ export type Auth = typeof auth
 
 // run vercel qg Query
 // https://lucia-auth.com/database-adapters/postgres/
+
+export const getSetting = async(id: string) => {
+  const { rows } = await sql`SELECT * FROM user_setting WHERE id = ${id};`
+  return rows
+}
+
+export const setSetting = async(id: string, value: string) => {
+  await sql`INSERT INTO user_setting (id, value) VALUES (${id}, ${value}) ON CONFLICT(id) DO UPDATE SET value = ${value};`
+}

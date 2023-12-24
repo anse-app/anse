@@ -15,3 +15,8 @@ CREATE TABLE user_session (
     idle_expires BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES auth_user(id)
 );
+
+CREATE TABLE user_setting (
+  id VARCHAR(15) PRIMARY KEY,
+  value TEXT NOT NULL
+)

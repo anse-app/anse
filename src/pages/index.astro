@@ -7,7 +7,7 @@ import ModalsLayer from '@/components/ModalsLayer'
 import Sidebar from '@/components/ui/Sidebar'
 import BuildStores from '@/components/client-only/BuildStores'
 const session = await Astro.locals.auth.validate()
-console.log('session:', session)
+console.log(session)
 ---
 
 <Layout title="Anse">
@@ -17,7 +17,7 @@ console.log('session:', session)
       </Sidebar>
       <Main />
       <Sidebar direction="right" class="hidden lg:block">
-        <Settings client:only />
+        <Settings client:only userId={session?.user.userId} />
       </Sidebar>
     </div>
     <ModalsLayer client:only />

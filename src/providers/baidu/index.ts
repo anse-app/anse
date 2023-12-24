@@ -23,7 +23,7 @@ const providerBaidu = () => {
   const provider: Provider = {
     id: 'provider-baidu',
     icon: 'i-simple-icons-baidu', // @unocss-include https://icones.js.org/
-    name: 'Baidu 千帆',
+    name: '文心一言',
     href: 'https://cloud.baidu.com/doc/WENXINWORKSHOP/s/yloieb01t',
     models,
     globalSettings: [

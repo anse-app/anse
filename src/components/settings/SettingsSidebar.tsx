@@ -1,20 +1,33 @@
-import { For } from 'solid-js'
+import { For, onMount } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { useI18n } from '@/hooks'
 import { platformSettingsUIList } from '@/stores/provider'
-import { providerSettingsMap, setSettingsByProviderId, updateGeneralSettings } from '@/stores/settings'
+import { globalUserId, providerSettingsMap, setSettingsByProviderId, updateGeneralSettings } from '@/stores/settings'
 import ThemeToggle from '../ui/ThemeToggle'
 import ProviderGlobalSettings from './ProviderGlobalSettings'
 import AppGeneralSettings from './AppGeneralSettings'
 import type { GeneralSettings } from '@/types/app'
 
-export default () => {
+export default (props: { userId: string }) => {
   const { t } = useI18n()
   const $providerSettingsMap = useStore(providerSettingsMap)
   // bug: someTimes providerSettingsMap() is {}
   const generalSettings = () => {
     return ($providerSettingsMap().general || {}) as unknown as GeneralSettings
   }
+  onMount(async() => {
+    if (props.userId) {
+      globalUserId.set(props.userId)
+      const settings = await fetch(`/api/setting?id=${props.userId}`).then(res => res.json())
+      if (settings && settings.length) {
+        try {
+          providerSettingsMap.set(JSON.parse(settings[0]))
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+  })
 
   return (
     <div class="h-full flex flex-col bg-sidebar">
