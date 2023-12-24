@@ -9,7 +9,7 @@ export const fetchChatCompletion = async(payload: OpenAIFetchPayload) => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${payload.apiKey}`,
-      'HTTP-Referer': 'https://anse.leeapp.cn',
+      'HTTP-Referer': 'https://ai.leeapp.cn',
     },
     method: 'POST',
     body: JSON.stringify(payload.body),
