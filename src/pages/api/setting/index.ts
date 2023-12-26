@@ -10,5 +10,5 @@ export const get: APIRoute = async({ url: { searchParams } }) => {
 export const post: APIRoute = async({ request }) => {
   const body = await request.json() as { id: string, value: string }
   await setSetting(body.id, body.value)
-  return new Response('ok', { status: 200 })
+  return new Response(null, { status: 200 })
 }

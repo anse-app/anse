@@ -21,7 +21,7 @@ export default (props: { userId: string }) => {
       const settings = await fetch(`/api/setting?id=${props.userId}`).then(res => res.json())
       if (settings && settings.length) {
         try {
-          providerSettingsMap.set(JSON.parse(settings[0]))
+          providerSettingsMap.set(JSON.parse(settings[0].value))
         } catch (e) {
           console.log(e)
         }
