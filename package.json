@@ -14,7 +14,7 @@
     "release": "bumpp"
   },
   "dependencies": {
-    "@astrojs/netlify": "3.0.0",
+    "@astrojs/netlify": "3.0.1",
     "@astrojs/node": "^5.3.6",
     "@astrojs/solid-js": "^2.2.1",
     "@astrojs/vercel": "^3.8.2",
