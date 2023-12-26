@@ -16,34 +16,13 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
   const [providerId, botId] = conversation.bot.split(':')
   const provider = getProviderById(providerId)
   if (!provider) return
-  if (prompt && (conversation.model || '').includes('vision') && prompt.indexOf('![') === 0) {
-    // 提取图片
-    let text = ''
-    let url = ''
-    prompt.replace(/!\[\]\(([^\\]+)\) (.*)/g, (_, $1, $2) => {
-      text = $2
-      url = $1
-      return ''
-    })
-    // @ts-expect-error
-    prompt = [
-      { type: 'text', text },
-      {
-        type: 'image_url',
-        image_url: {
-          url,
-          detail: 'auto',
-        },
-      },
-    ]
-  }
-
+  // TODO: 只在传给服务端时转换
   let callMethod = generalSettings.requestWithBackend ? 'backend' : 'frontend' as 'frontend' | 'backend'
   if (provider.supportCallMethod === 'frontend' || provider.supportCallMethod === 'backend')
     callMethod = provider.supportCallMethod
 
-  if (bot.type !== 'chat_continuous')
-    clearMessagesByConversationId(conversation.id)
+  // if (bot.type !== 'chat_continuous')
+  //   clearMessagesByConversationId(conversation.id)
   if (prompt) {
     pushMessageByConversationId(conversation.id, {
       id: `${conversation.id}:user:${Date.now()}`,
@@ -56,6 +35,44 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
 
   setLoadingStateByConversationId(conversation.id, true)
   let providerResponse: PromptResponse
+  const messages = [
+    ...(conversation.systemInfo ? [{ role: 'system', content: conversation.systemInfo }] : []) as Message[],
+    ...(destr(conversation.mockMessages) || []) as Message[],
+    ...getMessagesByConversationId(conversation.id).map(message => ({
+      role: message.role,
+      content: message.content,
+    })),
+  ]
+
+  console.log(messages)
+
+  // if (bot.type !== 'chat_continuous')
+  //   clearMessagesByConversationId(conversation.id)
+  if (prompt && (conversation.model || '').includes('vision') && prompt.indexOf('![](') === 0) {
+    // 提取图片
+    let text = ''
+    let url = ''
+    prompt.replace(/!\[\]\(([^\\]+)\) (.*)/g, (_, $1, $2) => {
+      text = $2
+      url = $1
+      return ''
+    })
+    messages[messages.length - 1] = {
+      role: 'user',
+      // @ts-expect-error
+      content: [
+        { type: 'text', text },
+        {
+          type: 'image_url',
+          image_url: {
+            url,
+            detail: 'auto',
+          },
+        },
+      ],
+    }
+  }
+
   const handlerPayload: HandlerPayload = {
     conversationId: conversation.id,
     conversationType: bot.type,
@@ -64,14 +81,7 @@ export const handlePrompt = async(conversation: Conversation, prompt?: string, s
     globalSettings: getSettingsByProviderId(provider.id),
     botSettings: {},
     prompt,
-    messages: [
-      ...(conversation.systemInfo ? [{ role: 'system', content: conversation.systemInfo }] : []) as Message[],
-      ...(destr(conversation.mockMessages) || []) as Message[],
-      ...getMessagesByConversationId(conversation.id).map(message => ({
-        role: message.role,
-        content: message.content,
-      })),
-    ],
+    messages: bot.type === 'chat_single' ? messages.slice(-1) : messages,
   }
   try {
     providerResponse = await getProviderResponse(provider.id, handlerPayload, {

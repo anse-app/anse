@@ -50,18 +50,22 @@ export default () => {
       <Match when={$currentConversationId() && !currentConversationMessages().length}>
         <ConversationEmpty conversation={currentConversation()} />
       </Match>
-      <Match when={currentBot()?.type === 'chat_continuous'}>
+      <Match when={currentBot()?.type.includes('chat')}>
         <Continuous
           conversationId={$currentConversationId()}
           messages={currentConversationMessages}
         />
       </Match>
+      {
+        /**
       <Match when={currentBot()?.type === 'chat_single'}>
         <Single
           conversationId={$currentConversationId()}
           messages={currentConversationMessages}
         />
       </Match>
+         */
+      }
       <Match when={currentBot()?.type === 'image_generation'}>
         <Image
           // conversationId={$currentConversationId()}

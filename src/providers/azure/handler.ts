@@ -48,10 +48,12 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     if (m === undefined)
       break
 
-    if (maxTokens - m.content.length < 0)
-      break
+    if (m.content) {
+      if (maxTokens - m.content.length < 0)
+        break
+      maxTokens -= m.content.length
+    }
 
-    maxTokens -= m.content.length
     messages.unshift(m)
   }
 
