@@ -67,7 +67,6 @@
     "@evan-yang/eslint-config": "^1.0.9",
     "@iconify-json/carbon": "^1.1.21",
     "@iconify-json/simple-icons": "^1.1.76",
-    "@types/jsonwebtoken": "^9.0.5",
     "@types/mapbox__rehype-prism": "^0.8.2",
     "@typescript-eslint/parser": "^5.62.0",
     "@vite-pwa/astro": "^0.1.4",
