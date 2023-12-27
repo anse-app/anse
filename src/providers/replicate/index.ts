@@ -12,19 +12,30 @@ const providerReplicate = () => {
         name: 'Replicate API token',
         type: 'api-key',
       },
-      {
-        key: 'version',
-        name: 'Model Version',
-        description: 'Version hash for Stable Diffusion.',
-        type: 'input',
-        default: 'db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf',
-      },
     ],
     bots: [
       {
         id: 'stable-diffusion',
         type: 'image_generation',
-        name: 'Stable Diffusion',
+        name: 'Stable Diffusion 2.1',
+        settings: [],
+      },
+      {
+        id: 'stable-diffusion-v1',
+        type: 'image_generation',
+        name: 'Stable Diffusion 1.5',
+        settings: [],
+      },
+      {
+        id: 'waifu-diffusion',
+        type: 'image_generation',
+        name: 'Waifu Diffusion',
+        settings: [],
+      },
+      {
+        id: 'sdxl',
+        type: 'image_generation',
+        name: 'sdxl',
         settings: [],
       },
     ],

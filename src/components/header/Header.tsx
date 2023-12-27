@@ -3,6 +3,8 @@ import { scrollController, showConversationSidebar, showSettingsSidebar } from '
 import { useLargeScreen } from '@/hooks'
 import ConversationHeaderInfo from './ConversationHeaderInfo'
 import ConversationMessageClearButton from './ConversationMessageClearButton'
+import ConversationMessageShareButton from './ConversationMessageShareButton'
+import ConversationMessageSettingButton from './ConversationMessageSettingButton'
 
 export default () => {
   onMount(() => {
@@ -24,7 +26,9 @@ export default () => {
         <ConversationHeaderInfo />
       </div>
       <div class="fi gap-1 overflow-hidden">
+        <ConversationMessageSettingButton />
         <ConversationMessageClearButton />
+        <ConversationMessageShareButton />
         <div
           class="fcc p-2 rounded-md text-xl hv-foreground lg:hidden"
           onClick={() => showSettingsSidebar.set(true)}

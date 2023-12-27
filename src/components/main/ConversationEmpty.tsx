@@ -12,7 +12,7 @@ export default (props: Props) => {
   return (
     <div class="fi flex-col h-full px-6 py-8 overflow-auto">
       <Button
-        icon="i-carbon-settings-adjust"
+        icon="i-carbon-settings-adjust text-sm"
         onClick={() => showConversationEditModal.set(true)}
         size="sm"
         variant="ghost"

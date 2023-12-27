@@ -1,7 +1,7 @@
 import { For } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { useI18n } from '@/hooks'
-import { conversationMapSortList } from '@/stores/conversation'
+import { addConversation, conversationMapSortList } from '@/stores/conversation'
 import ConversationSidebarItem from './ConversationSidebarItem'
 import ConversationSidebarAdd from './ConversationSidebarAdd'
 
@@ -22,7 +22,7 @@ export default () => {
           <ConversationSidebarAdd />
         </div>
       </header>
-      <div class="flex-1 overflow-auto">
+      <div class="flex-1 overflow-auto" onDblClick={() => addConversation()}>
         <div class="px-2">
           <For each={$conversationMapSortList()}>
             {instance => (

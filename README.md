@@ -2,7 +2,7 @@
 
 # Anse
 
-English | [简体中文](./README.zh-CN.md)
+English | [简体中文](./README.zh-CN.md) | [日本語](./README_JA-JP.md)
 
 Anse is a fully optimized UI for AI Chats.
 
@@ -50,7 +50,7 @@ For more details, please refer to this document: https://docs.anse.app/self-depl
 
 After forking the project, you need to manually enable Workflows and Upstream Sync Action on the Actions page of the forked project. Once enabled, automatic updates will be scheduled every day:
 
-![](https://cdn.staticaly.com/gh/yzh990918/static@master/20230518/image.2omctdf8bbk0.webp)
+![](https://cdn.jsdelivr.net/gh/yzh990918/static@master/20230518/image.2omctdf8bbk0.webp)
 ## Frequently Asked Questions
 
 Q: TypeError: fetch failed (can't connect to OpenAI Api)
@@ -65,9 +65,6 @@ Q: Accelerate domestic access without the need for proxy deployment tutorial?
 
 A: You can refer to this tutorial: https://github.com/anse-app/chatgpt-demo/discussions/270
 
-Q: `PWA` is not working?
-
-A: Current `PWA` does not support deployment on Netlify, you can choose vercel or node deployment.
 ## Contributing
 
 This project exists thanks to all those who contributed.

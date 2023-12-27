@@ -61,12 +61,12 @@ export default (props: Props) => {
       <Show when={botMeta()?.type !== 'image_generation'}>
         <div class="py-1 border border-base rounded-lg text-sm">
           <div class="px-4 py-2">
-            <h3 class="op-80 shrink-0">System Info</h3>
+            <h3 class="op-80 shrink-0">{t('conversations.promopt.system')}</h3>
             <textarea
               value={props.conversation.systemInfo || ''}
               rows="4"
               class="input-base mt-2 w-full"
-              placeholder="You are a helpful assistant, answer as concisely as possible..."
+              placeholder={t('conversations.promopt.desc')}
               onBlur={e => props.handleChange({ systemInfo: e.currentTarget.value })}
             />
           </div>

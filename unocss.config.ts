@@ -17,6 +17,12 @@ export default defineConfig({
     presetIcons(),
     presetTypography({
       cssExtend: {
+        '*:first-child': {
+          'margin-top': 0,
+        },
+        '*:last-child': {
+          'margin-bottom': 0,
+        },
         'h1': {
           'font-size': '1.25em',
           'margin': '1rem 0',
@@ -38,6 +44,9 @@ export default defineConfig({
           'padding': '0 0.2em',
           'color': 'var(--prism-keyword)',
         },
+        'pre': {
+          'background-color': 'var(--prism-background) !important',
+        },
       },
     }),
   ],
@@ -58,7 +67,8 @@ export default defineConfig({
     'hv-foreground': 'transition-opacity cursor-pointer op-70 hover:op-100',
     'input-base': 'bg-transparent placeholder:op-50 dark:placeholder:op-20 focus:(ring-0 outline-none) resize-none',
     'button': 'mt-4 px-3 py-2 text-xs border border-base rounded-lg hv-base hover:border-base-100',
-    'emerald-button': 'mt-4 px-3 py-2 text-xs border rounded-lg text-light-400 border-emerald-600 bg-emerald-600 hover-bg-emerald-700 hover-border-emerald-700',
+    'emerald-button': 'button bg-emerald-600 !hover:bg-emerald-700 text-white',
+    'emerald-light-button': 'button text-emerald-400 bg-emerald/12 !border-emerald-400 !hover-bg-emerald-600 !hover-border-emerald-600 !hover-text-light-700',
     'max-w-base': 'max-w-3xl mx-auto',
     'text-error': 'text-red-700 dark:text-red-400/80',
     'border-error': 'border border-red-700 dark:border-red-400/80',
@@ -68,6 +78,8 @@ export default defineConfig({
     'fi': 'flex items-center',
     'fcc': 'fc items-center',
     'fb': 'flex justify-between',
+    'code-copy-btn': 'absolute z-3 op-90 w-8 h-8 p-1 top-12px right-12px bg-light-300 dark:bg-dark-300 hover-text-emerald-600 fcc border rounded-md b-transparent cursor-pointer',
+    'code-copy-tips': 'absolute z-1 op-0 px-2 py-1 -top-8 bg-dark-600 dark:bg-dark fcc box-border rounded-md text-xs c-white transition-opacity duration-300 whitespace-nowrap',
   }],
   preflights: [{
     layer: 'base',
@@ -76,6 +88,10 @@ export default defineConfig({
       --c-scroll: #d9d9d9;
       --c-scroll-hover: #bbbbbb;
       --c-shadow: #00000008;
+      }
+
+      html,body {
+        height: 100%;
       }
 
       html.dark {
@@ -108,6 +124,10 @@ export default defineConfig({
       button,select,input,option {
         outline: none;
         -webkit-appearance: none
+      }
+      img { display: initial; }
+      .clipped {
+        clip-path: inset(0 100% 0 0);
       }
     `,
   }],

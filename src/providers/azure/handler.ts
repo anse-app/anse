@@ -19,7 +19,6 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     botId: 'temp',
     globalSettings: {
       ...globalSettings,
-      model: 'gpt-3.5-turbo',
       temperature: 0.4,
       maxTokens: 2048,
       top_p: 1,
@@ -30,8 +29,7 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     messages: [{ role: 'user', content: prompt }],
   } as HandlerPayload
   const result = await handleChatCompletion(rapidPromptPayload)
-  if (typeof result === 'string')
-    return result
+  if (typeof result === 'string') return result
   return ''
 }
 
@@ -63,11 +61,11 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     body: {
       messages,
       max_tokens: maxTokens,
-      model: payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
       top_p: payload.globalSettings.topP as number,
       stream: payload.globalSettings.stream as boolean ?? true,
     },
+    model: payload.globalSettings.model as string,
     signal,
   })
   if (!response.ok) {
@@ -90,12 +88,7 @@ const handleImageGeneration = async(payload: HandlerPayload) => {
   const response = await fetchImageGeneration({
     apiKey: payload.globalSettings.apiKey as string,
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
-    body: {
-      prompt,
-      n: 1,
-      size: '512x512',
-      response_format: 'url', // TODO: support 'b64_json'
-    },
+    body: { prompt, n: 1, size: '512x512' },
   })
   if (!response.ok) {
     const responseJson = await response.json()

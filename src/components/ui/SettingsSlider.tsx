@@ -25,10 +25,10 @@ export default ({ settings, editing, value, setValue }: Props) => {
           step={sliderSettings.step}
         />
       )}
-      {!editing() && value() && (
+      {!editing() && value() !== undefined && (
         <div>{value()}</div>
       )}
-      {!editing() && !value() && (
+      {!editing() && value() === undefined && (
         <SettingsNotDefined />
       )}
     </div>

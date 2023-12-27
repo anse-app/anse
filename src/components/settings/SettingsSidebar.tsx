@@ -40,11 +40,11 @@ export default () => {
         <ThemeToggle />
         <div text-xs op-40 px-2>
           <a href="https://docs.anse.app" target="_blank" rel="noreferrer" class="hv-foreground">
-            Docs
+            {t('docs')}
           </a>
           <span class="px-1"> · </span>
           <a href="https://github.com/anse-app/anse" target="_blank" rel="noreferrer" class="hv-foreground">
-            Github
+            {t('github')}
           </a>
         </div>
       </footer>

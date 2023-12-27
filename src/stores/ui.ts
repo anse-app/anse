@@ -6,6 +6,8 @@ export const showSettingsSidebar = atom(false)
 export const showConversationEditModal = atom(false)
 export const showEmojiPickerModal = atom(false)
 export const showConfirmModal = atom(false)
+export const showShareModal = atom(false)
+export const showSelectMessageModal = atom(false)
 
 export const isSendBoxFocus = atom(false)
 export const currentErrorMessage = atom<ErrorMessage | null>(null)
