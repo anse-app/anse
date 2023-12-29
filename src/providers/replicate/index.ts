@@ -17,13 +17,25 @@ const providerReplicate = () => {
       {
         id: 'stable-diffusion',
         type: 'image_generation',
-        name: 'Stable Diffusion',
+        name: 'Stable Diffusion 2.1',
+        settings: [],
+      },
+      {
+        id: 'stable-diffusion-v1',
+        type: 'image_generation',
+        name: 'Stable Diffusion 1.5',
         settings: [],
       },
       {
         id: 'waifu-diffusion',
         type: 'image_generation',
         name: 'Waifu Diffusion',
+        settings: [],
+      },
+      {
+        id: 'sdxl',
+        type: 'image_generation',
+        name: 'sdxl',
         settings: [],
       },
     ],

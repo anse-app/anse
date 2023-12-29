@@ -78,6 +78,8 @@ export default defineConfig({
     'fi': 'flex items-center',
     'fcc': 'fc items-center',
     'fb': 'flex justify-between',
+    'code-copy-btn': 'absolute z-3 op-90 w-8 h-8 p-1 top-12px right-12px bg-light-300 dark:bg-dark-300 hover-text-emerald-600 fcc border rounded-md b-transparent cursor-pointer',
+    'code-copy-tips': 'absolute z-1 op-0 px-2 py-1 -top-8 bg-dark-600 dark:bg-dark fcc box-border rounded-md text-xs c-white transition-opacity duration-300 whitespace-nowrap',
   }],
   preflights: [{
     layer: 'base',
