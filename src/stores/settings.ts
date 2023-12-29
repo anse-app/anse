@@ -12,6 +12,14 @@ export const rebuildSettingsStore = async() => {
   const defaultData = defaultSettingsStore()
   const data: Record<string, SettingsPayload> = {}
   providerMetaList.forEach((provider) => {
+    const modelSetting = getProviderById(provider.id)?.globalSettings?.find(obj => obj.key === 'model')
+    if (modelSetting?.type === 'select') {
+      const modelList = modelSetting.options
+      const isExistModel = modelList.some(model => model.value === exportData?.[provider.id]?.model)
+
+      if (!isExistModel && exportData?.[provider.id]?.model)
+        exportData[provider.id].model = modelList?.[0]?.value
+    }
     data[provider.id] = {
       ...defaultData[provider.id] || {},
       ...exportData?.[provider.id] || {},
