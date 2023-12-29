@@ -52,7 +52,7 @@ export const parseStream = (rawResponse: Response) => {
             const queue = encoder.encode(text)
             controller.enqueue(queue)
             if (json.candidates[0].finishReason === 'STOP')
-              controller.close()
+              setTimeout(() => controller.close(), 300)
           } catch (e) {
             controller.error(e)
           }
