@@ -17,7 +17,7 @@ console.log(session)
       </Sidebar>
       <Main />
       <Sidebar direction="right" class="hidden lg:block">
-        <Settings client:only userId={session?.user.userId} />
+        <Settings client:only userId={session?.user.userId || ''} />
       </Sidebar>
     </div>
     <ModalsLayer client:only />
