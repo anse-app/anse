@@ -1,5 +1,5 @@
 import { fetchChatCompletion } from './api'
-import { parseMessageList } from './parser'
+import { parseMessageList, parseStream } from './parser'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
@@ -51,8 +51,10 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
     messages.unshift(m)
   }
 
+  const stream = payload.globalSettings.stream as boolean ?? true
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
+    stream,
     body: {
       contents: parseMessageList(messages),
     },
@@ -60,6 +62,8 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
   })
 
   if (response.ok) {
+    if (stream)
+      return parseStream(response)
     const json = await response.json()
     // console.log('json', json)
     const output = json.candidates[0].content.parts[0].text || json
