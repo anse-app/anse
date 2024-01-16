@@ -61,7 +61,7 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
     body: {
-      prompt: messages,
+      messages,
       max_tokens: maxTokens,
       model: payload.model || payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
