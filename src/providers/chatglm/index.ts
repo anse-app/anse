@@ -5,8 +5,8 @@ import {
 import type { Provider } from '@/types/provider'
 
 const models = [
-  { label: 'ChatGLM-Turbo', value: 'chatglm_turbo' },
-  // { label: 'CharacterGLM', value: 'characterglm' }
+  { label: 'GLM-3-Turbo', value: 'glm-3-turbo' },
+  { label: 'GLM-4', value: 'glm-4' },
 ]
 
 const providerGlm = () => {
@@ -28,7 +28,7 @@ const providerGlm = () => {
         description: 'Custom gpt model for ChatGLM API.',
         type: 'select',
         options: models,
-        default: 'chatglm_turbo',
+        default: 'glm-3-turbo',
       },
       {
         key: 'maxTokens',
@@ -82,6 +82,12 @@ const providerGlm = () => {
         id: 'chat_single',
         type: 'chat_single',
         name: 'Single Chat',
+        settings: [],
+      },
+      {
+        id: 'cogview',
+        type: 'image_generation',
+        name: 'CogView',
         settings: [],
       },
     ],
