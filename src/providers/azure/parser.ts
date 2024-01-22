@@ -35,7 +35,7 @@ export const parseStream = (rawResponse: Response) => {
           controller.close()
           return
         }
-        parser.feed(decoder.decode(value))
+        parser.feed(decoder.decode(value, { stream: true }))
       }
     },
   })
