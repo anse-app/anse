@@ -9,7 +9,7 @@ export const convertReadableStreamToAccessor = async(stream: ReadableStream, set
     while (!done) {
       const { value, done: readerDone } = await reader.read()
       if (value) {
-        const char = decoder.decode(value)
+        const char = decoder.decode(value, { stream: true })
         if (char) {
           text += char
           setter(text)
