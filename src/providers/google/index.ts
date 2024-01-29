@@ -48,7 +48,7 @@ const providerGoogle = () => {
       {
         key: 'temperature',
         name: 'Temperature',
-        description: 'The temperature controls the degree of randomness in token selection. ower temperatures are good for prompts that require a more deterministic or less open-ended response.',
+        description: 'The temperature controls the degree of randomness in token selection. Lower temperatures are good for prompts that require a more deterministic or less open-ended response.',
         type: 'slider',
         min: 0,
         max: 1,
