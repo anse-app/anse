@@ -133,8 +133,10 @@ export const callProviderHandler = async(providerId: string, payload: HandlerPay
       baseUrl: payload.globalSettings?.baseUrl,
       model: payload.globalSettings?.model,
       maxTokens: payload.globalSettings?.maxTokens,
+      maxOutputTokens: payload.globalSettings?.maxOutputTokens,
       temperature: payload.globalSettings?.temperature,
-      top_p: payload.globalSettings?.top_p,
+      topP: payload.globalSettings?.topP,
+      topK: payload.globalSettings?.topK,
     },
     botSettings: payload.botSettings,
   })
