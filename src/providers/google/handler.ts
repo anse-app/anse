@@ -18,6 +18,11 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     globalSettings: {
       ...globalSettings,
       model: 'gemini-pro',
+      temperature: 0.4,
+      maxTokens: 10240,
+      maxOutputTokens: 1024,
+      topP: 0.8,
+      topK: 1,
     },
     botSettings: {},
     prompt,
@@ -57,7 +62,14 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
     stream,
     body: {
       contents: parseMessageList(messages),
+      generationConfig: {
+        temperature: payload.globalSettings.temperature as number,
+        maxOutputTokens: payload.globalSettings.maxOutputTokens as number,
+        topP: payload.globalSettings.topP as number,
+        topK: payload.globalSettings.topK as number,
+      }
     },
+    signal,
     model: payload.globalSettings.model as string,
   })
 
