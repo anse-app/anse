@@ -1,4 +1,9 @@
 /// <reference types="astro/client" />
+declare namespace App {
+  interface Locals {
+    auth: import('lucia').AuthRequest
+  }
+}
 
 interface ImportMetaEnv {
   readonly OPENAI_API_KEY: string
@@ -13,4 +18,13 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
+}
+
+/// <reference types="lucia" />
+declare namespace Lucia {
+  type Auth = import('./logics/lucia').Auth
+  interface DatabaseUserAttributes {
+    username: string
+  }
+  interface DatabaseSessionAttributes {}
 }

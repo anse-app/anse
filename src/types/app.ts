@@ -11,6 +11,7 @@ export interface BotMeta {
   value: string
   type: ConversationType
   label: string
+  models: { value: string, label: string }[]
   provider: {
     id: string
     name: string

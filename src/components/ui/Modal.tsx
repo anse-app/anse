@@ -11,6 +11,7 @@ interface Props {
   direction: 'top' | 'bottom' | 'left' | 'right'
   children: JSXElement
   closeBtnClass?: string
+  closeOnOutsideClick?: boolean
   closeCallback?: () => void
 }
 
@@ -46,7 +47,7 @@ export default (props: Props) => {
       <Show when={api().isOpen}>
         <div class="fixed inset-0 z-20 fcc">
           <Portal>
-            <div {...api().backdropProps} class="fixed inset-0 bg-base opacity-60 pointer-events-auto" onclick={() => api().close()} />
+            <div {...api().backdropProps} class="fixed inset-0 bg-base opacity-60 pointer-events-auto" onclick={() => props.closeOnOutsideClick && api().close()} />
           </Portal>
           <div {...api().containerProps}>
             <div {...api().contentProps} class={`bg-modal transition-transform ease-out max-w-screen max-h-screen overflow-auto border-base shadow-lg ring-0 outline-none ${containerBaseClass}`}>

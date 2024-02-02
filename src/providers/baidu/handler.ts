@@ -17,8 +17,10 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     conversationId: 'temp',
     conversationType: 'chat_single',
     botId: 'temp',
+    model: 'completions_pro',
     globalSettings: {
       ...globalSettings,
+      model: 'completions_pro',
       temperature: 0.4,
       maxTokens: 2048,
       top_p: 1,
@@ -29,7 +31,8 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     messages: [{ role: 'user', content: prompt }],
   } as HandlerPayload
   const result = await handleChatCompletion(rapidPromptPayload)
-  if (typeof result === 'string') return result
+  if (typeof result === 'string')
+    return result
   return ''
 }
 
@@ -48,18 +51,17 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     if (m === undefined)
       break
 
-    if (m.content) {
-      if (maxTokens - m.content.length < 0)
-        break
-      maxTokens -= m.content.length
-    }
+    if (maxTokens - m.content.length < 0)
+      break
 
+    maxTokens -= m.content.length
     messages.unshift(m)
   }
 
+  const enpoint = payload.model || payload.globalSettings.model as string
   const response = await fetchChatCompletion({
     apiKey: payload.globalSettings.apiKey as string,
-    baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
+    enpoint,
     body: {
       messages,
       max_tokens: maxTokens,
@@ -67,7 +69,6 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
       top_p: payload.globalSettings.topP as number,
       stream: payload.globalSettings.stream as boolean ?? true,
     },
-    model: payload.globalSettings.model as string,
     signal,
   })
   if (!response.ok) {
@@ -87,10 +88,14 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
 
 const handleImageGeneration = async(payload: HandlerPayload) => {
   const prompt = payload.prompt
+  // https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Klkqubb9w
   const response = await fetchImageGeneration({
     apiKey: payload.globalSettings.apiKey as string,
-    baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
-    body: { prompt, n: 1, size: '512x512' },
+    enpoint: 'sd_xl',
+    body: {
+      prompt,
+      n: 1,
+    },
   })
   if (!response.ok) {
     const responseJson = await response.json()
@@ -98,5 +103,9 @@ const handleImageGeneration = async(payload: HandlerPayload) => {
     throw new Error(errMessage)
   }
   const resJson = await response.json()
-  return resJson.data[0].url
+
+  if (resJson.error_code)
+    throw new Error(resJson)
+
+  return `data:image/jpeg;base64,${resJson.data[0].b64_image}`
 }

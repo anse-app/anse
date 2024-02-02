@@ -4,30 +4,41 @@ import {
 } from './handler'
 import type { Provider } from '@/types/provider'
 
-const providerOpenAI = () => {
+const models = [
+  { label: 'ERNIE-Bot 4.0', value: 'completions_pro' },
+  { label: 'ERNIE-Bot-8K', value: 'ernie_bot_8k' },
+  { label: 'ERNIE-Bot', value: 'completions' },
+  { label: 'ERNIE-Bot-turbo', value: 'eb-instant' },
+  { label: 'Qianfan-BLOOMZ-7B-compressed', value: 'qianfan_bloomz_7b_compressed' },
+  { label: 'Qianfan-Chinese-Llama-2-7B', value: 'qianfan_chinese_llama_2_7b' },
+  { label: 'Qianfan-Chinese-Llama-2-13B', value: 'qianfan_chinese_llama_2_13b' },
+  { label: 'ChatLaw', value: 'chatlaw' },
+  { label: 'XuanYuan-70B-Chat-4bit', value: 'xuanyuan_70b_chat' },
+  { label: 'Llama-2-7b-chat', value: 'llama_2_7b' },
+  { label: 'Llama-2-13b-chat', value: 'llama_2_13b' },
+  { label: 'Llama-2-70b-chat', value: 'llama_2_70b' },
+]
+
+const providerBaidu = () => {
   const provider: Provider = {
-    id: 'provider-azure',
-    icon: 'i-simple-icons:microsoftazure', // @unocss-include
-    name: 'Azure OpenAI',
-    href: 'https://azure.microsoft.com/en-us/products/ai-services/openai-service',
-    models: [],
+    id: 'provider-baidu',
+    icon: 'i-simple-icons-baidu', // @unocss-include https://icones.js.org/
+    name: '文心一言',
+    href: 'https://cloud.baidu.com/doc/WENXINWORKSHOP/s/yloieb01t',
+    models,
     globalSettings: [
       {
         key: 'apiKey',
-        name: 'API Key',
+        name: 'ACCESS_TOKEN',
         type: 'api-key',
       },
       {
-        key: 'baseUrl',
-        name: 'Endpoint',
-        description: 'OpenAI Endpoint',
-        type: 'input',
-      },
-      {
         key: 'model',
-        name: 'Azure deployment name',
-        description: 'Custom model name for Azure OpenAI.',
-        type: 'input',
+        name: 'Baidu model',
+        description: 'Custom gpt model for Baidu API.',
+        type: 'select',
+        options: models,
+        default: 'completions_pro',
       },
       {
         key: 'maxTokens',
@@ -46,7 +57,7 @@ const providerOpenAI = () => {
         type: 'slider',
         min: 1,
         max: 24,
-        default: 5,
+        default: 10,
         step: 1,
       },
       {
@@ -86,7 +97,7 @@ const providerOpenAI = () => {
       {
         id: 'image_generation',
         type: 'image_generation',
-        name: 'DALL·E',
+        name: 'Stable-Diffusion-XL',
         settings: [],
       },
     ],
@@ -96,4 +107,4 @@ const providerOpenAI = () => {
   return provider
 }
 
-export default providerOpenAI
+export default providerBaidu

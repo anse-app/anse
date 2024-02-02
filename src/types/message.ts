@@ -1,6 +1,17 @@
 export interface Message {
   role: 'system' | 'user' | 'assistant'
-  content: string
+  content:
+  | string
+  // | [
+  //   { type: 'text', text: string },
+  //   {
+  //     type: 'image_url'
+  //     image_url: {
+  //       url: string
+  //       detail: 'auto'
+  //     }
+  //   },
+  // ]
 }
 
 /** Used in app */

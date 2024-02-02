@@ -15,6 +15,7 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     conversationId: 'temp',
     conversationType: 'chat_single',
     botId: 'temp',
+    model: 'gemini-pro',
     globalSettings: {
       ...globalSettings,
       model: 'gemini-pro',
@@ -49,10 +50,12 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
     if (m === undefined)
       break
 
-    if (maxTokens - m.content.length < 0)
-      break
+    if (m.content) {
+      if (maxTokens - m.content.length < 0)
+        break
+      maxTokens -= m.content.length
+    }
 
-    maxTokens -= m.content.length
     messages.unshift(m)
   }
 
@@ -70,7 +73,7 @@ export const handleChatCompletion = async(payload: HandlerPayload, signal?: Abor
       }
     },
     signal,
-    model: payload.globalSettings.model as string,
+    model: payload.model || payload.globalSettings.model as string,
   })
 
   if (response.ok) {

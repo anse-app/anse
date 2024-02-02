@@ -17,6 +17,7 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     conversationId: 'temp',
     conversationType: 'chat_single',
     botId: 'temp',
+    model: 'gpt-3.5-turbo',
     globalSettings: {
       ...globalSettings,
       model: 'gpt-3.5-turbo',
@@ -50,10 +51,12 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     if (m === undefined)
       break
 
-    if (maxTokens - m.content.length < 0)
-      break
+    if (m.content) {
+      if (maxTokens - m.content.length < 0)
+        break
+      maxTokens -= m.content.length
+    }
 
-    maxTokens -= m.content.length
     messages.unshift(m)
   }
 
@@ -63,7 +66,7 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     body: {
       messages,
       max_tokens: maxTokens,
-      model: payload.globalSettings.model as string,
+      model: payload.model || payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
       top_p: payload.globalSettings.topP as number,
       stream: payload.globalSettings.stream as boolean ?? true,

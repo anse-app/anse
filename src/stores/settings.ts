@@ -6,6 +6,7 @@ import type { GeneralSettings } from '@/types/app'
 
 export const providerSettingsMap = map<Record<string, SettingsPayload>>({})
 export const globalAbortController = atom<AbortController | null>(null)
+export const globalUserId = atom<string>('')
 
 export const rebuildSettingsStore = async() => {
   const exportData = await db.exportData()
@@ -43,6 +44,16 @@ export const setSettingsByProviderId = action(
     }
     map.setKey(id, mergedSettings)
     db.setItem(id, mergedSettings)
+    if (globalUserId.value) {
+      const value = JSON.stringify(providerSettingsMap.value)
+      fetch('/api/setting', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: globalUserId.value,
+          value,
+        }),
+      })
+    }
   },
 )
 

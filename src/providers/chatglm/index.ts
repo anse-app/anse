@@ -4,13 +4,18 @@ import {
 } from './handler'
 import type { Provider } from '@/types/provider'
 
-const providerOpenAI = () => {
+const models = [
+  { label: 'GLM-3-Turbo', value: 'glm-3-turbo' },
+  { label: 'GLM-4', value: 'glm-4' },
+]
+
+const providerGlm = () => {
   const provider: Provider = {
-    id: 'provider-azure',
-    icon: 'i-simple-icons:microsoftazure', // @unocss-include
-    name: 'Azure OpenAI',
-    href: 'https://azure.microsoft.com/en-us/products/ai-services/openai-service',
-    models: [],
+    id: 'provider-chatglm',
+    icon: 'i-carbon-navaid-ndb', // @unocss-include
+    name: '智谱AI',
+    href: 'https://open.bigmodel.cn/usercenter/apikeys',
+    models,
     globalSettings: [
       {
         key: 'apiKey',
@@ -18,16 +23,12 @@ const providerOpenAI = () => {
         type: 'api-key',
       },
       {
-        key: 'baseUrl',
-        name: 'Endpoint',
-        description: 'OpenAI Endpoint',
-        type: 'input',
-      },
-      {
         key: 'model',
-        name: 'Azure deployment name',
-        description: 'Custom model name for Azure OpenAI.',
-        type: 'input',
+        name: 'ChatGLM model',
+        description: 'Custom gpt model for ChatGLM API.',
+        type: 'select',
+        options: models,
+        default: 'glm-3-turbo',
       },
       {
         key: 'maxTokens',
@@ -84,9 +85,9 @@ const providerOpenAI = () => {
         settings: [],
       },
       {
-        id: 'image_generation',
+        id: 'cogview',
         type: 'image_generation',
-        name: 'DALL·E',
+        name: 'CogView',
         settings: [],
       },
     ],
@@ -96,4 +97,4 @@ const providerOpenAI = () => {
   return provider
 }
 
-export default providerOpenAI
+export default providerGlm
