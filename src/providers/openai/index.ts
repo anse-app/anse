@@ -39,6 +39,7 @@ const providerOpenAI = () => {
           { value: 'gpt-4-32k', label: 'gpt-4-32k' },
           { value: 'gpt-4-32k-0314', label: 'gpt-4-32k-0314' },
           { value: 'gpt-4-32k-0613', label: 'gpt-4-32k-0613' },
+          { value: 'gpt-3.5-turbo-0125', label: 'gpt-3.5-turbo-0125' },
           { value: 'gpt-3.5-turbo-0301', label: 'gpt-3.5-turbo-0301' },
           { value: 'gpt-3.5-turbo-0613', label: 'gpt-3.5-turbo-0613' },
           { value: 'gpt-3.5-turbo-1106', label: 'gpt-3.5-turbo-1106' },
