@@ -53,14 +53,14 @@ export const fr = {
         },
         tabs: {
           context: 'Partager le contexte',
+          image: 'Partager l\'image',
         },
-        image: 'Partager l\'image',
         image: {
           btn: 'Générer une image',
           open: 'Ouvrir dans un nouvel onglet',
           loading: 'Générer...',
+          copy: 'Copier l\'image',
         },
-        copy: 'Copier l\'image',
       },
     },
     docs: 'Docs',
