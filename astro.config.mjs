@@ -4,13 +4,13 @@ import solidJs from '@astrojs/solid-js'
 import node from '@astrojs/node'
 import AstroPWA from '@vite-pwa/astro'
 import vercel from '@astrojs/vercel/edge'
-import netlify from '@astrojs/netlify/edge-functions'
+import netlify from '@astrojs/netlify/functions'
 import disableBlocks from './plugins/disableBlocks'
 
 const envAdapter = () => {
   switch (process.env.OUTPUT) {
     case 'vercel': return vercel({ analytics: false }) // Set `analytics` to `true` if you want to use Vercel Analytics
-    case 'netlify': return netlify()
+    case 'netlify': return netlify({edgeMiddleware: true})
     default: return node({ mode: 'standalone' })
   }
 }
