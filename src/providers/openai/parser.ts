@@ -1,14 +1,18 @@
-import { createParser } from 'eventsource-parser'
-import type { ParsedEvent, ReconnectInterval } from 'eventsource-parser'
+import type { Response } from 'node-fetch'
 
-export const parseStream = (rawResponse: Response) => {
+/**
+ * Function to parse the stream response from OpenAI API
+ * @param rawResponse The raw response object from the fetch request
+ * @returns A readable stream to handle the parsed data
+ */
+export const parseStream = async(rawResponse: Response) => {
   const encoder = new TextEncoder()
   const decoder = new TextDecoder()
   const rb = rawResponse.body as ReadableStream
 
   return new ReadableStream({
     async start(controller) {
-      const streamParser = (event: ParsedEvent | ReconnectInterval) => {
+      const streamParser = (event: any) => {
         if (event.type === 'event') {
           const data = event.data
           if (data === '[DONE]') {
@@ -35,8 +39,19 @@ export const parseStream = (rawResponse: Response) => {
           controller.close()
           return
         }
-        parser.feed(decoder.decode(value, { stream: true }))
+        parser.feed(decoder.decode(value, { stream: true }) as string)
       }
     },
   })
+}
+
+/**
+ * Creates a parser for stream events
+ * @param streamParser Function to handle stream events
+ * @returns A parser object with a feed method
+ */
+function createParser(streamParser: (event: any) => void) {
+  return {
+    feed: streamParser, // Returning an object with the feed method
+  }
 }

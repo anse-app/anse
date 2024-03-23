@@ -3,15 +3,25 @@ import { parseStream } from './parser'
 import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
+/**
+ * Handler function to process prompts based on bot IDs
+ * @param payload Payload containing the prompt data
+ * @param signal Optional AbortSignal for request cancellation
+ * @returns A Promise resolving to the response to the prompt
+ */
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
-  if (payload.botId === 'chat_continuous')
-    return handleChatCompletion(payload, signal)
-  if (payload.botId === 'chat_single')
+  if (payload.botId === 'chat_continuous' || payload.botId === 'chat_single')
     return handleChatCompletion(payload, signal)
   if (payload.botId === 'image_generation')
     return handleImageGeneration(payload)
 }
 
+/**
+ * Handler function to process rapid prompts
+ * @param prompt Prompt string
+ * @param globalSettings Global settings for the prompt
+ * @returns A Promise resolving to the response to the rapid prompt
+ */
 export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, globalSettings) => {
   const rapidPromptPayload = {
     conversationId: 'temp',
@@ -35,6 +45,12 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
   return ''
 }
 
+/**
+ * Handler function to process chat completions
+ * @param payload Payload containing the chat completion data
+ * @param signal Optional AbortSignal for request cancellation
+ * @returns A Promise resolving to the response to the chat completion
+ */
 const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal) => {
   // An array to store the chat messages
   const messages: Message[] = []
@@ -76,7 +92,7 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     const errMessage = responseJson.error?.message || response.statusText || 'Unknown error'
     throw new Error(errMessage, { cause: responseJson.error })
   }
-  const isStream = response.headers.get('content-type')?.includes('text/event-stream')
+  const isStream = response.headers.get('content-type')?.indexOf('text/event-stream') !== -1
   if (isStream) {
     return parseStream(response)
   } else {
@@ -85,6 +101,11 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
   }
 }
 
+/**
+ * Handler function to process image generation
+ * @param payload Payload containing the image generation data
+ * @returns A Promise resolving to the URL of the generated image
+ */
 const handleImageGeneration = async(payload: HandlerPayload) => {
   const prompt = payload.prompt
   const response = await fetchImageGeneration({

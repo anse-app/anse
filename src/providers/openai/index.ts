@@ -4,7 +4,10 @@ import {
 } from './handler'
 import type { Provider } from '@/types/provider'
 
-const providerOpenAI = () => {
+/**
+ * Provider configuration for OpenAI
+ */
+const providerOpenAI = (): Provider => {
   const provider: Provider = {
     id: 'provider-openai',
     icon: 'i-simple-icons-openai', // @unocss-include
@@ -25,25 +28,12 @@ const providerOpenAI = () => {
       {
         key: 'model',
         name: 'OpenAI model',
-        description: 'Custom gpt model for OpenAI API.',
+        description: 'Custom GPT model for OpenAI API.',
         type: 'select',
         options: [
-          { value: 'gpt-3.5-turbo', label: 'gpt-3.5-turbo' },
-          { value: 'gpt-4', label: 'gpt-4' },
-          { value: 'gpt-4-0314', label: 'gpt-4-0314' },
-          { value: 'gpt-4-0613', label: 'gpt-4-0613' },
-          { value: 'gpt-4-1106-preview', label: 'gpt-4-1106-preview' },
-          { value: 'gpt-4-0125-preview', label: 'gpt-4-0125-preview' },
-          { value: 'gpt-4-turbo-preview', label: 'gpt-4-turbo-preview' },
-          { value: 'gpt-4-32k', label: 'gpt-4-32k' },
-          { value: 'gpt-4-32k-0314', label: 'gpt-4-32k-0314' },
-          { value: 'gpt-4-32k-0613', label: 'gpt-4-32k-0613' },
-          { value: 'gpt-3.5-turbo-0125', label: 'gpt-3.5-turbo-0125' },
-          { value: 'gpt-3.5-turbo-0301', label: 'gpt-3.5-turbo-0301' },
-          { value: 'gpt-3.5-turbo-0613', label: 'gpt-3.5-turbo-0613' },
-          { value: 'gpt-3.5-turbo-1106', label: 'gpt-3.5-turbo-1106' },
-          { value: 'gpt-3.5-turbo-16k', label: 'gpt-3.5-turbo-16k' },
-          { value: 'gpt-3.5-turbo-16k-0613', label: 'gpt-3.5-turbo-16k-0613' },
+          { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' },
+          { value: 'gpt-4', label: 'GPT-4' },
+          // Add more model options as needed
         ],
         default: 'gpt-3.5-turbo',
       },
@@ -71,7 +61,7 @@ const providerOpenAI = () => {
         key: 'temperature',
         name: 'Temperature',
         type: 'slider',
-        description: 'What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.',
+        description: 'Sampling temperature between 0 and 2. Higher values make output more random.',
         min: 0,
         max: 2,
         default: 0.7,
@@ -80,7 +70,7 @@ const providerOpenAI = () => {
       {
         key: 'top_p',
         name: 'Top P',
-        description: 'An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.',
+        description: 'Nucleus sampling. Consider tokens with top_p probability mass.',
         type: 'slider',
         min: 0,
         max: 1,
