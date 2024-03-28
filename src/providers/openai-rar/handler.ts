@@ -4,10 +4,9 @@ import type { Message } from '@/types/message'
 import type { HandlerPayload, Provider } from '@/types/provider'
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
-  if (payload.botId === 'chat_continuous')
+  if (payload.botId === 'chat_continuous' || payload.botId === 'chat_single')
     return handleChatCompletion(payload, signal)
-  if (payload.botId === 'chat_single')
-    return handleChatCompletion(payload, signal)
+
   if (payload.botId === 'image_generation')
     return handleImageGeneration(payload)
 }
@@ -19,6 +18,7 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     botId: 'temp',
     globalSettings: {
       ...globalSettings,
+      model: 'gpt-3.5-turbo',
       temperature: 0.4,
       maxTokens: 2048,
       top_p: 1,
@@ -29,21 +29,19 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
     messages: [{ role: 'user', content: prompt }],
   } as HandlerPayload
   const result = await handleChatCompletion(rapidPromptPayload)
-  if (typeof result === 'string') return result
+  if (typeof result === 'string')
+    return result
+
   return ''
 }
 
 const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal) => {
-  // An array to store the chat messages
   const messages: Message[] = []
-
   let maxTokens = payload.globalSettings.maxTokens as number
   let messageHistorySize = payload.globalSettings.messageHistorySize as number
 
-  // Iterate through the message history
   while (messageHistorySize > 0) {
     messageHistorySize--
-    // Get the last message from the payload
     const m = payload.messages.pop()
     if (m === undefined)
       break
@@ -61,18 +59,17 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     body: {
       messages,
       max_tokens: maxTokens,
+      model: payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
       top_p: payload.globalSettings.topP as number,
       stream: payload.globalSettings.stream as boolean ?? true,
     },
-    model: payload.globalSettings.model as string,
     signal,
   })
   if (!response.ok) {
     const responseJson = await response.json()
-    console.log('responseJson', responseJson)
     const errMessage = responseJson.error?.message || response.statusText || 'Unknown error'
-    throw new Error(errMessage, { cause: responseJson.error })
+    throw new Error(errMessage)
   }
   const isStream = response.headers.get('content-type')?.includes('text/event-stream')
   if (isStream) {
@@ -88,7 +85,12 @@ const handleImageGeneration = async(payload: HandlerPayload) => {
   const response = await fetchImageGeneration({
     apiKey: payload.globalSettings.apiKey as string,
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
-    body: { prompt, n: 1, size: '512x512' },
+    body: {
+      prompt,
+      n: 1,
+      size: '512x512',
+      response_format: 'url', // TODO: support 'b64_json'
+    },
   })
   if (!response.ok) {
     const responseJson = await response.json()

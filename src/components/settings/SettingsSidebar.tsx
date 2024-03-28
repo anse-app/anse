@@ -39,12 +39,12 @@ export default () => {
       <footer class="h-14 fi justify-between px-3">
         <ThemeToggle />
         <div text-xs op-40 px-2>
-          <a href="https://docs.anse.app" target="_blank" rel="noreferrer" class="hv-foreground">
+          <a href="" target="_blank" rel="noreferrer" class="hv-foreground">
             {t('docs')}
           </a>
           <span class="px-1"> · </span>
-          <a href="https://github.com/anse-app/anse" target="_blank" rel="noreferrer" class="hv-foreground">
-            {t('github')}
+          <a href="https://samuelyossef.com/" target="_blank" rel="noreferrer" class="hv-foreground">
+            {t('by Samuel Yossef')}
           </a>
         </div>
       </footer>
