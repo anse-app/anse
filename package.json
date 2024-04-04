@@ -40,7 +40,7 @@
     "astro": "^2.10.15",
     "bumpp": "^9.2.0",
     "destr": "^2.0.2",
-    "eslint": "^8.52.0",
+    "eslint": "^8.57.0",
     "eventsource-parser": "^1.1.1",
     "idb-keyval": "^6.2.1",
     "js-sha256": "^0.9.0",
